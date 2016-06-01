@@ -2,8 +2,11 @@
 .vs/
 *.sln
 *.csproj
+source/PluginDev/obj/
 
 # Unity3D
+AssetStoreTools.meta
+AssetStoreTools/
 Library/
 source/PluginDev/ProjectSettings/
 Temp/
