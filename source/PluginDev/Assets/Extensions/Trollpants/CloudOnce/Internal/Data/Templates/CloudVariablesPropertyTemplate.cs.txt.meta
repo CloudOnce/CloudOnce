@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a4088578f5ddc914486bd20cfb01ace1
+labels:
+- Cloud
+- Save
+- Prefs
+- PlayerPrefs
+- Persistent
+- Variables
+timeCreated: 1441448190
+licenseType: Free
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

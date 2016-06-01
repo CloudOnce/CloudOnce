@@ -1,0 +1,5 @@
+        public static VAR_SIMPLE VAR_ID
+        {
+            get { return FIELDNAME.Value; }
+            set { FIELDNAME.Value = value; }
+        }

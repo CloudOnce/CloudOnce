@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 44ab885478d94df4dbc9e6990a847532
+labels:
+- Cloud
+- Save
+- Storage
+- PlayerPrefs
+- Persistent
+- Prefs
+- Values
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
