@@ -10,6 +10,9 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.2.4
+- Updated menu URLs
+
 Version 2.2.3
 - Updated GPGS plugin from v0.9.33 to v0.9.34
 - Changed license to MIT and made source available on GitHub
