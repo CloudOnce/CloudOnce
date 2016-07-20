@@ -7,6 +7,9 @@ Check out the [Getting Started](http://trollpants.github.io/CloudOnce/gettingSta
 ## API Documentation
 If you need more technical or more complete documentation of the plug-in, you can check out the [API documentation](http://trollpants.github.io/CloudOnce/api-docs/index.html).
 
+## Support
+Please **do not** use the issue tracker for personal support requests (use [Stack Overflow](http://stackoverflow.com/questions/tagged/cloudonce)).
+
 ## Contributing to this project
 Did you stumble upon a bug? If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
 
