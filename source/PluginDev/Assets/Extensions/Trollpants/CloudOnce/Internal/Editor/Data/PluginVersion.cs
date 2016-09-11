@@ -10,6 +10,6 @@ namespace Trollpants.CloudOnce.Internal.Editor.Data
     /// </summary>
     public class PluginVersion
     {
-        public const string VersionString = "2.2.2";
+        public const string VersionString = "2.2.4";
     }
 }
