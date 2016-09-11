@@ -153,8 +153,6 @@ namespace Trollpants.CloudOnce.Internal.Editor
             defaultDarkThemeTextColor = new Color(0.75f, 0.75f, 0.75f),
             headerDarkThemeColor = new Color(0.95f, 0.95f, 0.95f);
 
-        private readonly bool isProSkin = EditorGUIUtility.isProSkin;
-
         #endregion /readonly fields
 
         #region GUIStyles & GUIContents
@@ -261,6 +259,7 @@ namespace Trollpants.CloudOnce.Internal.Editor
         private Vector2 scrollPosition, apiKeyScrollPosition;
         private Color backgroundColorCache;
         private bool triggerRepaint;
+        private bool isProSkin;
 
         // bools used to validate the configuration
         private bool
@@ -486,6 +485,8 @@ namespace Trollpants.CloudOnce.Internal.Editor
         {
             EditorApplication.modifierKeysChanged -= Repaint;
             EditorApplication.modifierKeysChanged += Repaint;
+
+            isProSkin = EditorGUIUtility.isProSkin;
 
 #if !UNITY_5_0
             // Window title and icon
