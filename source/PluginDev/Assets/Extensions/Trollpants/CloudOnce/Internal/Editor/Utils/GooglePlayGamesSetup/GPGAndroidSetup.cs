@@ -14,7 +14,7 @@
 //    limitations under the License.
 // </copyright>
 
-// Code has been refactored and repurposed by Trollpants Game Studio,
+// Code has been refactored and repurposed by Jan Ivar Z. Carlsen,
 // is originally from GPGSAndroidSetupUI.cs in the GPG Unity plug-in.
 
 #if UNITY_EDITOR

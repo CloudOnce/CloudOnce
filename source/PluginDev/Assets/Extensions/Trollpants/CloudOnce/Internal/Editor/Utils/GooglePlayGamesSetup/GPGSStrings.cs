@@ -1,4 +1,4 @@
-﻿// <copyright file="GPGSStrings.cs" company="Google Inc.">
+// <copyright file="GPGSStrings.cs" company="Google Inc.">
 // Copyright (C) 2014 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 //    limitations under the License.
 // </copyright>
 
-// Modified by Trollpants Game Studio.
+// Modified by Jan Ivar Z. Carlsen.
 namespace Trollpants.CloudOnce.Internal.Editor.Utils
 {
     public class GPGSStrings
