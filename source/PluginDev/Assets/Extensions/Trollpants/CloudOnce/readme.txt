@@ -1,5 +1,5 @@
 Trollpants CloudOnce - Unified Game Services API
-http://github.com/Trollpants/CloudOnce
+http://jizc.github.io/CloudOnce
 
 Description
 -----------
@@ -10,6 +10,12 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.2.5
+- Fix for editor error in Unity 5.4
+- Changed copyright
+- Enforced UTF-8 file encoding
+- Updated URLs
+
 Version 2.2.4
 - Updated menu URLs
 

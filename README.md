@@ -23,5 +23,12 @@ Please take a moment to review the [guidelines for contributing](.github/CONTRIB
 
 Make sure your code works in Unity3D v5.0.0f4 and up. Code that produces warnings in the Unity3D console will not be accepted.
 
+## History
+This plug-in was originally developed for internal use by Trollpants Game Studio. [Sindri Jóelsson](http://github.com/sindrijo) wrote most of the original code, and [Jan Ivar Z. Carlsen](http://github.com/jizc) assisted by writing the implementations for Google Play and iOS.
+
+In January 2015 work began to make it into a commercial product. From that point, Jan Ivar has been the sole developer on the project. The first commercial version was released on the Asset Store on May 6th 2015.
+
+CloudOnce has evolved a lot since then, and on June 1st 2016 it was made open-source. This was done both due to time constraints (both creators have other full time jobs), and that the financial incentive wasn't large enough to justify the support responsibilities that comes from selling a commercial product.
+
 ## License
 This project is licensed under the MIT license, unless other is specified in file header. See [LICENSE file](./LICENSE) file in the project root for full license information.

@@ -1,5 +1,5 @@
-// <copyright file="PluginVersion.cs" company="Trollpants Game Studio AS">
-// Copyright (c) 2016 Trollpants Game Studio AS. All rights reserved.
+// <copyright file="PluginVersion.cs" company="Jan Ivar Z. Carlsen & Sindri Jóelsson">
+// Copyright (c) 2016 Jan Ivar Z. Carlsen & Sindri Jóelsson. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
@@ -10,6 +10,6 @@ namespace Trollpants.CloudOnce.Internal.Editor.Data
     /// </summary>
     public class PluginVersion
     {
-        public const string VersionString = "2.2.4";
+        public const string VersionString = "2.2.5";
     }
 }

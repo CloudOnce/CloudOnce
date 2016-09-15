@@ -14,6 +14,7 @@
 //    limitations under the License.
 // </copyright>
 
+// Modified by Jan Ivar Z. Carlsen.
 namespace Trollpants.CloudOnce.Internal.Editor.Utils
 {
     using System;
