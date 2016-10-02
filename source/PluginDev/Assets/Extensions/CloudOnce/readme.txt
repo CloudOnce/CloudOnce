@@ -11,9 +11,9 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 Release Notes
 -------------
 Version 2.3.0
-- Removing Trollpants namespace
-- Removing outdated iCloud platform check
-- Renaming Amazon and Google build symbols
+- Removed Trollpants namespace
+- Removed outdated iCloud platform check
+- Renamed Amazon, Google and Debug build symbols
 - Added latest GPGS changes
 
 Version 2.2.5

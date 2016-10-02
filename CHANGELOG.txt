@@ -1,3 +1,9 @@
+Version 2.3.0
+- Removed Trollpants namespace
+- Removed outdated iCloud platform check
+- Renamed Amazon, Google and Debug build symbols
+- Added latest GPGS changes
+
 Version 2.2.5
 - Fix for editor error in Unity 5.4
 - Changed copyright
