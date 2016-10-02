@@ -31,4 +31,4 @@ In January 2015 work began to make it into a commercial product. From that point
 CloudOnce has evolved a lot since then, and on June 1st 2016 it was made open-source. This was done both due to time constraints (both creators have other full time jobs), and that the financial incentive wasn't large enough to justify the support responsibilities that comes from selling a commercial product.
 
 ## License
-This project is licensed under the MIT license, unless other is specified in file header. See [LICENSE file](./LICENSE) file in the project root for full license information.
+The contents of this project is licensed under the MIT license, unless other is specified in file header. See [LICENSE file](./LICENSE) file in the project root for full license information.
