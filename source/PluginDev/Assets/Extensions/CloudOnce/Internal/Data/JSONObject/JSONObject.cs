@@ -417,7 +417,7 @@ namespace CloudOnce.Internal
 
                 return result;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             UnityEngine.Debug.LogWarning("Tried to turn non-Object JSONObject into a dictionary");
 #endif
             return null;
@@ -435,7 +435,7 @@ namespace CloudOnce.Internal
                     if (str[0] != '[' && str[0] != '{')
                     {
                         ObjectType = Type.Null;
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                         UnityEngine.Debug.LogWarning("Improper (strict) JSON formatting.  First character must be [ or {");
 #endif
                         return;
@@ -513,7 +513,7 @@ namespace CloudOnce.Internal
                                             catch (System.FormatException)
                                             {
                                                 ObjectType = Type.Null;
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                                                 UnityEngine.Debug.LogWarning("improper JSON formatting:" + str);
 #endif
                                             }
@@ -675,7 +675,7 @@ namespace CloudOnce.Internal
         {
             if (depth++ > c_maxDepth)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 UnityEngine.Debug.Log("reached max depth!");
 #endif
                 return;

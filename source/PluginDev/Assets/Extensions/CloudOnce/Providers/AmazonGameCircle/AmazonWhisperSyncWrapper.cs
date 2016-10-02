@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_ANDROID && CloudOnceAmazon
+#if UNITY_ANDROID && CLOUDONCE_AMAZON
 namespace CloudOnce.Internal.Providers
 {
     using System;
@@ -55,7 +55,7 @@ namespace CloudOnce.Internal.Providers
             DataManager.SaveToDisk();
             if (!AmazonCloudProvider.Instance.CloudSaveInitialized || !Cloud.CloudSaveEnabled)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning(!AmazonCloudProvider.Instance.CloudSaveInitialized
                     ? "Cloud Save has not been initialized, skipping upload and only saving to disk."
                     : "Cloud Save is currently disabled, skipping upload and only saving to disk.");
@@ -69,7 +69,7 @@ namespace CloudOnce.Internal.Providers
             {
                 if (AGSClient.IsServiceReady())
                 {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                     Debug.Log("Saving cloud data");
 #endif
                     using (var dataMap = AGSWhispersyncClient.GetGameData())
@@ -101,7 +101,7 @@ namespace CloudOnce.Internal.Providers
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Save called, but no data has changed since last save.");
 #endif
                 saveInitialized = false;
@@ -116,7 +116,7 @@ namespace CloudOnce.Internal.Providers
         {
             if (!AmazonCloudProvider.Instance.CloudSaveInitialized || !Cloud.CloudSaveEnabled)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning(!AmazonCloudProvider.Instance.CloudSaveInitialized
                     ? "Cloud Save has not been initialized, aborting cloud load."
                     : "Cloud Save is currently disabled, aborting cloud load.");
@@ -127,7 +127,7 @@ namespace CloudOnce.Internal.Providers
 
             if (AGSClient.IsServiceReady())
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Loading cloud data");
 #endif
                 AGSWhispersyncClient.Synchronize();
@@ -211,7 +211,7 @@ namespace CloudOnce.Internal.Providers
                         var cloudValue = developerString.getCloudValue();
                         if (string.IsNullOrEmpty(cloudValue))
                         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                             Debug.Log("No data saved to the cloud yet.");
 #endif
                             processingCloudData = false;
@@ -230,7 +230,7 @@ namespace CloudOnce.Internal.Providers
                                 return;
                             }
                         }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                         Debug.Log("Processing cloud data");
 #endif
                         var changedKeys = DataManager.MergeLocalDataWith(cloudValue);
@@ -246,7 +246,7 @@ namespace CloudOnce.Internal.Providers
             else
             {
                 processingCloudData = false;
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("Attempting to process cloud data, but the AGS service is not ready!");
 #endif
             }

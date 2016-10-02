@@ -12,12 +12,12 @@
 
 /*
  * Modified by Jan Ivar Z. Carlsen.
- * Added CloudOnceAmazon build symbol.
+ * Added CLOUDONCE_AMAZON build symbol.
  * Removed iOS support.
  * Changed errorLevel from const to static and set default to AmazonLoggingLevel.Errors.
  */
 
-#if UNITY_ANDROID && CloudOnceAmazon
+#if UNITY_ANDROID && CLOUDONCE_AMAZON
 
 using UnityEngine;
 using System;

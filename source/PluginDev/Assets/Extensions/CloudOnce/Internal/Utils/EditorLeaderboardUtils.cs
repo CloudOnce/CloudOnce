@@ -64,14 +64,14 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
         }
         private static void ReportSubmitScoreSuccess(long score, Action<CloudRequestResult<bool>> callbackAction, string id, string internalID)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));

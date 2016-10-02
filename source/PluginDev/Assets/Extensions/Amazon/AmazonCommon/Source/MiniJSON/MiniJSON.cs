@@ -33,10 +33,10 @@
 
 /*
  * Modified by Jan Ivar Z. Carlsen.
- * Added CloudOnceAmazon build symbol.
+ * Added CLOUDONCE_AMAZON build symbol.
  */
 
-#if UNITY_ANDROID && CloudOnceAmazon
+#if UNITY_ANDROID && CLOUDONCE_AMAZON
 
 namespace AmazonCommon {
     

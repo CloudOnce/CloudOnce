@@ -26,7 +26,7 @@ namespace CloudOnce.QuickStart
             {
                 return;
             }
-#elif !TP_AndroidGoogle
+#elif !CLOUDONCE_GOOGLE
             gameObject.SetActive(false);
 #endif
         }

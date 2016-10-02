@@ -152,12 +152,12 @@ namespace CloudOnce.Internal.Utils
         {
             if (!Social.localUser.authenticated)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("ShowOverlay can only be called after authentication.");
 #endif
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Showing achievements overlay.");
 #endif
             Social.ShowAchievementsUI();
@@ -171,12 +171,12 @@ namespace CloudOnce.Internal.Utils
         {
             if (!Social.localUser.authenticated)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("LoadAchievementDescriptions can only be called after authentication.");
 #endif
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Loading achievement descriptions.");
 #endif
             Social.LoadAchievementDescriptions(callback);
@@ -190,12 +190,12 @@ namespace CloudOnce.Internal.Utils
         {
             if (!Social.localUser.authenticated)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("LoadAchievements can only be called after authentication.");
 #endif
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Loading achievements.");
 #endif
             Social.LoadAchievements(callback);
@@ -207,7 +207,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
@@ -217,7 +217,7 @@ namespace CloudOnce.Internal.Utils
         {
             if (response)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));

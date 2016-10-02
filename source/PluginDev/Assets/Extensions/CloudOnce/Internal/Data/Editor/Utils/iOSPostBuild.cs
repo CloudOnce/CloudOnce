@@ -61,7 +61,7 @@ namespace CloudOnce.Internal.Editor.Utils
             // If the top-level UIRequiredDeviceCapabilities field doesn't exist, add it and the GameKit entry
             if (string.IsNullOrEmpty(buddy.EntryValue(c_requiredDeviceCapabilities)))
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Adding GameKit to Info.plist.");
 #endif
                 buddy.AddArray(c_requiredDeviceCapabilities);
@@ -81,7 +81,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
                 index++;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Adding GameKit to Info.plist.");
 #endif
 

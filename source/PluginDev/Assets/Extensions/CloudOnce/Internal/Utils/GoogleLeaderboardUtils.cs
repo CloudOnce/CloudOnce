@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_ANDROID && TP_AndroidGoogle
+#if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Utils
 {
     using System;
@@ -58,7 +58,7 @@ namespace CloudOnce.Internal.Utils
         {
             if (!PlayGamesPlatform.Instance.IsAuthenticated())
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("ShowOverlay can only be called after authentication.");
 #endif
                 return;
@@ -66,14 +66,14 @@ namespace CloudOnce.Internal.Utils
 
             if (string.IsNullOrEmpty(id))
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Showing leaderboards overlay.");
 #endif
                 PlayGamesPlatform.Instance.ShowLeaderboardUI(null, OnShowOverlayCompleted);
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log(string.IsNullOrEmpty(internalID)
                     ? string.Format("Showing {0} leaderboard overlay.", id)
                     : string.Format("Showing {0} ({1}) leaderboard overlay.", internalID, id));
@@ -98,12 +98,12 @@ namespace CloudOnce.Internal.Utils
 
         private static void OnShowOverlayCompleted(UIStatus callback)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Leaderboards overlay closed.");
 #endif
             if (callback == UIStatus.NotAuthorized)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("User logged out from overlay, using guest user from now on.");
 #endif
                 GooglePlayGamesCloudProvider.Instance.ActivateGuestUserMode();
@@ -112,7 +112,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
@@ -120,7 +120,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportSubmitScoreSuccess(long score, Action<CloudRequestResult<bool>> callbackAction, string id, string internalID)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));

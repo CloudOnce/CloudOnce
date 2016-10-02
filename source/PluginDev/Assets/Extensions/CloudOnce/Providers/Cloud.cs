@@ -182,7 +182,7 @@ namespace CloudOnce
 
                 return TestProvider.Instance;
 #elif UNITY_ANDROID
-#if CloudOnceAmazon // If Amazon is selected as current Android platform in CloudOnce Editor
+#if CLOUDONCE_AMAZON // If Amazon is selected as current Android platform in CloudOnce Editor
                 if (!s_isProviderInitialized)
                 {
                     AmazonCloudProvider.Instance.InternalInit(s_cloudOnceEvents);
@@ -190,7 +190,7 @@ namespace CloudOnce
                 }
 
                 return AmazonCloudProvider.Instance;
-#elif TP_AndroidGoogle // If Google is selected as current Android platform in CloudOnce Editor
+#elif CLOUDONCE_GOOGLE // If Google is selected as current Android platform in CloudOnce Editor
                 if (!s_isProviderInitialized)
                 {
                     GooglePlayGamesCloudProvider.Instance.InternalInit(s_cloudOnceEvents);

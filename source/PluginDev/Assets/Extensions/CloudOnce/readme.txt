@@ -10,6 +10,12 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.3.0
+- Removing Trollpants namespace
+- Removing outdated iCloud platform check
+- Renaming Amazon and Google build symbols
+- Added latest GPGS changes
+
 Version 2.2.5
 - Fix for editor error in Unity 5.4
 - Changed copyright
@@ -44,7 +50,7 @@ Version 2.1.0
 - Added LoadAchievements method
 - Added LoadAchievementDescriptions method
 - Jar background resolution is now disabled OnLoad
-- Changed DEBUG build symbol to CO_DEBUG
+- Changed DEBUG build symbol to CLOUDONCE_DEBUG
 
 Version 2.0.0
 - A lot of breaking API changes. Upgrade is not recommended for existing projects close to a deadline.

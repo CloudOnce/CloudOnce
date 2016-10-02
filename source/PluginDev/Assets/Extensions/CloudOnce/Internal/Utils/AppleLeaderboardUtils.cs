@@ -56,7 +56,7 @@ namespace CloudOnce.Internal.Utils
         {
             if (!Social.localUser.authenticated)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("ShowOverlay can only be called after authentication.");
 #endif
                 return;
@@ -64,14 +64,14 @@ namespace CloudOnce.Internal.Utils
 
             if (string.IsNullOrEmpty(id))
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Showing leaderboards overlay.");
 #endif
                 Social.ShowLeaderboardUI();
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log(string.Format("Showing {0} ({1}) leaderboard overlay.", internalID, id));
 #endif
                 GameCenterPlatform.ShowLeaderboardUI(id, TimeScope.AllTime);
@@ -94,7 +94,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
@@ -102,7 +102,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportSubmitScoreSuccess(long score, Action<CloudRequestResult<bool>> callbackAction, string id, string internalID)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));

@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_ANDROID && TP_AndroidGoogle
+#if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Utils
 {
     using System;
@@ -128,12 +128,12 @@ namespace CloudOnce.Internal.Utils
         {
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("ShowOverlay can only be called after authentication.");
 #endif
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Showing achievements overlay.");
 #endif
             PlayGamesPlatform.Instance.ShowAchievementsUI(OnShowOverlayCompleted);
@@ -147,12 +147,12 @@ namespace CloudOnce.Internal.Utils
         {
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("LoadAchievementDescriptions can only be called after authentication.");
 #endif
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Loading achievement descriptions.");
 #endif
             PlayGamesPlatform.Instance.LoadAchievementDescriptions(callback);
@@ -166,12 +166,12 @@ namespace CloudOnce.Internal.Utils
         {
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("LoadAchievements can only be called after authentication.");
 #endif
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Loading achievements.");
 #endif
             PlayGamesPlatform.Instance.LoadAchievements(callback);
@@ -183,12 +183,12 @@ namespace CloudOnce.Internal.Utils
 
         private static void OnShowOverlayCompleted(UIStatus callback)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Achievements overlay closed.");
 #endif
             if (callback == UIStatus.NotAuthorized)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("User logged out from overlay, using guest user from now on.");
 #endif
                 GooglePlayGamesCloudProvider.Instance.ActivateGuestUserMode();
@@ -197,7 +197,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
@@ -207,7 +207,7 @@ namespace CloudOnce.Internal.Utils
         {
             if (response)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));

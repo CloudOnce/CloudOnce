@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_ANDROID && CloudOnceAmazon
+#if UNITY_ANDROID && CLOUDONCE_AMAZON
 namespace CloudOnce.Internal.Providers
 {
     using System;
@@ -149,7 +149,7 @@ namespace CloudOnce.Internal.Providers
             isInitializing = true;
             cloudSaveEnabled = activateCloudSave;
             autoLoadOnSignInEnabled = autoCloudLoad;
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Initializing Amazon GameCircle.");
             Debug.Log(activateCloudSave ? "WhisperSync support enabled." : "WhisperSync support disabled.");
             AGSClient.errorLevel = AmazonLogging.AmazonLoggingLevel.Verbose;
@@ -456,7 +456,7 @@ namespace CloudOnce.Internal.Providers
 
             if (!AGSPlayerClient.IsSignedIn())
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("AGSAchievementsClient.RequestAchievements(); can only be called after authentication.");
 #endif
                 return;
@@ -488,7 +488,7 @@ namespace CloudOnce.Internal.Providers
                     }
                     catch
                     {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                         Debug.Log(string.Format(
                             "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", agsAchievement.id));
 #endif
@@ -515,14 +515,14 @@ namespace CloudOnce.Internal.Providers
 
             if (focusStatus)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("AmazonCloudProvider.OnApplicationFocus(true) -> AGSClient.Init()");
 #endif
                 AGSClient.Init();
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("AmazonCloudProvider.OnApplicationFocus(false) -> AGSClient.release()");
 #endif
                 AGSClient.release();
@@ -572,7 +572,7 @@ namespace CloudOnce.Internal.Providers
 
         private void ServiceReadyEvent()
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnServiceReady");
 #endif
             if (cloudSaveEnabled)
@@ -581,7 +581,7 @@ namespace CloudOnce.Internal.Providers
                 // where one depends on another being called first, AGSClient.Init must be called before
                 // AGSWhispersyncClient) we put the initialization logic here.
                 // Otherwise we will not get some of the event callbacks we need.
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Initializing WhisperSync");
 #endif
                 AGSWhispersyncClient.InitAGSWhispersyncClient();
@@ -606,7 +606,7 @@ namespace CloudOnce.Internal.Providers
         {
             if (signedIn)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Signed in to Amazon GameCircle.");
 #endif
                 if (CloudSaveInitialized && cloudSaveEnabled && autoLoadOnSignInEnabled)
@@ -619,7 +619,7 @@ namespace CloudOnce.Internal.Providers
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Signed out of Amazon GameCircle.");
 #endif
             }
@@ -644,7 +644,7 @@ namespace CloudOnce.Internal.Providers
                     playerAlias = response.player.alias;
                     if (string.IsNullOrEmpty(response.player.avatarUrl))
                     {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                         Debug.LogWarning("Can't download profile picture; URL was null.");
 #endif
                     }
@@ -656,7 +656,7 @@ namespace CloudOnce.Internal.Providers
                     sb.AppendFormat("Player: {0} - Id: {1} ", response.player.alias, response.player.playerId);
                 }
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log(sb);
 #endif
         }

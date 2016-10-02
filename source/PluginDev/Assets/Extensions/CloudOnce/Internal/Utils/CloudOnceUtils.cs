@@ -22,10 +22,10 @@ namespace CloudOnce.Internal.Utils
 #if !UNITY_EDITOR && UNITY_IOS
             AchievementUtils = new AppleAchievementUtils();
             LeaderboardUtils = new AppleLeaderboardUtils();
-#elif !UNITY_EDITOR && UNITY_ANDROID && TP_AndroidGoogle
+#elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE
             AchievementUtils = new GoogleAchievementUtils();
             LeaderboardUtils = new GoogleLeaderboardUtils();
-#elif !UNITY_EDITOR && UNITY_ANDROID && CloudOnceAmazon
+#elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_AMAZON
             AchievementUtils = new AmazonAchievementUtils();
             LeaderboardUtils = new AmazonLeaderboardUtils();
 #else

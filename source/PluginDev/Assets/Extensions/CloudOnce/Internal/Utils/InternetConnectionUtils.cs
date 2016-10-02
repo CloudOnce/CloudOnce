@@ -21,7 +21,7 @@ namespace CloudOnce.Internal.Utils
             var htmlText = GetHtmlFromUrl("http://google.com");
             if (string.IsNullOrEmpty(htmlText))
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Internet connection status: Disconnected");
 #endif
                 return InternetConnectionStatus.Disconnected;
@@ -30,13 +30,13 @@ namespace CloudOnce.Internal.Utils
             if (!htmlText.Contains("schema.org/WebPage"))
             {
                 // Expected phrase was not found
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Internet connection status: Unstable connection");
 #endif
                 return InternetConnectionStatus.Unstable;
             }
 
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Internet connection status: Connected");
 #endif
             return InternetConnectionStatus.Connected;

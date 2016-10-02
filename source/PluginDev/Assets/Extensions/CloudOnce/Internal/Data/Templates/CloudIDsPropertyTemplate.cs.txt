@@ -3,9 +3,9 @@
                 get
                 {
 #if UNITY_ANDROID && !UNITY_EDITOR
-#if CloudOnceAmazon
+#if CLOUDONCE_AMAZON
                     return "AMAZONID";
-#elif TP_AndroidGoogle
+#elif CLOUDONCE_GOOGLE
                     return "GOOGLEID";
 #else
                     return string.Empty;

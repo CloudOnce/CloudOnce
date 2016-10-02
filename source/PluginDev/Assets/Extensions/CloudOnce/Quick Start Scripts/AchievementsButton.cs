@@ -39,7 +39,7 @@ namespace CloudOnce.QuickStart
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Can't show achievements overlay, user is not signed in!");
 #endif
                 SubscribeEvent();

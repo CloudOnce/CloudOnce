@@ -18,9 +18,9 @@ namespace CloudOnce.Internal.Editor.Utils
     {
         #region Fields & properties
 
-        private const string c_debugBuildSymbolConstraint = "CO_DEBUG";
-        private const string c_amazonBuildSymbolConstaint = "CloudOnceAmazon";
-        private const string c_googleBuildSymbolConstaint = "TP_AndroidGoogle";
+        private const string c_debugBuildSymbolConstraint = "CLOUDONCE_DEBUG";
+        private const string c_amazonBuildSymbolConstaint = "CLOUDONCE_AMAZON";
+        private const string c_googleBuildSymbolConstaint = "CLOUDONCE_GOOGLE";
 
         private static readonly AndroidManifestModifier s_manifestModifier = new AndroidManifestModifier();
 

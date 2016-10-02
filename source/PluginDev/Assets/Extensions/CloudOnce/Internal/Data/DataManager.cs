@@ -11,7 +11,7 @@ namespace CloudOnce.Internal
 #if UNITY_EDITOR
     using System.Linq;
 #endif
-#if !UNITY_EDITOR && TP_AndroidGoogle
+#if !UNITY_EDITOR && CLOUDONCE_GOOGLE
     using GooglePlayGames;
     using GooglePlayGames.BasicApi;
     using GooglePlayGames.BasicApi.SavedGame;
@@ -594,7 +594,7 @@ namespace CloudOnce.Internal
                 {
                     return Convert.ToUInt32(localItem.ValueString, CultureInfo.InvariantCulture);
                 }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogError("DataType is not a uint");
 #endif
                 return default(uint);
@@ -806,7 +806,7 @@ namespace CloudOnce.Internal
                 playerPreference.Value.Reset();
             }
 
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning("All cloud variables have been reset!");
 #endif
             return s_localGameData.GetAllKeys();
@@ -825,7 +825,7 @@ namespace CloudOnce.Internal
                 playerPreference.Value.Reset();
             }
 
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning("All cloud variables have been deleted!");
 #endif
         }
@@ -886,7 +886,7 @@ namespace CloudOnce.Internal
             {
                 PlayerPrefs.SetString(DevStringKey, SerializeLocalData().ToBase64String());
                 PlayerPrefs.Save();
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Data saved to local cache");
 #endif
             }
@@ -930,7 +930,7 @@ namespace CloudOnce.Internal
                     RefreshCloudValues();
                 }
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Data loaded from local cache");
 #endif
             return changedKeys;
@@ -1049,7 +1049,7 @@ namespace CloudOnce.Internal
         private static void DeleteCloudData()
         {
 #if !UNITY_EDITOR && UNITY_ANDROID
-#if CloudOnceAmazon
+#if CLOUDONCE_AMAZON
             if (AGSClient.IsServiceReady())
             {
                 using (var dataMap = AGSWhispersyncClient.GetGameData())
@@ -1068,7 +1068,7 @@ namespace CloudOnce.Internal
                     }
                 }
             }
-#elif TP_AndroidGoogle
+#elif CLOUDONCE_GOOGLE
             if (GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized && PlayGamesPlatform.Instance.IsAuthenticated())
             {
                 PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(

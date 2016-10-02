@@ -104,12 +104,12 @@ namespace CloudOnce.Internal.Providers
             {
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Initializing Apple Game Center.");
 #endif
             isInitializing = true;
             cloudSaveEnabled = activateCloudSave;
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log(cloudSaveEnabled ? "iCloud support enabled." : "iCloud support disabled.");
 #endif
             if (autoSignIn)
@@ -154,7 +154,7 @@ namespace CloudOnce.Internal.Providers
             isSigningIn = true;
             if (IsSignedIn)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Already signed in to Apple Game Center." +
                           " If you want to change the user, that must be done from the iOS Settings menu.");
 #endif
@@ -174,7 +174,7 @@ namespace CloudOnce.Internal.Providers
                 {
                     if (success)
                     {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                         Debug.Log("Successfully signed in to Apple Game Center.");
 #endif
                         cloudOnceEvents.RaiseOnSignedInChanged(true);
@@ -188,7 +188,7 @@ namespace CloudOnce.Internal.Providers
                     }
                     else
                     {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                         Debug.LogWarning("Failed to sign in to Apple Game Center.");
 #endif
                         cloudOnceEvents.RaiseOnSignInFailed();
@@ -204,7 +204,7 @@ namespace CloudOnce.Internal.Providers
         /// </summary>
         public override void SignOut()
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning("The SignOut method has no function on iOS. Apple wants users" +
                       " to only sign out of Game Center via the iOS Settings menu.");
 #endif
@@ -256,7 +256,7 @@ namespace CloudOnce.Internal.Providers
                         }
                         catch
                         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                             Debug.Log(string.Format(
                                 "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
 #endif

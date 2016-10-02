@@ -51,7 +51,7 @@ namespace CloudOnce.Internal
         /// </summary>
         public void RaiseOnInitializeComplete()
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnInitializeComplete");
 #endif
             CloudOnceUtils.SafeInvoke(OnInitializeComplete);
@@ -62,7 +62,7 @@ namespace CloudOnce.Internal
         /// </summary>
         public void RaiseOnSignedInChanged(bool isSignedIn)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnSignedInChanged: " + (isSignedIn ? "Signed In" : "Signed Out"));
 #endif
             CloudOnceUtils.SafeInvoke(OnSignedInChanged, isSignedIn);
@@ -73,7 +73,7 @@ namespace CloudOnce.Internal
         /// </summary>
         public void RaiseOnSignInFailed()
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnSignInFailed");
 #endif
             CloudOnceUtils.SafeInvoke(OnSignInFailed);
@@ -84,7 +84,7 @@ namespace CloudOnce.Internal
         /// </summary>
         public void RaiseOnPlayerImageDownloaded(Texture2D playerImage)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnPlayerImageDownloaded");
 #endif
             CloudOnceUtils.SafeInvoke(OnPlayerImageDownloaded, playerImage);
@@ -96,7 +96,7 @@ namespace CloudOnce.Internal
         /// <param name="success">If the save was successful or not.</param>
         public void RaiseOnCloudSaveComplete(bool success)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnCloudSaveComplete: " + (success ? "Cloud save was successful." : "Cloud save failed."));
 #endif
             CloudOnceUtils.SafeInvoke(OnCloudSaveComplete, success);
@@ -108,7 +108,7 @@ namespace CloudOnce.Internal
         /// <param name="success">If the load was successful or not.</param>
         public void RaiseOnCloudLoadComplete(bool success)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnCloudLoadComplete: " + (success ? "Cloud load was successful." : "Cloud load failed."));
 #endif
             CloudOnceUtils.SafeInvoke(OnCloudLoadComplete, success);
@@ -120,7 +120,7 @@ namespace CloudOnce.Internal
         /// <param name="changedKeys">A <see cref="string"/> array of the changed interal IDs.</param>
         public void RaiseOnNewCloudValues(string[] changedKeys)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("OnNewCloudValues: " + changedKeys.Length + " values have changed.");
 #endif
             CloudOnceUtils.SafeInvoke(OnNewCloudValues, changedKeys);

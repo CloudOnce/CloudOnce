@@ -34,7 +34,7 @@ namespace CloudOnce.Internal.Providers
             DataManager.SaveToDisk();
             if (!Cloud.CloudSaveEnabled)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("Cloud Save is currently disabled, skipping upload and only saving to disk.");
 #endif
                 cloudOnceEvents.RaiseOnCloudSaveComplete(false);
@@ -43,7 +43,7 @@ namespace CloudOnce.Internal.Providers
 
             if (DataManager.IsLocalDataDirty)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Saving cloud data");
 #endif
                 var saveSuccess = SaveToCloud();
@@ -59,7 +59,7 @@ namespace CloudOnce.Internal.Providers
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Save called, but no data has changed since last save.");
 #endif
                 cloudOnceEvents.RaiseOnCloudSaveComplete(false);
@@ -73,7 +73,7 @@ namespace CloudOnce.Internal.Providers
         {
             if (!Cloud.CloudSaveEnabled)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("Cloud Save is currently disabled, aborting cloud load.");
 #endif
                 cloudOnceEvents.RaiseOnCloudLoadComplete(false);
@@ -84,7 +84,7 @@ namespace CloudOnce.Internal.Providers
 
             if (string.IsNullOrEmpty(devString))
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("No data saved to the cloud yet.");
 #endif
                 cloudOnceEvents.RaiseOnCloudLoadComplete(true);
@@ -161,7 +161,7 @@ namespace CloudOnce.Internal.Providers
 
         private void LoadImpl(string devString)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Loading cloud data");
 #endif
             var changedKeys = DataManager.MergeLocalDataWith(devString);

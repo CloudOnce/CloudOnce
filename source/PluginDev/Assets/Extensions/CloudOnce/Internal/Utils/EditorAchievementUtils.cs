@@ -121,7 +121,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
@@ -131,7 +131,7 @@ namespace CloudOnce.Internal.Utils
         {
             if (response)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));

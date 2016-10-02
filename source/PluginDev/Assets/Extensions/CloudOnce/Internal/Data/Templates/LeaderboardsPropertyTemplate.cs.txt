@@ -1,9 +1,9 @@
         private static readonly UnifiedLeaderboard FIELDNAME = new UnifiedLeaderboard("INTERNALID",
 #if !UNITY_EDITOR && UNITY_IOS
             "APPLEID"
-#elif !UNITY_EDITOR && UNITY_ANDROID && TP_AndroidGoogle
+#elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE
             "GOOGLEID"
-#elif !UNITY_EDITOR && UNITY_ANDROID && CloudOnceAmazon
+#elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_AMAZON
             "AMAZONID"
 #else
             "INTERNALID"

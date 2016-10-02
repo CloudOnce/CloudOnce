@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_ANDROID && TP_AndroidGoogle
+#if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Providers
 {
     using System;
@@ -150,14 +150,14 @@ namespace CloudOnce.Internal.Providers
             {
                 return;
             }
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Initializing Google Play Game Services.");
 #endif
             initializing = true;
 
             cloudSaveEnabled = activateCloudSave;
 
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Saved Games support " + (activateCloudSave ? "enabled." : "disabled."));
 #endif
             var config = new PlayGamesClientConfiguration.Builder();
@@ -171,7 +171,7 @@ namespace CloudOnce.Internal.Providers
 
             SubscribeOnAuthenticatedEvent();
 
-#if CO_DEBUG   // Enable/disable logs on the PlayGamesPlatform
+#if CLOUDONCE_DEBUG   // Enable/disable logs on the PlayGamesPlatform
             PlayGamesPlatform.DebugLogEnabled = true;
             Debug.Log("PlayGamesPlatform debug logs enabled.");
 #else
@@ -350,7 +350,7 @@ namespace CloudOnce.Internal.Providers
                 }
                 catch
                 {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                     Debug.Log(string.Format("An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
 #endif
                 }

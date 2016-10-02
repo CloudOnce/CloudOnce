@@ -38,7 +38,7 @@ namespace CloudOnce.Internal
             }
 #endif
             ServiceName = serviceProviderName;
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Using " + ServiceName);
 #endif
         }

@@ -13,14 +13,14 @@
 /*
  * Modified by Jan Ivar Z. Carlsen.
  * Initialization switched from static constructor to a static method that can be called at a specified point.
- * Added CloudOnceAmazon build symbol.
+ * Added CLOUDONCE_AMAZON build symbol.
  * Removed iOS support.
  * Removed redundant code.
  * Renamed OnSyncFailed parameter.
  * Tweaked spacing to improve readability.
  */
 
-#if UNITY_ANDROID && CloudOnceAmazon
+#if UNITY_ANDROID && CLOUDONCE_AMAZON
 
 using System;
 using UnityEngine;

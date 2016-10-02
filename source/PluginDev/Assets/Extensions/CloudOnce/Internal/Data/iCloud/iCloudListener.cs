@@ -34,7 +34,7 @@ namespace CloudOnce.Internal
         /// <param name="message">The callback string.</param>
         private void ExternalChange(string message)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Received data from iCloud: " + message);
 #endif
             var data = message.Split('|');

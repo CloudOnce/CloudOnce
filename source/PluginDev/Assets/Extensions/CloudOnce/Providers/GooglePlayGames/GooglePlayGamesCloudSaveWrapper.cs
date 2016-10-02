@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_ANDROID && TP_AndroidGoogle
+#if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Providers
 {
     using System;
@@ -51,7 +51,7 @@ namespace CloudOnce.Internal.Providers
             DataManager.SaveToDisk();
             if (!GooglePlayGamesCloudProvider.Instance.CloudSaveInitialized || !Cloud.CloudSaveEnabled)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning(!GooglePlayGamesCloudProvider.Instance.CloudSaveInitialized
                     ? "Cloud Save has not been initialized, skipping upload and only saving to disk."
                     : "Cloud Save is currently disabled, skipping upload and only saving to disk.");
@@ -73,7 +73,7 @@ namespace CloudOnce.Internal.Providers
                 }
                 else
                 {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                     Debug.LogWarning("Save called, but user is not authenticated.");
 #endif
                     s_saveInitialized = false;
@@ -82,7 +82,7 @@ namespace CloudOnce.Internal.Providers
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Save called, but no data has changed since last save.");
 #endif
                 s_saveInitialized = false;
@@ -97,7 +97,7 @@ namespace CloudOnce.Internal.Providers
         {
             if (!GooglePlayGamesCloudProvider.Instance.CloudSaveInitialized || !Cloud.CloudSaveEnabled)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning(!GooglePlayGamesCloudProvider.Instance.CloudSaveInitialized
                     ? "Cloud Save has not been initialized, aborting cloud load."
                     : "Cloud Save is currently disabled, aborting cloud load.");
@@ -178,7 +178,7 @@ namespace CloudOnce.Internal.Providers
 
         public void SubscribeToAuthenticationEvent()
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.Log("Subscribing to OnAuthenticated event.");
 #endif
             PlayGamesPlatform.Instance.OnAuthenticated -= Load;
@@ -280,7 +280,7 @@ namespace CloudOnce.Internal.Providers
         {
             if (cloudData == null)
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("No data saved to the cloud yet.");
 #endif
                 s_loadInitialized = false;
@@ -316,7 +316,7 @@ namespace CloudOnce.Internal.Providers
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("No data saved to the cloud yet.");
 #endif
                 s_loadInitialized = false;

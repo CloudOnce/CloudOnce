@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_ANDROID && CloudOnceAmazon
+#if UNITY_ANDROID && CLOUDONCE_AMAZON
 namespace CloudOnce.Internal.Utils
 {
     using System;
@@ -82,7 +82,7 @@ namespace CloudOnce.Internal.Utils
         {
             if (!AGSPlayerClient.IsSignedIn())
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.LogWarning("ShowOverlay can only be called after authentication.");
 #endif
                 return;
@@ -90,14 +90,14 @@ namespace CloudOnce.Internal.Utils
 
             if (string.IsNullOrEmpty(id))
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log("Showing leaderboards overlay.");
 #endif
                 AGSLeaderboardsClient.ShowLeaderboardsOverlay();
             }
             else
             {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
                 Debug.Log(string.IsNullOrEmpty(internalID)
                     ? string.Format("Showing {0} leaderboard overlay.", id)
                     : string.Format("Showing {0} ({1}) leaderboard overlay.", internalID, id));
@@ -123,7 +123,7 @@ namespace CloudOnce.Internal.Utils
 
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
@@ -135,7 +135,7 @@ namespace CloudOnce.Internal.Utils
             string id,
             string internalID)
         {
-#if CO_DEBUG
+#if CLOUDONCE_DEBUG
             var debugMessage = string.Format(
                 "Successfully submitted a score of {0} to {1} ({2}) leaderboard.",
                 score,
