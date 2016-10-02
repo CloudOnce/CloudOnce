@@ -11,13 +11,13 @@
  */
 
 /*
- * Modified by Trollpants Game Studio AS.
- * Added TP_AndroidAmazon build symbol.
+ * Modified by Jan Ivar Z. Carlsen.
+ * Added CloudOnceAmazon build symbol.
  * Removed iOS support.
  * Changed errorLevel from const to static and set default to AmazonLoggingLevel.Errors.
  */
 
-#if UNITY_ANDROID && TP_AndroidAmazon
+#if UNITY_ANDROID && CloudOnceAmazon
 
 using UnityEngine;
 using System;

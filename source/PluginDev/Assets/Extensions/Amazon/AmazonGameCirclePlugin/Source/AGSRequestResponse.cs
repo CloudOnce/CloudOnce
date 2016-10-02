@@ -11,11 +11,11 @@
  */
 
 /*
- * Modified by Trollpants Game Studio AS.
- * Added TP_AndroidAmazon build symbol.
+ * Modified by Jan Ivar Z. Carlsen.
+ * Added CloudOnceAmazon build symbol.
  */
 
-#if UNITY_ANDROID && TP_AndroidAmazon
+#if UNITY_ANDROID && CloudOnceAmazon
 
 public class AGSRequestResponse {
 

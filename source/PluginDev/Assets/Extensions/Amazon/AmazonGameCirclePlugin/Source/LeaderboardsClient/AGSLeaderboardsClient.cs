@@ -11,13 +11,13 @@
  */
 
 /*
- * Modified by Trollpants Game Studio AS.
- * Added TP_AndroidAmazon build symbol.
+ * Modified by Jan Ivar Z. Carlsen.
+ * Added CloudOnceAmazon build symbol.
  * Removed iOS support.
  * Added ShowLeaderboardsOverlay overload for showing specific leaderboard.
  */
 
-#if UNITY_ANDROID && TP_AndroidAmazon
+#if UNITY_ANDROID && CloudOnceAmazon
 
 using AmazonCommon;
 using UnityEngine;

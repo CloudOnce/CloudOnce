@@ -11,16 +11,16 @@
  */
 
 /*
- * Modified by Trollpants Game Studio AS.
+ * Modified by Jan Ivar Z. Carlsen.
  * Initialization switched from static constructor to a static method that can be called at a specified point.
- * Added TP_AndroidAmazon build symbol.
+ * Added CloudOnceAmazon build symbol.
  * Removed iOS support.
  * Removed redundant code.
  * Renamed OnSyncFailed parameter.
  * Tweaked spacing to improve readability.
  */
 
-#if UNITY_ANDROID && TP_AndroidAmazon
+#if UNITY_ANDROID && CloudOnceAmazon
 
 using System;
 using UnityEngine;

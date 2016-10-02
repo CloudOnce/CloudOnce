@@ -32,11 +32,11 @@
 // http://forum.unity3d.com/threads/35484-MiniJSON-script-for-parsing-JSON-data
 
 /*
- * Modified by Trollpants Game Studio AS.
- * Added TP_AndroidAmazon build symbol.
+ * Modified by Jan Ivar Z. Carlsen.
+ * Added CloudOnceAmazon build symbol.
  */
 
-#if UNITY_ANDROID && TP_AndroidAmazon
+#if UNITY_ANDROID && CloudOnceAmazon
 
 namespace AmazonCommon {
     
