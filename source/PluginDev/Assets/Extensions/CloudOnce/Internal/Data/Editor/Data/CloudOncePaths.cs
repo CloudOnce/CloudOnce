@@ -13,6 +13,6 @@ public static class CloudOncePaths
     public const string GooglePlayLib = Android + "/MainLibProj";
     public const string Settings = "ProjectSettings/CloudOnceSettings.txt";
 
+    private const string c_cloudOnce = "Assets/Extensions/CloudOnce";
     private const string c_plugins = "Assets/Plugins";
-    private const string c_cloudOnce = c_plugins + "/CloudOnce";
 }
