@@ -14,7 +14,7 @@
 //    limitations under the License.
 // </copyright>
 
-// Modified by Trollpants Game Studio.
+// Modified by Jan Ivar Z. Carlsen.
 // Added OnAuthenticatedProxy event
 
 #if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))

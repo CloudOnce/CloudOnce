@@ -1,0 +1,16 @@
+        private static readonly UnifiedLeaderboard FIELDNAME = new UnifiedLeaderboard("INTERNALID",
+#if !UNITY_EDITOR && UNITY_IOS
+            "APPLEID"
+#elif !UNITY_EDITOR && UNITY_ANDROID && TP_AndroidGoogle
+            "GOOGLEID"
+#elif !UNITY_EDITOR && UNITY_ANDROID && CloudOnceAmazon
+            "AMAZONID"
+#else
+            "INTERNALID"
+#endif
+            );
+
+        public static UnifiedLeaderboard INTERNALID
+        {
+            get { return FIELDNAME; }
+        }

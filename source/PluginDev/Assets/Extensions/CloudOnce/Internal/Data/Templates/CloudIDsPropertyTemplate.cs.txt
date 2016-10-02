@@ -1,0 +1,21 @@
+            public static string INTERNALID
+            {
+                get
+                {
+#if UNITY_ANDROID && !UNITY_EDITOR
+#if CloudOnceAmazon
+                    return "AMAZONID";
+#elif TP_AndroidGoogle
+                    return "GOOGLEID";
+#else
+                    return string.Empty;
+#endif
+#elif UNITY_IOS && !UNITY_EDITOR
+                    return "APPLEID";
+#elif UNITY_EDITOR
+                    return "INTERNALID";
+#else
+                    return string.Empty;
+#endif
+                }
+            }
