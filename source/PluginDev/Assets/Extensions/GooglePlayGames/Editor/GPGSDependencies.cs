@@ -17,7 +17,9 @@
 
 namespace GooglePlayGames.Editor
 {
-
+    using System;
+    using System.Collections.Generic;
+    using Google;
     using Google.JarResolver;
     using UnityEditor;
 
@@ -25,14 +27,8 @@ namespace GooglePlayGames.Editor
     /// Play-Services Dependencies for Google Play Games.
     /// </summary>
     [InitializeOnLoad]
-    public static class GPGSDependencies
+    public class GPGSDependencies : AssetPostprocessor
     {
-        /// <summary>
-        /// The name of your plugin.  This is used to create a settings file
-        /// which contains the dependencies specific to your plugin.
-        /// </summary>
-        private static readonly string PluginName = "GooglePlayGames";
-
         /// <summary>Instance of the PlayServicesSupport resolver</summary>
         public static PlayServicesSupport svcSupport;
 
@@ -41,11 +37,6 @@ namespace GooglePlayGames.Editor
         /// </summary>
         static GPGSDependencies()
         {
-            svcSupport = PlayServicesSupport.CreateInstance(
-                                             PluginName,
-                                             EditorPrefs.GetString("AndroidSdkRoot"),
-                                             "ProjectSettings");
-
             RegisterDependencies();
         }
 
@@ -54,19 +45,102 @@ namespace GooglePlayGames.Editor
         /// </summary>
         public static void RegisterDependencies()
         {
-            svcSupport.DependOn("com.google.android.gms",
-                "play-services-games",
-                PluginVersion.PlayServicesVersionConstraint);
+            // Setup the resolver using reflection as the module may not be
+            // available at compile time.
+            Type playServicesSupport = VersionHandler.FindClass(
+                "Google.JarResolver", "Google.JarResolver.PlayServicesSupport");
+            if (playServicesSupport == null)
+            {
+                return;
+            }
 
-            // need nearby too, even if it is not used.
-            svcSupport.DependOn("com.google.android.gms",
-                "play-services-nearby",
-                PluginVersion.PlayServicesVersionConstraint);
+            if (svcSupport == null)
+            {
+                svcSupport = (PlayServicesSupport)VersionHandler.InvokeStaticMethod(
+                    playServicesSupport, "CreateInstance",
+                    new object[]
+                    {
+                        "GooglePlayGames",
+                        EditorPrefs.GetString("AndroidSdkRoot"),
+                        "ProjectSettings"
+                    });
+            }
 
-            // Marshmallow permissions requires app-compat
-            svcSupport.DependOn("com.android.support",
-                "support-v4",
-                "23.1+");
+            VersionHandler.InvokeInstanceMethod(
+                svcSupport, "DependOn",
+                new object[]
+                {
+                    "com.google.android.gms", "play-services-games",
+                    PluginVersion.PlayServicesVersionConstraint
+                },
+                new Dictionary<string, object>
+                {
+                    { "packageIds", new[] { "extra-google-m2repository" } }
+                });
+
+            VersionHandler.InvokeInstanceMethod(
+                svcSupport, "DependOn",
+                new object[]
+                {
+                    "com.google.android.gms", "play-services-nearby",
+                    PluginVersion.PlayServicesVersionConstraint
+                },
+                new Dictionary<string, object>
+                {
+                    { "packageIds", new[] { "extra-google-m2repository" } }
+                });
+
+            // Auth is needed for getting the token and email.
+            VersionHandler.InvokeInstanceMethod(
+                svcSupport, "DependOn",
+                new object[]
+                {
+                    "com.google.android.gms", "play-services-auth",
+                    PluginVersion.PlayServicesVersionConstraint
+                },
+                new Dictionary<string, object>
+                {
+                    { "packageIds", new[] { "extra-google-m2repository" } }
+                });
+
+            // if google+ is needed, add it
+            if (GameInfo.RequireGooglePlus())
+            {
+                VersionHandler.InvokeInstanceMethod(
+                    svcSupport, "DependOn",
+                    new object[]
+                    {
+                        "com.google.android.gms", "play-services-plus",
+                        PluginVersion.PlayServicesVersionConstraint
+                    },
+                    new Dictionary<string, object>
+                    {
+                        { "packageIds", new[] { "extra-google-m2repository" } }
+                    });
+            }
+
+            VersionHandler.InvokeInstanceMethod(
+                svcSupport, "DependOn",
+                new object[] { "com.android.support", "support-v4", "23.1+" },
+                new Dictionary<string, object>
+                {
+                    { "packageIds", new[] { "extra-android-m2repository" } }
+                });
+        }
+
+        // Handle delayed loading of the dependency resolvers.
+        private static void OnPostprocessAllAssets(
+            string[] importedAssets, string[] deletedAssets,
+            string[] movedAssets, string[] movedFromPath)
+        {
+            foreach (string asset in importedAssets)
+            {
+                if (asset.Contains("JarResolver"))
+                {
+                    RegisterDependencies();
+                    break;
+                }
+            }
         }
     }
 }
