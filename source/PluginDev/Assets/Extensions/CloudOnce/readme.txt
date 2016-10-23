@@ -10,6 +10,10 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.3.1
+- Fixed init of providers
+- Updated GPGS plugin from v0.9.34 to v0.9.35
+
 Version 2.3.0
 - Removed Trollpants namespace
 - Removed outdated iCloud platform check
