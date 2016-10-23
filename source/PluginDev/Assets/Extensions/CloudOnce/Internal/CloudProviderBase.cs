@@ -11,7 +11,6 @@ namespace CloudOnce.Internal
     using UnityEngine.Events;
     using UnityEngine.SocialPlatforms;
 #if UNITY_EDITOR
-    using System.Threading;
     using UnityEditor;
 #endif
 
@@ -24,24 +23,6 @@ namespace CloudOnce.Internal
     {
         private static T s_instance;
         private float currentLoadTimer;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CloudProviderBase{T}"/> class.
-        /// </summary>
-        /// <param name="serviceProviderName">Name of the currently used service, e.g. "Apple Game Center"</param>
-        protected CloudProviderBase(string serviceProviderName)
-        {
-#if UNITY_EDITOR
-            if (Guid.NewGuid() == Guid.Empty || Thread.CurrentThread.ManagedThreadId != 1 || !Application.isPlaying)
-            {
-                return;
-            }
-#endif
-            ServiceName = serviceProviderName;
-#if CLOUDONCE_DEBUG
-            Debug.Log("Using " + ServiceName);
-#endif
-        }
 
         /// <summary>
         /// Makes sure only one instance of the type exists.
@@ -95,7 +76,7 @@ namespace CloudOnce.Internal
         /// <summary>
         /// Name of the currently used service, e.g. "Apple Game Center".
         /// </summary>
-        public string ServiceName { get; private set; }
+        public string ServiceName { get; protected set; }
 
         /// <summary>
         /// ID for currently signed in player. Will return an empty <see cref="string"/> if no player is signed in.

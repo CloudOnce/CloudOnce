@@ -19,14 +19,6 @@ namespace CloudOnce.Internal.Providers
         private CloudOnceEvents cloudOnceEvents;
 
         /// <summary>
-        /// Private constructor for preventing a default instance of the <see cref="DummyProvider" /> class from being created.
-        /// </summary>
-        private DummyProvider()
-            : base("Dummy Provider")
-        {
-        }
-
-        /// <summary>
         /// ID for currently signed in player. Will always return DummyPlayerID when using <see cref="DummyProvider"/>.
         /// </summary>
         public override string PlayerID
@@ -144,6 +136,10 @@ namespace CloudOnce.Internal.Providers
         {
             cloudOnceEvents = events;
             Storage = new DummyStorageWrapper(events);
+            ServiceName = "Dummy Provider";
+#if CLOUDONCE_DEBUG
+            Debug.Log("Using " + ServiceName);
+#endif
         }
     }
 }

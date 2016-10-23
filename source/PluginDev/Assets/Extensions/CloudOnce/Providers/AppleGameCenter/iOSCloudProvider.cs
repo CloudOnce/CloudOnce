@@ -27,14 +27,6 @@ namespace CloudOnce.Internal.Providers
         private bool cloudSaveEnabled = true;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="iOSCloudProvider" /> class from being created.
-        /// </summary>
-        private iOSCloudProvider()
-            : base("Apple Game Center")
-        {
-        }
-
-        /// <summary>
         /// ID for currently signed in player. Will return an empty <see cref="string"/> if no player is signed in.
         /// </summary>
         public override string PlayerID
@@ -227,6 +219,10 @@ namespace CloudOnce.Internal.Providers
         {
             cloudOnceEvents = events;
             Storage = new iOSCloudSaveWrapper(events);
+            ServiceName = "Apple Game Center";
+#if CLOUDONCE_DEBUG
+            Debug.Log("Using " + ServiceName);
+#endif
         }
 
         #endregion /Public methods

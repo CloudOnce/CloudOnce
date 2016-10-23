@@ -26,14 +26,6 @@ namespace CloudOnce.Internal.Providers
         private bool isSignedIn;
 
         /// <summary>
-        /// Private constructor for preventing a default instance of the <see cref="TestProvider" /> class from being created.
-        /// </summary>
-        private TestProvider()
-            : base("Test Cloud Provider")
-        {
-        }
-
-        /// <summary>
         /// ID for currently signed in player. Will return an empty <see cref="string"/> if no player is signed in.
         /// </summary>
         public override string PlayerID
@@ -197,6 +189,10 @@ namespace CloudOnce.Internal.Providers
             cloudOnceEvents = events;
             DataManager.InitDataManager();
             Storage = new TestProviderStorageWrapper(events);
+            ServiceName = "Test Cloud Provider";
+#if CLOUDONCE_DEBUG
+            Debug.Log("Using " + ServiceName);
+#endif
         }
 
         protected override void OnAwake()

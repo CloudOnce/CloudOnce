@@ -36,14 +36,6 @@ namespace CloudOnce.Internal.Providers
         private bool initializing;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="GooglePlayGamesCloudProvider"/> class from being created.
-        /// </summary>
-        private GooglePlayGamesCloudProvider()
-            : base("Google Play Game Services")
-        {
-        }
-
-        /// <summary>
         /// Gets or sets whether debug logs for the Google Play Games plugin are enabled.
         /// </summary>
         public static bool DebugLogEnabled
@@ -306,6 +298,10 @@ namespace CloudOnce.Internal.Providers
         {
             cloudOnceEvents = events;
             Storage = new GooglePlayGamesCloudSaveWrapper(events);
+            ServiceName = "Google Play Game Services";
+#if CLOUDONCE_DEBUG
+            Debug.Log("Using " + ServiceName);
+#endif
         }
 
         /// <summary>
