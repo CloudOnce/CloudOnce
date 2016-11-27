@@ -1,3 +1,5 @@
+![logo_small.png](https://s26.postimg.org/nt8e0dluh/logo_small.png)
+
 # CloudOnce - Unified Game Services API
 CloudOnce is a [Unity3D](http://unity3d.com/) plug-in that provides a unified game services API for Google Play Game Services, iOS Game Center and Amazon GameCircle. Ease of use is the primary focus for the plug-in, but it also attempts to satisfy the needs of power users.
 
