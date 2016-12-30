@@ -872,11 +872,25 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.BeginHorizontal();
             Undo.RecordObject(tmpConfig, "Set Google App ID");
             tmpConfig.GoogleAppID = EditorGUILayout.TextField(tmpConfig.GoogleAppID);
+            GUI.enabled = !string.IsNullOrEmpty(tmpConfig.GoogleAppID);
             if (GUILayout.Button(GPGSStrings.Setup.SetupButton, EditorStyles.miniButton))
             {
-                tmpConfig.GoogleSetupRun = GPGAndroidSetup.DoSetup(tmpConfig.GoogleAppID);
+                GUI.enabled = true;
+                if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
+                {
+                    var message = string.Format(
+                            "Can only run setup when Platform in Build Settings (Ctrl+Shift+B) is set to Android. " +
+                            "It is currently set to {0}. Please change it and run setup again.",
+                            EditorUserBuildSettings.activeBuildTarget);
+                    EditorUtility.DisplayDialog("Google Application ID setup", message, "OK");
+                }
+                else
+                {
+                    tmpConfig.GoogleSetupRun = GPGAndroidSetup.DoSetup(tmpConfig.GoogleAppID);
+                }
             }
 
+            GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndHorizontal();

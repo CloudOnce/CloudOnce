@@ -45,12 +45,18 @@ namespace GooglePlayGames.BasicApi
         /// </remarks>
         /// <param name="callback">Callback when completed.</param>
         /// <param name="silent">If set to <c>true</c> silent.</param>
-        public void Authenticate(Action<bool> callback, bool silent)
+        public void Authenticate(Action<bool, string> callback, bool silent)
         {
             LogUsage();
+            if (OnAuthenticatedProxy != null)
+            {
+                GooglePlayGames.OurUtils.Logger.d("OnAuthenticated");
+                OnAuthenticatedProxy();
+            }
+
             if (callback != null)
             {
-                callback.Invoke(false);
+                callback(false, "Not implemented on this platform");
             }
         }
 

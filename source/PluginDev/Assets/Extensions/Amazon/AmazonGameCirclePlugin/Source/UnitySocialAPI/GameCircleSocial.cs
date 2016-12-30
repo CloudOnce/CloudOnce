@@ -14,6 +14,7 @@
  * Modified by Jan Ivar Z. Carlsen.
  * Added CLOUDONCE_AMAZON build symbol.
  * Removed iOS support.
+ * Added Authenticate(ILocalUser user, Action<bool, string> callback) to comply with Unity 5.5 ISocialPlatform
  */
 
 #if UNITY_ANDROID && CLOUDONCE_AMAZON
@@ -234,7 +235,16 @@ public class GameCircleSocial : ISocialPlatform {
         // initialize it with leaderboards and achievements, but not whispersync.
         AGSClient.Init(/*Leaderboards*/true,/*Achievements*/true,/*Whispersync*/false);
     }
-    
+
+#if UNITY_5_5_OR_NEWER
+    public void Authenticate(ILocalUser user, Action<bool, string> callback) {
+        authenticationCallback = b => {
+            callback.Invoke(b, string.Empty);
+        };
+        AGSClient.Init(/*Leaderboards*/true,/*Achievements*/true,/*Whispersync*/false);
+    }
+#endif
+
     /// <summary>
     /// Loads the friends.
     /// </summary>
