@@ -242,7 +242,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 {
                     var apiKeyMetaData = new XElement("meta-data");
                     apiKeyMetaData.Add(new XAttribute(xmlns + "name", "APIKey"));
-                    apiKeyMetaData.Add(new XAttribute(xmlns + "value", gameCircleApiKey));
+                    apiKeyMetaData.Add(new XAttribute(xmlns + "value", gameCircleApiKey ?? string.Empty));
                     return apiKeyMetaData;
                 }
 
