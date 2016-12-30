@@ -1,3 +1,10 @@
+Version 2.3.3
+- Unity 5.5 compatibility
+- Added build target check to GPGS setup
+- Fixed GameCircle provider
+- Fixed error from saving empty GameCircle API key
+- Updated GPGS plugin from v0.9.35 to v0.9.36
+
 Version 2.3.2
 - Fixed Editor path
 
