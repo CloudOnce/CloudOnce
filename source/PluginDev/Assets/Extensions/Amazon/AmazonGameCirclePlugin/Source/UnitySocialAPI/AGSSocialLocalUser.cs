@@ -14,6 +14,7 @@
  * Modified by Jan Ivar Z. Carlsen.
  * Added CLOUDONCE_AMAZON build symbol.
  * Removed iOS support.
+ * Added Authenticate(Action<bool, string> callback) to comply with Unity 5.5 ILocalUser
  */
 
 #if UNITY_ANDROID && CLOUDONCE_AMAZON
@@ -45,7 +46,17 @@ public class AGSSocialLocalUser : AGSSocialUser, ILocalUser  {
         GameCircleSocial.Instance.RequestLocalPlayer (callback);
         Social.Active.Authenticate(this, callback);
     }
-    
+
+#if UNITY_5_5_OR_NEWER
+    public void Authenticate(System.Action<bool, string> callback) {
+        System.Action<bool> callbackWrapper = b => {
+            callback.Invoke(b, string.Empty);
+        };
+        GameCircleSocial.Instance.RequestLocalPlayer(callbackWrapper);
+        Social.Active.Authenticate(this, callback);
+    }
+#endif
+
     /// <summary>
     /// Loads this local user's friends list.
     /// </summary>
