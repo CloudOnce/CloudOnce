@@ -43,14 +43,6 @@ namespace CloudOnce.Internal.Providers
         private bool firstInitializedFinished;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="AmazonCloudProvider" /> class from being created.
-        /// </summary>
-        private AmazonCloudProvider()
-            : base("Amazon GameCircle")
-        {
-        }
-
-        /// <summary>
         /// Whether or not the GameCircle service as been initialized.
         /// </summary>
         public bool IsServiceReady
@@ -243,6 +235,7 @@ namespace CloudOnce.Internal.Providers
          * --------------------------------------------------------------------------------------
          */
 
+        // ReSharper disable InconsistentNaming
         public void serviceReady(string empty)
         {
             AGSClient.Log("AGSClient - ServiceReady");
@@ -389,6 +382,7 @@ namespace CloudOnce.Internal.Providers
             AGSAchievementsClient.RequestAchievementsForPlayerComplete(json);
         }
 
+        // ReSharper disable UnusedParameter.Global
         public void onNewCloudData(string empty)
         {
             AGSClient.Log("AGSWhispersyncClient - OnNewCloudData");
@@ -431,6 +425,8 @@ namespace CloudOnce.Internal.Providers
             AGSWhispersyncClient.OnSyncFailed(failReason);
         }
 
+        // ReSharper restore UnusedParameter.Global
+        // ReSharper restore InconsistentNaming
         #endregion
 
         /// <summary>
@@ -491,6 +487,8 @@ namespace CloudOnce.Internal.Providers
 #if CLOUDONCE_DEBUG
                         Debug.Log(string.Format(
                             "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", agsAchievement.id));
+#else
+                        // Ignored
 #endif
                     }
                 }
