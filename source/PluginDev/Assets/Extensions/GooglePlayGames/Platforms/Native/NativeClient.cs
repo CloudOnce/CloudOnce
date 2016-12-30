@@ -63,8 +63,8 @@ namespace GooglePlayGames.Native
         private volatile Dictionary<String, Achievement> mAchievements = null;
         private volatile Player mUser = null;
         private volatile List<Player> mFriends = null;
-        private volatile Action<bool> mPendingAuthCallbacks;
-        private volatile Action<bool> mSilentAuthCallbacks;
+        private volatile Action<bool, string> mPendingAuthCallbacks;
+        private volatile Action<bool, string> mSilentAuthCallbacks;
         private volatile AuthState mAuthState = AuthState.Unauthenticated;
         private volatile uint mAuthGeneration = 0;
         private volatile bool mSilentAuthFailed = false;
@@ -99,7 +99,7 @@ namespace GooglePlayGames.Native
         }
         ///<summary></summary>
         /// <seealso cref="GooglePlayGames.BasicApi.IPlayGamesClient.Authenticate"/>
-        public void Authenticate(Action<bool> callback, bool silent)
+        public void Authenticate(Action<bool,string> callback, bool silent)
         {
             lock (AuthStateLock)
             {
@@ -107,7 +107,7 @@ namespace GooglePlayGames.Native
                 // any additional work.
                 if (mAuthState == AuthState.Authenticated)
                 {
-                    InvokeCallbackOnGameThread(callback, true);
+                    InvokeCallbackOnGameThread(callback, true, null);
                     return;
                 }
 
@@ -115,7 +115,7 @@ namespace GooglePlayGames.Native
                 // trying again.
                 if (mSilentAuthFailed && silent)
                 {
-                    InvokeCallbackOnGameThread(callback, false);
+                    InvokeCallbackOnGameThread(callback, false, "silent auth failed");
                     return;
                 }
 
@@ -155,6 +155,20 @@ namespace GooglePlayGames.Native
             }
 
             return result => InvokeCallbackOnGameThread(callback, result);
+        }
+
+        private static void InvokeCallbackOnGameThread<T,S>(Action<T,S> callback, T data, S msg)
+        {
+            if (callback == null)
+            {
+                return;
+            }
+
+            PlayGamesHelperObject.RunOnGameThread(() =>
+            {
+                OurUtils.Logger.d("Invoking user callback on game thread");
+                callback(data, msg);
+            });
         }
 
         private static void InvokeCallbackOnGameThread<T>(Action<T> callback, T data)
@@ -199,6 +213,10 @@ namespace GooglePlayGames.Native
                         if (mConfiguration.RequireGooglePlus)
                         {
                             builder.RequireGooglePlus();
+                        }
+                        string[] scopes = mConfiguration.Scopes;
+                        for (int i = 0; i < scopes.Length; i++) {
+                            builder.AddOauthScope(scopes[i]);
                         }
                         Debug.Log("Building GPG services, implicitly attempts silent auth");
                         mAuthState = AuthState.SilentPending;
@@ -491,7 +509,8 @@ namespace GooglePlayGames.Native
 
                     if (localLoudAuthCallbacks != null)
                     {
-                        InvokeCallbackOnGameThread(localLoudAuthCallbacks, false);
+                        InvokeCallbackOnGameThread(localLoudAuthCallbacks, false,
+                                                   "Cannot load achievements, Authenication failing");
                     }
                     SignOut();
                     return;
@@ -515,7 +534,7 @@ namespace GooglePlayGames.Native
 
         void MaybeFinishAuthentication()
         {
-            Action<bool> localCallbacks = null;
+            Action<bool, string> localCallbacks = null;
 
             lock (AuthStateLock)
             {
@@ -543,7 +562,7 @@ namespace GooglePlayGames.Native
             if (localCallbacks != null)
             {
                 GooglePlayGames.OurUtils.Logger.d("Invoking Callbacks: " + localCallbacks);
-                InvokeCallbackOnGameThread(localCallbacks, true);
+                InvokeCallbackOnGameThread(localCallbacks, true, null);
             }
         }
 
@@ -568,7 +587,7 @@ namespace GooglePlayGames.Native
 
                     if (localCallbacks != null)
                     {
-                        InvokeCallbackOnGameThread(localCallbacks, false);
+                        InvokeCallbackOnGameThread(localCallbacks, false, "Cannot load user profile");
                     }
                     SignOut();
                     return;
@@ -624,7 +643,7 @@ namespace GooglePlayGames.Native
                                     "Invoking callbacks, AuthState changed " +
                                     "from silentPending to Unauthenticated.");
 
-                                InvokeCallbackOnGameThread(silentCallbacks, false);
+                                InvokeCallbackOnGameThread(silentCallbacks, false, "silent auth failed");
                                 if (mPendingAuthCallbacks != null)
                                 {
                                     GooglePlayGames.OurUtils.Logger.d(
@@ -642,9 +661,9 @@ namespace GooglePlayGames.Native
                                 UnpauseUnityPlayer();
 
                                 // Noisy sign-in failed - report failure.
-                                Action<bool> localCallbacks = mPendingAuthCallbacks;
+                                Action<bool, string> localCallbacks = mPendingAuthCallbacks;
                                 mPendingAuthCallbacks = null;
-                                InvokeCallbackOnGameThread(localCallbacks, false);
+                                InvokeCallbackOnGameThread(localCallbacks, false, "Authentication failed");
                             }
                         }
                         break;
