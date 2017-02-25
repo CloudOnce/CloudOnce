@@ -181,11 +181,6 @@ namespace CloudOnce.Internal.Providers
                         cloudOnceEvents.RaiseOnSignedInChanged(true);
                         cloudOnceEvents.RaiseOnPlayerImageDownloaded(Social.localUser.image);
                         UpdateAchievementsData();
-                        if (CloudSaveEnabled && autoCloudLoad)
-                        {
-                            var iCloudWrapper = (iOSCloudSaveWrapper)Storage;
-                            iCloudWrapper.Load();
-                        }
                     }
                     else
                     {
@@ -199,6 +194,12 @@ namespace CloudOnce.Internal.Providers
 #endif
 #endif
                         cloudOnceEvents.RaiseOnSignInFailed();
+                    }
+
+                    if (CloudSaveEnabled && autoCloudLoad)
+                    {
+                        var iCloudWrapper = (iOSCloudSaveWrapper)Storage;
+                        iCloudWrapper.Load();
                     }
 
                     CloudOnceUtils.SafeInvoke(callback, success);
