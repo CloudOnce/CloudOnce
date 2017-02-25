@@ -172,7 +172,10 @@ namespace CloudOnce.Internal.Providers
 #if CLOUDONCE_DEBUG
                         Debug.Log("Successfully signed in to Apple Game Center.");
 #if UNITY_5_5_OR_NEWER
-                        Debug.Log(message);
+                        if (!string.IsNullOrEmpty(message))
+                        {
+                            Debug.Log(message);
+                        }
 #endif
 #endif
                         cloudOnceEvents.RaiseOnSignedInChanged(true);
@@ -189,7 +192,10 @@ namespace CloudOnce.Internal.Providers
 #if CLOUDONCE_DEBUG
                         Debug.LogWarning("Failed to sign in to Apple Game Center.");
 #if UNITY_5_5_OR_NEWER
-                        Debug.Log(message);
+                        if (!string.IsNullOrEmpty(message))
+                        {
+                            Debug.Log(message);
+                        }
 #endif
 #endif
                         cloudOnceEvents.RaiseOnSignInFailed();
