@@ -8,7 +8,6 @@ namespace CloudOnce.Internal.Providers
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.SocialPlatforms;
@@ -251,22 +250,30 @@ namespace CloudOnce.Internal.Providers
 
             Social.LoadAchievements(achievements =>
             {
-                if (achievements.Length > 0)
+                if (achievements.Length <= 0)
                 {
-                    foreach (var achievement in achievements)
+                    return;
+                }
+
+                foreach (var achievement in achievements)
+                {
+                    var achievementFound = false;
+                    foreach (var unifiedAchievement in allAchievements)
                     {
-                        try
+                        if (unifiedAchievement.Value.ID == achievement.id)
                         {
-                            var kvp = allAchievements.Single(pair => pair.Value.ID == achievement.id);
-                            allAchievements[kvp.Key].UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                            unifiedAchievement.Value.UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                            achievementFound = true;
+                            break;
                         }
-                        catch
-                        {
+                    }
+
+                    if (!achievementFound)
+                    {
 #if CLOUDONCE_DEBUG
-                            Debug.Log(string.Format(
-                                "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
+                        Debug.Log(string.Format(
+                            "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
 #endif
-                        }
                     }
                 }
             });
