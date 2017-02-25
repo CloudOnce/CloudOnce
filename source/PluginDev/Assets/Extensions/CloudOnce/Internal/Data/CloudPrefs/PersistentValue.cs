@@ -6,7 +6,6 @@
 namespace CloudOnce.Internal
 {
     using System;
-    using UnityEngine;
 
     /// <summary>
     /// A preference that is stored in the cloud.
@@ -27,14 +26,6 @@ namespace CloudOnce.Internal
         /// <param name="valueSetter"><c>delegate</c> used to set the preference.</param>
         protected PersistentValue(string key, PersistenceType type, T value, T defaultValue, ValueLoaderDelegate valueLoader, ValueSetterDelegate valueSetter)
         {
-            // Compiler directives need to be placed in the specific order they're in, don't move/combine them
-#if UNITY_EDITOR
-            // Workaround for Unity Editor serialization weirdness
-            if (Guid.NewGuid() == Guid.Empty)
-            {
-                return;
-            }
-#endif
             Key = key;
             Value = value;
             PersistenceType = type;
@@ -43,14 +34,6 @@ namespace CloudOnce.Internal
             ValueSetter = valueSetter;
 
             DataManager.CloudPrefs[key] = this;
-
-#if UNITY_EDITOR
-            // 1 is the main thread
-            if (System.Threading.Thread.CurrentThread.ManagedThreadId != 1 || !Application.isPlaying)
-            {
-                return;
-            }
-#endif
             DataManager.InitDataManager();
         }
 
