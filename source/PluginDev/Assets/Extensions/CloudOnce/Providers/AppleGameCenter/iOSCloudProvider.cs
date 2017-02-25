@@ -162,12 +162,19 @@ namespace CloudOnce.Internal.Providers
             }
 
             Social.localUser.Authenticate(
+#if UNITY_5_5_OR_NEWER
+                (success, message) =>
+#else
                 success =>
+#endif
                 {
                     if (success)
                     {
 #if CLOUDONCE_DEBUG
                         Debug.Log("Successfully signed in to Apple Game Center.");
+#if UNITY_5_5_OR_NEWER
+                        Debug.Log(message);
+#endif
 #endif
                         cloudOnceEvents.RaiseOnSignedInChanged(true);
                         cloudOnceEvents.RaiseOnPlayerImageDownloaded(Social.localUser.image);
@@ -182,6 +189,9 @@ namespace CloudOnce.Internal.Providers
                     {
 #if CLOUDONCE_DEBUG
                         Debug.LogWarning("Failed to sign in to Apple Game Center.");
+#if UNITY_5_5_OR_NEWER
+                        Debug.Log(message);
+#endif
 #endif
                         cloudOnceEvents.RaiseOnSignInFailed();
                     }
