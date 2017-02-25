@@ -250,7 +250,7 @@ namespace CloudOnce.Internal.Providers
 
             Social.LoadAchievements(achievements =>
             {
-                if (achievements.Length <= 0)
+                if (achievements.Length == 0)
                 {
                     return;
                 }
