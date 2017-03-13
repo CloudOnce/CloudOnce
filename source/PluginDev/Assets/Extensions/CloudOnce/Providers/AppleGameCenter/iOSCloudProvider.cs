@@ -255,36 +255,40 @@ namespace CloudOnce.Internal.Providers
                 }
             }
 
-            var achievements = new List<IAchievement>();
-            Social.LoadAchievements(a =>
+            Social.LoadAchievements(achievements =>
             {
-                if (a != null && a.Length > 0)
+                if (achievements == null || achievements.Length == 0)
                 {
-                    achievements.AddRange(a);
+                    return;
                 }
-            });
 
-            foreach (var achievement in achievements)
-            {
-                var achievementFound = false;
-                foreach (var unifiedAchievement in allAchievements)
+                foreach (var achievement in achievements)
                 {
-                    if (unifiedAchievement.Value.ID == achievement.id)
+                    if (achievement == null || string.IsNullOrEmpty(achievement.id))
                     {
-                        unifiedAchievement.Value.UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
-                        achievementFound = true;
-                        break;
+                        continue;
+                    }
+
+                    var achievementFound = false;
+                    foreach (var unifiedAchievement in allAchievements)
+                    {
+                        if (unifiedAchievement.Value.ID == achievement.id)
+                        {
+                            unifiedAchievement.Value.UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                            achievementFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!achievementFound)
+                    {
+#if CLOUDONCE_DEBUG
+                        Debug.Log(string.Format(
+                            "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
+#endif
                     }
                 }
-
-                if (!achievementFound)
-                {
-#if CLOUDONCE_DEBUG
-                    Debug.Log(string.Format(
-                        "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
-#endif
-                }
-            }
+            });
         }
     }
 }
