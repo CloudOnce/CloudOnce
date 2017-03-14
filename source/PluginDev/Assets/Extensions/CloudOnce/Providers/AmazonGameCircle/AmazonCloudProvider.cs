@@ -445,6 +445,11 @@ namespace CloudOnce.Internal.Providers
 
         private static void UpdateAchievementsData()
         {
+            if (Achievements.All.Length == 0)
+            {
+                return;
+            }
+
             AGSAchievementsClient.RequestAchievementsCompleted -= OnRequestAchievementsCompleted;
             AGSAchievementsClient.RequestAchievementsCompleted += OnRequestAchievementsCompleted;
 
@@ -461,11 +466,6 @@ namespace CloudOnce.Internal.Providers
 
         private static void OnRequestAchievementsCompleted(AGSRequestAchievementsResponse agsRequestAchievementsResponse)
         {
-            if (Achievements.All.Length == 0)
-            {
-                return;
-            }
-
             if (agsRequestAchievementsResponse.achievements.Count > 0)
             {
                 foreach (var agsAchievement in agsRequestAchievementsResponse.achievements)

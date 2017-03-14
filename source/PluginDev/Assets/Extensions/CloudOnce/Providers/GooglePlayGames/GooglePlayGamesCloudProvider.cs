@@ -325,11 +325,6 @@ namespace CloudOnce.Internal.Providers
 
         private static void UpdateAchievementsData(IAchievement[] achievements)
         {
-            if (Achievements.All.Length == 0)
-            {
-                return;
-            }
-
             foreach (var achievement in achievements)
             {
                 if (achievement == null || string.IsNullOrEmpty(achievement.id))
@@ -380,7 +375,10 @@ namespace CloudOnce.Internal.Providers
                     Logger.d("Successfully signed in to Google Play Game Services.");
                     IsGuestUserDefault = false;
                     GetPlayerImage();
-                    PlayGamesPlatform.Instance.LoadAchievements(UpdateAchievementsData);
+                    if (Achievements.All.Length > 0)
+                    {
+                        PlayGamesPlatform.Instance.LoadAchievements(UpdateAchievementsData);
+                    }
                 });
         }
 
