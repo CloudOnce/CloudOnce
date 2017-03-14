@@ -267,7 +267,8 @@ namespace CloudOnce.Internal.Editor
             noDuplicateCloudVariableKeys,
             noInvalidDefaultValues,
             noEmptyInternalIdFields,
-            noEmptyPlatformIdFields;
+            noEmptyPlatformIdFields,
+            noAchievementsNamedAll;
 
         #endregion /Fields
 
@@ -1457,6 +1458,7 @@ namespace CloudOnce.Internal.Editor
             noDuplicateCloudVariableKeys = ValidationUtils.ConfigHasNoDuplicateCloudVariableKeys(tmpConfig.CloudVariables);
             noInvalidDefaultValues = ValidationUtils.ConfigHasNoInvalidDefaultValues(tmpConfig.CloudVariables);
             noEmptyPlatformIdFields = ValidationUtils.ConfigHasNoEmptyPlatformIDs(tmpConfig);
+            noAchievementsNamedAll = ValidationUtils.ConfigHasNoAchievementsNamedAll(tmpConfig.AchievementIDs);
             if (tmpConfig.GoogleSupported && !tmpConfig.GoogleSetupRun)
             {
                 EditorGUILayout.HelpBox("You have chosen to support Google Play, but you have not successfully run Google Application ID setup.", MessageType.Info);
@@ -1470,7 +1472,8 @@ namespace CloudOnce.Internal.Editor
             }
 
             return noEmptyInternalIdFields && noDuplicateAchievmentIDs && noDuplicateLeaderboardIDs
-                && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyPlatformIdFields;
+                && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyPlatformIdFields
+                && noAchievementsNamedAll;
         }
 
         /// <summary>
@@ -1497,7 +1500,8 @@ namespace CloudOnce.Internal.Editor
         private bool AllSettingsReadyForSave()
         {
             return noErrorsFoundInPlatformSettings && noDuplicateAchievmentIDs && noDuplicateLeaderboardIDs
-                && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyInternalIdFields;
+                && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyInternalIdFields
+                && noAchievementsNamedAll;
         }
 
         #endregion /Footer

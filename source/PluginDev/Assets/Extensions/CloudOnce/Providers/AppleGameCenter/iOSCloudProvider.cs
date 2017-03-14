@@ -7,7 +7,6 @@
 namespace CloudOnce.Internal.Providers
 {
     using System;
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.SocialPlatforms;
@@ -161,22 +160,12 @@ namespace CloudOnce.Internal.Providers
             }
 
             Social.localUser.Authenticate(
-#if UNITY_5_5_OR_NEWER
-                (success, message) =>
-#else
                 success =>
-#endif
                 {
                     if (success)
                     {
 #if CLOUDONCE_DEBUG
                         Debug.Log("Successfully signed in to Apple Game Center.");
-#if UNITY_5_5_OR_NEWER
-                        if (!string.IsNullOrEmpty(message))
-                        {
-                            Debug.Log(message);
-                        }
-#endif
 #endif
                         cloudOnceEvents.RaiseOnSignedInChanged(true);
                         cloudOnceEvents.RaiseOnPlayerImageDownloaded(Social.localUser.image);
@@ -186,12 +175,6 @@ namespace CloudOnce.Internal.Providers
                     {
 #if CLOUDONCE_DEBUG
                         Debug.LogWarning("Failed to sign in to Apple Game Center.");
-#if UNITY_5_5_OR_NEWER
-                        if (!string.IsNullOrEmpty(message))
-                        {
-                            Debug.Log(message);
-                        }
-#endif
 #endif
                         cloudOnceEvents.RaiseOnSignInFailed();
                     }
@@ -245,14 +228,9 @@ namespace CloudOnce.Internal.Providers
 
         private static void UpdateAchievementsData()
         {
-            var type = typeof(Achievements);
-            var allAchievements = new Dictionary<string, UnifiedAchievement>();
-            foreach (var propertyInfo in type.GetProperties())
+            if (Achievements.All.Length == 0)
             {
-                if (propertyInfo.PropertyType == typeof(UnifiedAchievement))
-                {
-                    allAchievements[propertyInfo.Name] = (UnifiedAchievement)propertyInfo.GetValue(null, null);
-                }
+                return;
             }
 
             Social.LoadAchievements(achievements =>
@@ -270,11 +248,11 @@ namespace CloudOnce.Internal.Providers
                     }
 
                     var achievementFound = false;
-                    foreach (var unifiedAchievement in allAchievements)
+                    foreach (var unifiedAchievement in Achievements.All)
                     {
-                        if (unifiedAchievement.Value.ID == achievement.id)
+                        if (unifiedAchievement.ID == achievement.id)
                         {
-                            unifiedAchievement.Value.UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                            unifiedAchievement.UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
                             achievementFound = true;
                             break;
                         }

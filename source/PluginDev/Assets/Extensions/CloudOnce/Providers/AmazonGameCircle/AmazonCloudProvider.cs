@@ -8,8 +8,6 @@ namespace CloudOnce.Internal.Providers
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
     using Internal;
     using UnityEngine;
@@ -463,32 +461,36 @@ namespace CloudOnce.Internal.Providers
 
         private static void OnRequestAchievementsCompleted(AGSRequestAchievementsResponse agsRequestAchievementsResponse)
         {
-            var type = typeof(Achievements);
-            var allAchievements = new Dictionary<string, UnifiedAchievement>();
-            foreach (var propertyInfo in type.GetProperties())
+            if (Achievements.All.Length == 0)
             {
-                if (propertyInfo.PropertyType == typeof(UnifiedAchievement))
-                {
-                    allAchievements[propertyInfo.Name] = (UnifiedAchievement)propertyInfo.GetValue(null, null);
-                }
+                return;
             }
 
             if (agsRequestAchievementsResponse.achievements.Count > 0)
             {
                 foreach (var agsAchievement in agsRequestAchievementsResponse.achievements)
                 {
-                    try
+                    if (agsAchievement == null || string.IsNullOrEmpty(agsAchievement.id))
                     {
-                        var kvp = allAchievements.Single(pair => pair.Value.ID == agsAchievement.id);
-                        allAchievements[kvp.Key].UpdateData(agsAchievement.isUnlocked, agsAchievement.progress, agsAchievement.isHidden);
+                        continue;
                     }
-                    catch
+
+                    var achievementFound = false;
+                    foreach (var unifiedAchievement in Achievements.All)
+                    {
+                        if (unifiedAchievement.ID == agsAchievement.id)
+                        {
+                            unifiedAchievement.UpdateData(agsAchievement.isUnlocked, agsAchievement.progress, agsAchievement.isHidden);
+                            achievementFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!achievementFound)
                     {
 #if CLOUDONCE_DEBUG
                         Debug.Log(string.Format(
                             "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", agsAchievement.id));
-#else
-                        // Ignored
 #endif
                     }
                 }

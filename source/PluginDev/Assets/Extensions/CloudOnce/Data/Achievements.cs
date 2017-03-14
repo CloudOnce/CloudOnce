@@ -5,11 +5,13 @@
 
 namespace CloudOnce
 {
-	/// <summary>
+    using Internal;
+
+    /// <summary>
 	/// Empty class that is overwritten by the CloudOnce Editor.
-	/// Needed due to use of reflection.
 	/// </summary>
     public static class Achievements
     {
+        public static readonly UnifiedAchievement[] All = new UnifiedAchievement[0];
     }
 }

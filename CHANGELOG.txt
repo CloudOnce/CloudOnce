@@ -1,3 +1,6 @@
+Version 2.3.4
+- Fix for achievements loading crash on iOS
+
 Version 2.3.3
 - Unity 5.5 compatibility
 - Added build target check to GPGS setup
