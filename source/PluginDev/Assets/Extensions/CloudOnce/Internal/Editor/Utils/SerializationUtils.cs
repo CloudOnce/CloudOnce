@@ -38,6 +38,7 @@ namespace CloudOnce.Internal.Editor.Utils
         private const string c_defaultVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", PERSISTENCE_TYPE, VAR_DEFAULT_VALUE);";
         private const string c_currencyVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", VAR_DEFAULT_VALUE, ALLOW_NEGATIVE);";
         private const string c_dateTimeVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", PERSISTENCE_TYPE);";
+        private const string c_allAchievementsTemplate = "        public static readonly UnifiedAchievement[] All =";
 
         #endregion /Fields & properties
 
@@ -178,20 +179,24 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
 
                 var builder = new StringBuilder();
-                for (var i = 0; i < cloudConfig.AchievementIDs.Count; i++)
+                foreach (var idData in cloudConfig.AchievementIDs)
                 {
                     var propertyString = idPropertyTemplate;
-                    propertyString = propertyString.Replace("FIELDNAME", "s_" + FirstLetterToLowerCase(cloudConfig.AchievementIDs[i].InternalId));
-                    propertyString = propertyString.Replace("INTERNALID", cloudConfig.AchievementIDs[i].InternalId);
-                    propertyString = propertyString.Replace("APPLEID", cloudConfig.AchievementIDs[i].AppleId);
-                    propertyString = propertyString.Replace("GOOGLEID", cloudConfig.AchievementIDs[i].GoogleId);
-                    propertyString = propertyString.Replace("AMAZONID", cloudConfig.AchievementIDs[i].AmazonId);
-                    builder.AppendLine(propertyString);
-                    if (i != cloudConfig.AchievementIDs.Count - 1)
-                    {
-                        builder.AppendLine();
-                    }
+                    propertyString = propertyString.Replace("FIELDNAME", "s_" + FirstLetterToLowerCase(idData.InternalId));
+                    propertyString = propertyString.Replace("INTERNALID", idData.InternalId);
+                    propertyString = propertyString.Replace("APPLEID", idData.AppleId);
+                    propertyString = propertyString.Replace("GOOGLEID", idData.GoogleId);
+                    propertyString = propertyString.Replace("AMAZONID", idData.AmazonId);
+                    builder.AppendLine(propertyString).AppendLine();
                 }
+
+                builder.AppendLine(c_allAchievementsTemplate).AppendLine("        {");
+                foreach (var idData in cloudConfig.AchievementIDs)
+                {
+                    builder.AppendLine("            s_" + FirstLetterToLowerCase(idData.InternalId) + ",");
+                }
+
+                builder.AppendLine("        };");
 
                 newAchievementsScript = newAchievementsScript.Replace("// ACHIEVEMENT_IDS", builder.ToString());
 

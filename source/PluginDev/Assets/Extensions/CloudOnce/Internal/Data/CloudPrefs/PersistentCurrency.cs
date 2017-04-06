@@ -25,27 +25,11 @@ namespace CloudOnce.Internal
 
         protected PersistentCurrency(string key, float defaultValue, bool allowNegative)
         {
-            // Compiler directives need to be placed in the specific order they're in, don't move/combine them
-#if UNITY_EDITOR
-            // Workaround for Unity Editor serialization weirdness
-            if (Guid.NewGuid() == Guid.Empty)
-            {
-                return;
-            }
-#endif
             Key = key;
             DefaultValue = defaultValue;
             AllowNegative = allowNegative;
 
             DataManager.CloudPrefs[key] = this;
-
-#if UNITY_EDITOR
-            // 1 is the main thread
-            if (System.Threading.Thread.CurrentThread.ManagedThreadId != 1 || !Application.isPlaying)
-            {
-                return;
-            }
-#endif
             DataManager.InitDataManager();
         }
 
@@ -173,13 +157,6 @@ namespace CloudOnce.Internal
         {
             get
             {
-#if UNITY_EDITOR
-                // 1 is the main thread
-                if (System.Threading.Thread.CurrentThread.ManagedThreadId != 1 || !Application.isPlaying)
-                {
-                    return string.Empty;
-                }
-#endif
                 if (!string.IsNullOrEmpty(s_deviceIdCache))
                 {
                     return s_deviceIdCache;

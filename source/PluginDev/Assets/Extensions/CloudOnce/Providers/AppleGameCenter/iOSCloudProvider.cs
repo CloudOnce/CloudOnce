@@ -7,8 +7,6 @@
 namespace CloudOnce.Internal.Providers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.SocialPlatforms;
@@ -172,11 +170,6 @@ namespace CloudOnce.Internal.Providers
                         cloudOnceEvents.RaiseOnSignedInChanged(true);
                         cloudOnceEvents.RaiseOnPlayerImageDownloaded(Social.localUser.image);
                         UpdateAchievementsData();
-                        if (CloudSaveEnabled && autoCloudLoad)
-                        {
-                            var iCloudWrapper = (iOSCloudSaveWrapper)Storage;
-                            iCloudWrapper.Load();
-                        }
                     }
                     else
                     {
@@ -184,6 +177,12 @@ namespace CloudOnce.Internal.Providers
                         Debug.LogWarning("Failed to sign in to Apple Game Center.");
 #endif
                         cloudOnceEvents.RaiseOnSignInFailed();
+                    }
+
+                    if (CloudSaveEnabled && autoCloudLoad)
+                    {
+                        var iCloudWrapper = (iOSCloudSaveWrapper)Storage;
+                        iCloudWrapper.Load();
                     }
 
                     CloudOnceUtils.SafeInvoke(callback, success);
@@ -229,34 +228,42 @@ namespace CloudOnce.Internal.Providers
 
         private static void UpdateAchievementsData()
         {
-            var type = typeof(Achievements);
-            var allAchievements = new Dictionary<string, UnifiedAchievement>();
-            foreach (var propertyInfo in type.GetProperties())
+            if (Achievements.All.Length == 0)
             {
-                if (propertyInfo.PropertyType == typeof(UnifiedAchievement))
-                {
-                    allAchievements[propertyInfo.Name] = (UnifiedAchievement)propertyInfo.GetValue(null, null);
-                }
+                return;
             }
 
             Social.LoadAchievements(achievements =>
             {
-                if (achievements.Length > 0)
+                if (achievements == null || achievements.Length == 0)
                 {
-                    foreach (var achievement in achievements)
+                    return;
+                }
+
+                foreach (var achievement in achievements)
+                {
+                    if (achievement == null || string.IsNullOrEmpty(achievement.id))
                     {
-                        try
+                        continue;
+                    }
+
+                    var achievementFound = false;
+                    foreach (var unifiedAchievement in Achievements.All)
+                    {
+                        if (unifiedAchievement.ID == achievement.id)
                         {
-                            var kvp = allAchievements.Single(pair => pair.Value.ID == achievement.id);
-                            allAchievements[kvp.Key].UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                            unifiedAchievement.UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                            achievementFound = true;
+                            break;
                         }
-                        catch
-                        {
+                    }
+
+                    if (!achievementFound)
+                    {
 #if CLOUDONCE_DEBUG
-                            Debug.Log(string.Format(
-                                "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
+                        Debug.Log(string.Format(
+                            "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
 #endif
-                        }
                     }
                 }
             });

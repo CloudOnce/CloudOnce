@@ -8,8 +8,6 @@ namespace CloudOnce.Internal.Providers
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using GooglePlayGames;
     using GooglePlayGames.BasicApi;
     using UnityEngine;
@@ -327,27 +325,29 @@ namespace CloudOnce.Internal.Providers
 
         private static void UpdateAchievementsData(IAchievement[] achievements)
         {
-            var type = typeof(Achievements);
-            var allAchievements = new Dictionary<string, UnifiedAchievement>();
-            foreach (var propertyInfo in type.GetProperties())
-            {
-                if (propertyInfo.PropertyType == typeof(UnifiedAchievement))
-                {
-                    allAchievements[propertyInfo.Name] = (UnifiedAchievement)propertyInfo.GetValue(null, null);
-                }
-            }
-
             foreach (var achievement in achievements)
             {
-                try
+                if (achievement == null || string.IsNullOrEmpty(achievement.id))
                 {
-                    var kvp = allAchievements.Single(pair => pair.Value.ID == achievement.id);
-                    allAchievements[kvp.Key].UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                    continue;
                 }
-                catch
+
+                var achievementFound = false;
+                foreach (var unifiedAchievement in Achievements.All)
+                {
+                    if (unifiedAchievement.ID == achievement.id)
+                    {
+                        unifiedAchievement.UpdateData(achievement.completed, achievement.percentCompleted, achievement.hidden);
+                        achievementFound = true;
+                        break;
+                    }
+                }
+
+                if (!achievementFound)
                 {
 #if CLOUDONCE_DEBUG
-                    Debug.Log(string.Format("An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
+                    Debug.Log(string.Format(
+                        "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
 #endif
                 }
             }
@@ -375,7 +375,10 @@ namespace CloudOnce.Internal.Providers
                     Logger.d("Successfully signed in to Google Play Game Services.");
                     IsGuestUserDefault = false;
                     GetPlayerImage();
-                    PlayGamesPlatform.Instance.LoadAchievements(UpdateAchievementsData);
+                    if (Achievements.All.Length > 0)
+                    {
+                        PlayGamesPlatform.Instance.LoadAchievements(UpdateAchievementsData);
+                    }
                 });
         }
 

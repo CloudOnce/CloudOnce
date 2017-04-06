@@ -188,11 +188,14 @@ namespace CloudOnce.Internal.Editor.Utils
                     var gameCircleUserInterface = new XElement("activity");
                     gameCircleUserInterface.Add(new XAttribute(xmlns + "name", "com.amazon.ags.html5.overlay.GameCircleUserInterface"));
                     gameCircleUserInterface.Add(new XAttribute(xmlns + "theme", "@style/GCOverlay"));
+#if !UNITY_5_6_OR_NEWER
                     if (PlayerSettings.Android.minSdkVersion > AndroidSdkVersions.AndroidApiLevel10)
                     {
+#endif
                         gameCircleUserInterface.Add(new XAttribute(xmlns + "hardwareAccelerated", "false"));
+#if !UNITY_5_6_OR_NEWER
                     }
-
+#endif
                     return gameCircleUserInterface;
                 }
 
@@ -202,11 +205,14 @@ namespace CloudOnce.Internal.Editor.Utils
                     gameCircleAlertUserInterface.Add(new XAttribute(
                         xmlns + "name", "com.amazon.ags.html5.overlay.GameCircleAlertUserInterface"));
                     gameCircleAlertUserInterface.Add(new XAttribute(xmlns + "theme", "@style/GCAlert"));
+#if !UNITY_5_6_OR_NEWER
                     if (PlayerSettings.Android.minSdkVersion > AndroidSdkVersions.AndroidApiLevel10)
                     {
+#endif
                         gameCircleAlertUserInterface.Add(new XAttribute(xmlns + "hardwareAccelerated", "false"));
+#if !UNITY_5_6_OR_NEWER
                     }
-
+#endif
                     return gameCircleAlertUserInterface;
                 }
 
@@ -229,7 +235,11 @@ namespace CloudOnce.Internal.Editor.Utils
                         new XAttribute(xmlns + "name", "android.intent.category.BROWSABLE")));
 
                     var ifData = new XElement("data");
+#if UNITY_5_6_OR_NEWER
+                    ifData.Add(new XAttribute(xmlns + "host", PlayerSettings.applicationIdentifier));
+#else
                     ifData.Add(new XAttribute(xmlns + "host", PlayerSettings.bundleIdentifier));
+#endif
                     ifData.Add(new XAttribute(xmlns + "scheme", "amzn"));
 
                     authorizationIntentFilter.Add(ifData);

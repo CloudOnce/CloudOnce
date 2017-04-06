@@ -313,6 +313,20 @@ namespace CloudOnce.Internal.Editor.Utils
             return true;
         }
 
+        public static bool ConfigHasNoAchievementsNamedAll(List<PlatformIdData> achievementIds)
+        {
+            var result = !achievementIds.Any(id => string.Equals(
+                id.InternalId,
+                "All",
+                StringComparison.InvariantCultureIgnoreCase));
+            if (!result)
+            {
+                EditorGUILayout.HelpBox("\"All\" internal achievement ID is reserved.", MessageType.Warning);
+            }
+
+            return result;
+        }
+
         #endregion /Public methods
 
         #region Private methods

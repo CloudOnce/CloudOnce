@@ -29,6 +29,7 @@ namespace GooglePlayGames
     using GooglePlayGames.BasicApi.Nearby;
     using GooglePlayGames.BasicApi.Quests;
     using GooglePlayGames.BasicApi.SavedGame;
+    using GooglePlayGames.BasicApi.Video;
     using GooglePlayGames.OurUtils;
     using UnityEngine;
     using UnityEngine.SocialPlatforms;
@@ -88,6 +89,7 @@ namespace GooglePlayGames
         /// <param name="configuration">Configuration object to use.</param>
         private PlayGamesPlatform(PlayGamesClientConfiguration configuration)
         {
+            GooglePlayGames.OurUtils.Logger.w("Creating new PlayGamesPlatform");
             this.mLocalUser = new PlayGamesLocalUser(this);
             this.mConfiguration = configuration;
         }
@@ -193,11 +195,22 @@ namespace GooglePlayGames
 
         /// <summary>Gets the quests client object.</summary>
         /// <value>The quests client.</value>
+        [Obsolete("Quests are being removed in 2018.")]
         public IQuestsClient Quests
         {
             get
             {
                 return mClient.GetQuestsClient();
+            }
+        }
+
+        /// <summary>Gets the video client object.</summary>
+        /// <value>The video client.</value>
+        public IVideoClient Video
+        {
+            get
+            {
+                return mClient.GetVideoClient();
             }
         }
 
@@ -497,35 +510,13 @@ namespace GooglePlayGames
         /// <summary>
         /// Get an id token for the user.
         /// </summary>
-        /// <param name="idTokenCallback"> A callback to be invoked after token is retrieved. Will be passed null value
-        /// on failure. </param>
-        public void GetIdToken(Action<string> idTokenCallback)
+        public string GetIdToken()
         {
             if (mClient != null)
             {
-                mClient.GetIdToken(idTokenCallback);
+                return mClient.GetIdToken();
             }
-            else
-            {
-                GooglePlayGames.OurUtils.Logger.e(
-                    "No client available, calling back with null.");
-                idTokenCallback(null);
-            }
-        }
-
-        /// <summary>
-        /// Returns an id token for the user.
-        /// </summary>
-        /// <returns>
-        /// An id token for the user.
-        /// </returns>
-        public string GetAccessToken()
-        {
-            if (mClient != null)
-            {
-                return mClient.GetAccessToken();
-            }
-
+            OurUtils.Logger.e("No client available, returning null.");
             return null;
         }
 
@@ -537,63 +528,21 @@ namespace GooglePlayGames
         /// https://developers.google.com/drive/v2/web/auth/web-server
         /// </remarks>
         /// <param name="callback">Callback.</param>
-        public void GetServerAuthCode(Action<CommonStatusCodes, string> callback)
+        public string GetServerAuthCode()
         {
             if (mClient != null && mClient.IsAuthenticated())
             {
-                if (GameInfo.WebClientIdInitialized())
-                {
-                    mClient.GetServerAuthCode(GameInfo.WebClientId, callback);
-                }
-                else
-                {
-                    GooglePlayGames.OurUtils.Logger.e(
-                        "GetServerAuthCode requires a webClientId.");
-                    callback(CommonStatusCodes.DeveloperError, "");
-                }
+                return mClient.GetServerAuthCode();
             }
-            else
-            {
-                GooglePlayGames.OurUtils.Logger.e(
-                    "GetServerAuthCode can only be called after authentication.");
-
-                callback(CommonStatusCodes.SignInRequired, "");
-            }
+            return null;
         }
 
         /// <summary>
         /// Gets the user's email.
         /// </summary>
-        /// <remarks>The email address returned is selected by the user from the accounts present
-        /// on the device. There is no guarantee this uniquely identifies the player.
-        /// For unique identification use the id property of the local player.
-        /// The user can also choose to not select any email address, meaning it is not
-        /// available.</remarks>
-        /// <returns>The user email or null if not authenticated or the permission is
-        /// not available.</returns>
         public string GetUserEmail()
         {
-            if (mClient != null)
-            {
-                return mClient.GetUserEmail();
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets the user's email with a callback.
-        /// </summary>
-        /// <remarks>The email address returned is selected by the user from the accounts present
-        /// on the device. There is no guarantee this uniquely identifies the player.
-        /// For unique identification use the id property of the local player.
-        /// The user can also choose to not select any email address, meaning it is not
-        /// available.</remarks>
-        /// <param name="callback">The callback with a status code of the request,
-        /// and string which is the email. It can be null.</param>
-        public void GetUserEmail(Action<CommonStatusCodes, string> callback)
-        {
-            mClient.GetUserEmail(callback);
+            return mClient.GetUserEmail();
         }
 
         /// <summary>
@@ -925,15 +874,15 @@ namespace GooglePlayGames
             }
 
             mClient.LoadAchievements(ach =>
+            {
+                IAchievementDescription[] data = new IAchievementDescription[ach.Length];
+                for (int i = 0; i < data.Length; i++)
                 {
-                    IAchievementDescription[] data = new IAchievementDescription[ach.Length];
-                    for (int i = 0; i < data.Length; i++)
-                    {
-                        data[i] = new PlayGamesAchievement(ach[i]);
-                    }
+                    data[i] = new PlayGamesAchievement(ach[i]);
+                }
 
-                    callback.Invoke(data);
-                });
+                callback.Invoke(data);
+            });
         }
 
         /// <summary>
@@ -951,15 +900,15 @@ namespace GooglePlayGames
             }
 
             mClient.LoadAchievements(ach =>
+            {
+                IAchievement[] data = new IAchievement[ach.Length];
+                for (int i = 0; i < data.Length; i++)
                 {
-                    IAchievement[] data = new IAchievement[ach.Length];
-                    for (int i = 0; i < data.Length; i++)
-                    {
-                        data[i] = new PlayGamesAchievement(ach[i]);
-                    }
+                    data[i] = new PlayGamesAchievement(ach[i]);
+                }
 
-                    callback.Invoke(data);
-                });
+                callback.Invoke(data);
+            });
         }
 
         /// <summary>
@@ -1247,15 +1196,15 @@ namespace GooglePlayGames
             mDefaultLbUi = lbid;
         }
 
-       /// <summary>
-       /// Loads the friends that also play this game.  See loadConnectedPlayers.
-       /// </summary>
+        /// <summary>
+        /// Loads the friends that also play this game.  See loadConnectedPlayers.
+        /// </summary>
         /// <remarks>This is a callback variant of LoadFriends.  When completed,
         /// the friends list set in the user object, so they can accessed via the
         /// friends property as needed.
         /// </remarks>
         /// <param name="user">The current local user</param>
-       /// <param name="callback">Callback invoked when complete.</param>
+        /// <param name="callback">Callback invoked when complete.</param>
         public void LoadFriends(ILocalUser user, Action<bool> callback)
         {
             if (!IsAuthenticated())
@@ -1341,15 +1290,6 @@ namespace GooglePlayGames
         public void RegisterInvitationDelegate(InvitationReceivedDelegate deleg)
         {
             mClient.RegisterInvitationDelegate(deleg);
-        }
-
-        /// <summary>
-        /// Retrieves a bearer token associated with the current account.
-        /// </summary>
-        /// <returns>A bearer token for authorized requests.</returns>
-        public string GetToken()
-        {
-            return mClient.GetToken();
         }
 
         /// <summary>
