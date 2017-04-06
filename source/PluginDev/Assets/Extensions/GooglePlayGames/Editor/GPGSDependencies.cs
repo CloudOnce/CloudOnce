@@ -33,7 +33,7 @@ namespace GooglePlayGames.Editor
         public static PlayServicesSupport svcSupport;
 
         /// <summary>
-        /// Initializes static members of the <see cref="SampleDependencies"/> class.
+        /// Initializes static members of the class.
         /// </summary>
         static GPGSDependencies()
         {
@@ -103,29 +103,6 @@ namespace GooglePlayGames.Editor
                     { "packageIds", new[] { "extra-google-m2repository" } }
                 });
 
-            // if google+ is needed, add it
-            if (GameInfo.RequireGooglePlus())
-            {
-                VersionHandler.InvokeInstanceMethod(
-                    svcSupport, "DependOn",
-                    new object[]
-                    {
-                        "com.google.android.gms", "play-services-plus",
-                        PluginVersion.PlayServicesVersionConstraint
-                    },
-                    new Dictionary<string, object>
-                    {
-                        { "packageIds", new[] { "extra-google-m2repository" } }
-                    });
-            }
-
-            VersionHandler.InvokeInstanceMethod(
-                svcSupport, "DependOn",
-                new object[] { "com.android.support", "support-v4", "23.1+" },
-                new Dictionary<string, object>
-                {
-                    { "packageIds", new[] { "extra-android-m2repository" } }
-                });
         }
 
         // Handle delayed loading of the dependency resolvers.

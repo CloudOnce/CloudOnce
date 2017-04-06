@@ -1,5 +1,5 @@
-// <copyright file="GameServices.cs" company="Google Inc.">
-// Copyright (C) 2014 Google Inc.
+﻿// <copyright file="CaptureOverlayStateListenerHelper.cs" company="Google Inc.">
+// Copyright (C) 2016 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -16,41 +16,31 @@
 
 #if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
 
+
 namespace GooglePlayGames.Native.Cwrapper
 {
     using System;
     using System.Runtime.InteropServices;
     using System.Text;
 
-    internal static class GameServices
+    internal static class CaptureOverlayStateListenerHelper
     {
-        internal delegate void FlushCallback(
-        /* from(FlushStatus_t) */ CommonErrorStatus.FlushStatus arg0,
-        /* from(void *) */ IntPtr arg1);
+        internal delegate void OnCaptureOverlayStateChangedCallback(
+            /* from(VideoCaptureOverlayState_t) */ Types.VideoCaptureOverlayState arg0,
+            /* from(void *) */ IntPtr arg1);
 
         [DllImport(SymbolLocation.NativeSymbolLocation)]
-        internal static extern void GameServices_Flush(
+        internal static extern void CaptureOverlayStateListenerHelper_SetOnCaptureOverlayStateChangedCallback(
             HandleRef self,
-         /* from(GameServices_FlushCallback_t) */FlushCallback callback,
-         /* from(void *) */IntPtr callback_arg);
+            /* from(RealTimeEventListenerHelper_OnCaptureOverlayStateChangedCallback_t) */OnCaptureOverlayStateChangedCallback callback,
+            /* from(void *) */IntPtr callback_arg);
 
         [DllImport(SymbolLocation.NativeSymbolLocation)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        internal static extern /* from(bool) */ bool GameServices_IsAuthorized(
-            HandleRef self);
+        internal static extern /* from(CaptureOverlayStateListenerHelper_t) */ IntPtr CaptureOverlayStateListenerHelper_Construct();
 
         [DllImport(SymbolLocation.NativeSymbolLocation)]
-        internal static extern void GameServices_Dispose(
+        internal static extern void CaptureOverlayStateListenerHelper_Dispose(
             HandleRef self);
-
-        [DllImport(SymbolLocation.NativeSymbolLocation)]
-        internal static extern void GameServices_SignOut(
-            HandleRef self);
-
-        [DllImport(SymbolLocation.NativeSymbolLocation)]
-        internal static extern void GameServices_StartAuthorizationUI(
-            HandleRef self);
-
     }
 }
 #endif // (UNITY_ANDROID || UNITY_IPHONE)
