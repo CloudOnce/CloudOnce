@@ -10,6 +10,9 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.3.5
+- Updated Jar Resolver from v1.2.15 to v1.2.16
+
 Version 2.3.4
 - Unity 5.6 compatibility
 - Fix for achievements loading crash on iOS
