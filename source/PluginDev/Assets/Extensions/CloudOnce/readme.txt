@@ -10,6 +10,10 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.3.6
+- Updated GPGS plugin from v0.9.37 to v0.9.38a
+- Updated Jar Resolver from v1.2.16 to v1.2.22
+
 Version 2.3.5
 - Updated Jar Resolver from v1.2.15 to v1.2.16
 
