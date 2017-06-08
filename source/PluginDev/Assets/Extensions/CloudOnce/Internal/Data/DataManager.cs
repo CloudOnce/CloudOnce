@@ -70,8 +70,8 @@ namespace CloudOnce.Internal
         {
             if (!s_isInitialized)
             {
-                s_isInitialized = true;
                 LoadFromDisk();
+                s_isInitialized = true;
             }
         }
 
@@ -895,45 +895,43 @@ namespace CloudOnce.Internal
         /// <summary>
         /// Loads data stored in <see cref="PlayerPrefs"/>.
         /// </summary>
-        /// <returns><c>true</c> if the local data was changed, <c>false</c> if there was no new data.</returns>
-        public static string[] LoadFromDisk()
+        public static void LoadFromDisk()
         {
             var devstring = PlayerPrefs.GetString(DevStringKey);
-            if (!string.IsNullOrEmpty(devstring))
+            if (string.IsNullOrEmpty(devstring))
             {
-                if (!devstring.IsJson())
+                return;
+            }
+
+            if (!devstring.IsJson())
+            {
+                try
                 {
-                    try
-                    {
-                        devstring = devstring.FromBase64StringToString();
-                    }
-                    catch (FormatException)
-                    {
-                        Debug.LogWarning("Unable to deserialize local data! Resetting it.");
-                        devstring = string.Empty;
-                    }
+                    devstring = devstring.FromBase64StringToString();
+                }
+                catch (FormatException)
+                {
+                    Debug.LogWarning("Unable to deserialize local data!");
+                    return;
                 }
             }
 
-            string[] changedKeys;
-            if (s_localGameData == null)
+            if (!s_isInitialized)
             {
                 s_localGameData = new GameData(devstring);
-                RefreshCloudValues();
-                changedKeys = new string[0];
             }
             else
             {
-                changedKeys = MergeLocalDataWith(devstring);
+                var changedKeys = MergeLocalDataWith(devstring);
                 if (changedKeys.Length > 0)
                 {
                     RefreshCloudValues();
                 }
             }
+
 #if CLOUDONCE_DEBUG
             Debug.Log("Data loaded from local cache");
 #endif
-            return changedKeys;
         }
 
         /// <summary>
