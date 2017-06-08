@@ -2,8 +2,8 @@
 //  CloudOnceCloudSave.h
 //  CloudOnceCloudSave
 //
-//  Created by Trollpants Game Studio on 21/04/15.
-//  Copyright (c) 2016 Trollpants Game Studio AS. All rights reserved.
+//  Created by Jan Ivar Z. Carlsen on 21/04/15.
+//  Copyright (c) 2016 Jan Ivar Z. Carlsen, Sindri Jóelsson. All rights reserved.
 //  Licensed under the MIT license. See LICENSE file in the project root for full license information.
 //
 
