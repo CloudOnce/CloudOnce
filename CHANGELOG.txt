@@ -1,3 +1,7 @@
+Version 2.3.7
+- Fixed cloud load issue related to PersistenceType.Latest
+- Updated GPGS plugin from v0.9.38a to v0.9.39a
+
 Version 2.3.6
 - Updated GPGS plugin from v0.9.37 to v0.9.38a
 - Updated Jar Resolver from v1.2.16 to v1.2.22
