@@ -135,16 +135,15 @@ namespace GooglePlayGames.Native
                 mTokenClient.FetchTokens((int result) => {
                     InitializeGameServices();
                     if (result == 0) {
-                    {
                         GameServices().StartAuthorizationUI();
                     } else {
                         HandleAuthTransition(Types.AuthOperation.SIGN_IN, (Status.AuthStatus)result);
                     }
+                });
             } else {
                 // If game services are uninitialized, creating them will start a silent auth attempt.
                 InitializeGameServices();
                 if (!silent) {
-                {
                     GameServices().StartAuthorizationUI();
                 }
             }
