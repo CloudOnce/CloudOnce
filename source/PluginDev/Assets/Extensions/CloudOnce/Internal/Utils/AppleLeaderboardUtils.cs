@@ -100,19 +100,14 @@ namespace CloudOnce.Internal.Utils
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
         }
 
-        private static void ReportSubmitScoreSuccess(long score, Action<CloudRequestResult<bool>> callbackAction, string id, string internalID)
-        {
-#if CLOUDONCE_DEBUG
-            Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
-#endif
-            CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
-        }
-
         private static void OnSubmitScoreCompleted(bool response, long score, Action<CloudRequestResult<bool>> callbackAction, string id, string internalID)
         {
             if (response)
             {
-                ReportSubmitScoreSuccess(score, callbackAction, id, internalID);
+#if CLOUDONCE_DEBUG
+                Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
+#endif
+                CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }
             else
             {

@@ -18,9 +18,9 @@ namespace CloudOnce.Internal.Editor.Utils
     {
         #region Fields & properties
 
-        private const string c_debugBuildSymbolConstraint = "CLOUDONCE_DEBUG";
-        private const string c_amazonBuildSymbolConstaint = "CLOUDONCE_AMAZON";
-        private const string c_googleBuildSymbolConstaint = "CLOUDONCE_GOOGLE";
+        private const string debugBuildSymbolConstraint = "CLOUDONCE_DEBUG";
+        private const string amazonBuildSymbolConstaint = "CLOUDONCE_AMAZON";
+        private const string googleBuildSymbolConstaint = "CLOUDONCE_GOOGLE";
 
         private static readonly AndroidManifestModifier s_manifestModifier = new AndroidManifestModifier();
 
@@ -35,26 +35,26 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             if (enableiOSDebug)
             {
-                if (!iOSBuildSymbolIsDefined(c_debugBuildSymbolConstraint))
+                if (!iOSBuildSymbolIsDefined(debugBuildSymbolConstraint))
                 {
-                    SetiOSBuildSymbolImpl(new[] { c_debugBuildSymbolConstraint }, null);
+                    SetiOSBuildSymbolImpl(new[] { debugBuildSymbolConstraint }, null);
                 }
             }
             else
             {
-                SetiOSBuildSymbolImpl(null, new[] { c_debugBuildSymbolConstraint });
+                SetiOSBuildSymbolImpl(null, new[] { debugBuildSymbolConstraint });
             }
 
             if (enableAndroidDebug)
             {
-                if (!AndroidBuildSymbolIsDefined(c_debugBuildSymbolConstraint))
+                if (!AndroidBuildSymbolIsDefined(debugBuildSymbolConstraint))
                 {
-                    SetAndroidBuildSymbolImpl(new[] { c_debugBuildSymbolConstraint }, null);
+                    SetAndroidBuildSymbolImpl(new[] { debugBuildSymbolConstraint }, null);
                 }
             }
             else
             {
-                SetAndroidBuildSymbolImpl(null, new[] { c_debugBuildSymbolConstraint });
+                SetAndroidBuildSymbolImpl(null, new[] { debugBuildSymbolConstraint });
             }
         }
 
@@ -65,9 +65,9 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             s_manifestModifier.EnableAmazonBuildPlatform(apiKey);
 
-            if (!AndroidBuildSymbolIsDefined(c_amazonBuildSymbolConstaint))
+            if (!AndroidBuildSymbolIsDefined(amazonBuildSymbolConstaint))
             {
-                SetAndroidBuildSymbolImpl(new[] { c_amazonBuildSymbolConstaint }, new[] { c_googleBuildSymbolConstaint });
+                SetAndroidBuildSymbolImpl(new[] { amazonBuildSymbolConstaint }, new[] { googleBuildSymbolConstaint });
             }
         }
 
@@ -78,9 +78,9 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             s_manifestModifier.EnableGoogleBuildPlatform();
 
-            if (!AndroidBuildSymbolIsDefined(c_googleBuildSymbolConstaint))
+            if (!AndroidBuildSymbolIsDefined(googleBuildSymbolConstaint))
             {
-                SetAndroidBuildSymbolImpl(new[] { c_googleBuildSymbolConstaint }, new[] { c_amazonBuildSymbolConstaint });
+                SetAndroidBuildSymbolImpl(new[] { googleBuildSymbolConstaint }, new[] { amazonBuildSymbolConstaint });
             }
         }
 
@@ -89,9 +89,9 @@ namespace CloudOnce.Internal.Editor.Utils
         /// </summary>
         public static void DisableAndroidBuildSymbolConstraints()
         {
-            if (AndroidBuildSymbolIsDefined(c_amazonBuildSymbolConstaint) || AndroidBuildSymbolIsDefined(c_googleBuildSymbolConstaint))
+            if (AndroidBuildSymbolIsDefined(amazonBuildSymbolConstaint) || AndroidBuildSymbolIsDefined(googleBuildSymbolConstaint))
             {
-                SetAndroidBuildSymbolImpl(null, new[] { c_amazonBuildSymbolConstaint, c_googleBuildSymbolConstaint });
+                SetAndroidBuildSymbolImpl(null, new[] { amazonBuildSymbolConstaint, googleBuildSymbolConstaint });
             }
         }
 
@@ -114,11 +114,7 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <returns>List of defined build constraint symbols.</returns>
         private static List<string> GetiOSDefinesList()
         {
-#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7
-            return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.iPhone).Split(';').ToList();
-#else
             return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS).Split(';').ToList();
-#endif
         }
 
         /// <summary>
@@ -217,11 +213,8 @@ namespace CloudOnce.Internal.Editor.Utils
                     }
                 }
             }
-#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iPhone, string.Join(";", definedSymbols.ToArray()));
-#else
+
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, string.Join(";", definedSymbols.ToArray()));
-#endif
         }
 
         #endregion / Private methods

@@ -43,18 +43,18 @@ namespace CloudOnce.Internal.Editor.Data
     [Serializable]
     public class CloudConfig : ScriptableObject, IJsonSerializeable
     {
-        private const string c_keyAchievementIDs = "AchievementIDs";
-        private const string c_keyLeaderboardIDs = "LeaderboardIDs";
-        private const string c_keyCloudVariables = "CloudVariables";
-        private const string c_keyAppleSupported = "AppleSupported";
-        private const string c_keyGoogleSupported = "GoogleSupported";
-        private const string c_keyAmazonSupported = "AmazonSupported";
-        private const string c_keyAndroidPlatform = "AndroidPlatform";
-        private const string c_keyGoogleAppID = "GoogleAppID";
-        private const string c_keyGoogleSetupRun = "GoogleSetupRun";
-        private const string c_keyDebugModeEnabled = "DebugModeEnabled";
-        private const string c_keyVersion = "Version";
-        private const string c_apiKey = "APIKey";
+        private const string achievementIDsName = "AchievementIDs";
+        private const string leaderboardIDsName = "LeaderboardIDs";
+        private const string cloudVariablesName = "CloudVariables";
+        private const string appleSupportedName = "AppleSupported";
+        private const string googleSupportedName = "GoogleSupported";
+        private const string amazonSupportedName = "AmazonSupported";
+        private const string androidPlatformName = "AndroidPlatform";
+        private const string googleAppIDName = "GoogleAppID";
+        private const string googleSetupRunName = "GoogleSetupRun";
+        private const string debugModeEnabledName = "DebugModeEnabled";
+        private const string versionName = "Version";
+        private const string apiKeyName = "APIKey";
 
         [SerializeField] private List<PlatformIdData> achievementIDs;
         [SerializeField] private List<PlatformIdData> leaderboardIDs;
@@ -201,18 +201,18 @@ namespace CloudOnce.Internal.Editor.Data
         {
             var jsonObject = new JSONObject(JSONObject.Type.Object);
 
-            jsonObject.AddField(c_keyAchievementIDs, JsonHelper.ToJsonObject(AchievementIDs));
-            jsonObject.AddField(c_keyLeaderboardIDs, JsonHelper.ToJsonObject(LeaderboardIDs));
-            jsonObject.AddField(c_keyCloudVariables, JsonHelper.ToJsonObject(CloudVariables));
-            jsonObject.AddField(c_keyAppleSupported, AppleSupported);
-            jsonObject.AddField(c_keyGoogleSupported, GoogleSupported);
-            jsonObject.AddField(c_keyAmazonSupported, AmazonSupported);
-            jsonObject.AddField(c_keyAndroidPlatform, Enum.Format(typeof(AndroidBuildPlatform), AndroidPlatform, "D"));
-            jsonObject.AddField(c_keyGoogleAppID, GoogleAppID);
-            jsonObject.AddField(c_keyGoogleSetupRun, GoogleSetupRun);
-            jsonObject.AddField(c_keyDebugModeEnabled, DebugModeEnabled);
-            jsonObject.AddField(c_keyVersion, Version = PluginVersion.VersionString);
-            jsonObject.AddField(c_apiKey, ApiKey);
+            jsonObject.AddField(achievementIDsName, JsonHelper.ToJsonObject(AchievementIDs));
+            jsonObject.AddField(leaderboardIDsName, JsonHelper.ToJsonObject(LeaderboardIDs));
+            jsonObject.AddField(cloudVariablesName, JsonHelper.ToJsonObject(CloudVariables));
+            jsonObject.AddField(appleSupportedName, AppleSupported);
+            jsonObject.AddField(googleSupportedName, GoogleSupported);
+            jsonObject.AddField(amazonSupportedName, AmazonSupported);
+            jsonObject.AddField(androidPlatformName, Enum.Format(typeof(AndroidBuildPlatform), AndroidPlatform, "D"));
+            jsonObject.AddField(googleAppIDName, GoogleAppID);
+            jsonObject.AddField(googleSetupRunName, GoogleSetupRun);
+            jsonObject.AddField(debugModeEnabledName, DebugModeEnabled);
+            jsonObject.AddField(versionName, Version = PluginVersion.VersionString);
+            jsonObject.AddField(apiKeyName, ApiKey);
 
             return jsonObject;
         }
@@ -251,26 +251,26 @@ namespace CloudOnce.Internal.Editor.Data
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the <see cref="CloudConfig"/>.</param>
         private void FromJSONObject(JSONObject jsonObject)
         {
-            if (!jsonObject.HasFields(c_keyAchievementIDs, c_keyLeaderboardIDs, c_keyCloudVariables, c_keyAppleSupported, c_keyGoogleSupported,
-                c_keyAmazonSupported, c_keyAndroidPlatform, c_keyGoogleAppID, c_keyGoogleSetupRun, c_keyDebugModeEnabled, c_keyVersion))
+            if (!jsonObject.HasFields(achievementIDsName, leaderboardIDsName, cloudVariablesName, appleSupportedName, googleSupportedName,
+                amazonSupportedName, androidPlatformName, googleAppIDName, googleSetupRunName, debugModeEnabledName, versionName))
             {
                 throw new SerializationException("JSONObject missing fields, cannot deserialize to " + typeof(CloudConfig).Name);
             }
 
-            AchievementIDs = EditorJsonHelper.Convert<List<PlatformIdData>>(jsonObject[c_keyAchievementIDs]);
-            LeaderboardIDs = EditorJsonHelper.Convert<List<PlatformIdData>>(jsonObject[c_keyLeaderboardIDs]);
-            CloudVariables = EditorJsonHelper.Convert<List<CloudVariableData>>(jsonObject[c_keyCloudVariables]);
-            AppleSupported = jsonObject[c_keyAppleSupported].B;
-            GoogleSupported = jsonObject[c_keyGoogleSupported].B;
-            AmazonSupported = jsonObject[c_keyAmazonSupported].B;
-            AndroidPlatform = (AndroidBuildPlatform)Enum.Parse(typeof(AndroidBuildPlatform), jsonObject[c_keyAndroidPlatform].String);
-            GoogleAppID = jsonObject[c_keyGoogleAppID].String;
-            GoogleSetupRun = jsonObject[c_keyGoogleSetupRun].B;
-            DebugModeEnabled = jsonObject[c_keyDebugModeEnabled].B;
-            Version = jsonObject[c_keyVersion].String;
-            if (jsonObject.HasFields(c_apiKey))
+            AchievementIDs = EditorJsonHelper.Convert<List<PlatformIdData>>(jsonObject[achievementIDsName]);
+            LeaderboardIDs = EditorJsonHelper.Convert<List<PlatformIdData>>(jsonObject[leaderboardIDsName]);
+            CloudVariables = EditorJsonHelper.Convert<List<CloudVariableData>>(jsonObject[cloudVariablesName]);
+            AppleSupported = jsonObject[appleSupportedName].B;
+            GoogleSupported = jsonObject[googleSupportedName].B;
+            AmazonSupported = jsonObject[amazonSupportedName].B;
+            AndroidPlatform = (AndroidBuildPlatform)Enum.Parse(typeof(AndroidBuildPlatform), jsonObject[androidPlatformName].String);
+            GoogleAppID = jsonObject[googleAppIDName].String;
+            GoogleSetupRun = jsonObject[googleSetupRunName].B;
+            DebugModeEnabled = jsonObject[debugModeEnabledName].B;
+            Version = jsonObject[versionName].String;
+            if (jsonObject.HasFields(apiKeyName))
             {
-                ApiKey = jsonObject[c_apiKey].String;
+                ApiKey = jsonObject[apiKeyName].String;
             }
         }
     }

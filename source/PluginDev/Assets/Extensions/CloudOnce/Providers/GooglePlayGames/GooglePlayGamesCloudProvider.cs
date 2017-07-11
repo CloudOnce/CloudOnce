@@ -23,7 +23,7 @@ namespace CloudOnce.Internal.Providers
     {
         #region Fields, constructor & properties
 
-        private const string c_guestPreferenceKey = "GooglePlayWantsToUseGuest";
+        private const string guestPreferenceKey = "GooglePlayWantsToUseGuest";
         private CloudOnceEvents cloudOnceEvents;
         private bool cloudSaveEnabled = true;
         private Texture2D playerImage;
@@ -315,12 +315,12 @@ namespace CloudOnce.Internal.Providers
 
         protected override void OnAwake()
         {
-            IsGuestUserDefault = PlayerPrefs.GetInt(c_guestPreferenceKey, 0) == 1;
+            IsGuestUserDefault = PlayerPrefs.GetInt(guestPreferenceKey, 0) == 1;
         }
 
         protected override void OnOnDestroy()
         {
-            PlayerPrefs.SetInt(c_guestPreferenceKey, IsGuestUserDefault ? 1 : 0);
+            PlayerPrefs.SetInt(guestPreferenceKey, IsGuestUserDefault ? 1 : 0);
         }
 
         private static void UpdateAchievementsData(IAchievement[] achievements)

@@ -24,7 +24,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
     internal sealed class PlistBuddyHelper
     {
-        private const string c_plistBuddyPath = "/usr/libexec/PlistBuddy";
+        private const string plistBuddyPath = "/usr/libexec/PlistBuddy";
         private readonly string mPlistPath;
 
         private PlistBuddyHelper(string plistPath)
@@ -44,7 +44,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 return null;
             }
 
-            return File.Exists(c_plistBuddyPath) ? new PlistBuddyHelper(filepath) : null;
+            return File.Exists(plistBuddyPath) ? new PlistBuddyHelper(filepath) : null;
         }
 
         internal bool AddArray(params object[] fieldPath)

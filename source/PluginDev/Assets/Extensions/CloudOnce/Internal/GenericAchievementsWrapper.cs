@@ -6,7 +6,6 @@
 namespace CloudOnce.Internal.Providers
 {
     using System;
-    using UnityEngine;
     using UnityEngine.SocialPlatforms;
     using Utils;
 
@@ -26,7 +25,7 @@ namespace CloudOnce.Internal.Providers
         public void UnlockAchievement(string achievementId, Action<CloudRequestResult<bool>> onComplete = null)
         {
 #if CLOUDONCE_DEBUG
-            Debug.Log(string.Format("Attempting to unlock {0}.", achievementId));
+            UnityEngine.Debug.Log(string.Format("Attempting to unlock {0}.", achievementId));
 #endif
             Action<CloudRequestResult<bool>> callback = response =>
             {
@@ -47,7 +46,7 @@ namespace CloudOnce.Internal.Providers
         public void RevealAchievement(string achievementId, Action<CloudRequestResult<bool>> onComplete = null)
         {
 #if CLOUDONCE_DEBUG
-            Debug.Log(string.Format("Attempting to reveal {0}.", achievementId));
+            UnityEngine.Debug.Log(string.Format("Attempting to reveal {0}.", achievementId));
 #endif
             Action<CloudRequestResult<bool>> callback = response =>
             {
@@ -103,21 +102,21 @@ namespace CloudOnce.Internal.Providers
             if (progress.Equals(0.0))
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log("Progress equals 0.0.");
+                UnityEngine.Debug.Log("Progress equals 0.0.");
 #endif
                 RevealAchievement(achievementId, onComplete);
             }
             else if (progress >= 100.0)
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log("Progress equals 100.0 or more.");
+                UnityEngine.Debug.Log("Progress equals 100.0 or more.");
 #endif
                 UnlockAchievement(achievementId, onComplete);
             }
             else
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log(string.Format("Attempting to increment {0} to {1:F2}%.", achievementId, progress));
+                UnityEngine.Debug.Log(string.Format("Attempting to increment {0} to {1:F2}%.", achievementId, progress));
 #endif
                 Action<CloudRequestResult<bool>> callback = response =>
                 {

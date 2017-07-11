@@ -14,20 +14,20 @@ namespace CloudOnce.Internal.Editor.Utils
     [InitializeOnLoad]
     public class AutoAddDefineSymbols
     {
-        private const string c_defineSymbol = "NO_GPGS";
+        private const string defineSymbol = "NO_GPGS";
 
         static AutoAddDefineSymbols()
         {
             var defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS).Trim();
-            if (!defineSymbols.Contains(c_defineSymbol))
+            if (!defineSymbols.Contains(defineSymbol))
             {
                 if (string.IsNullOrEmpty(defineSymbols))
                 {
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, c_defineSymbol);
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defineSymbol);
                 }
                 else
                 {
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defineSymbols + ";" + c_defineSymbol);
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defineSymbols + ";" + defineSymbol);
                 }
             }
 

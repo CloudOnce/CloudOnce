@@ -35,7 +35,6 @@ namespace CloudOnce.Internal.Utils
         }
 
         public static IAchievementUtils AchievementUtils { get; private set; }
-
         public static ILeaderboardUtils LeaderboardUtils { get; private set; }
 
         public static string ToBase64String(this string str)

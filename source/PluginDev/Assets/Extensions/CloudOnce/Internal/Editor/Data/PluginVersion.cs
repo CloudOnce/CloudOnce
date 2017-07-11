@@ -10,6 +10,6 @@ namespace CloudOnce.Internal.Editor.Data
     /// </summary>
     public class PluginVersion
     {
-        public const string VersionString = "2.3.7";
+        public const string VersionString = "2.3.8";
     }
 }

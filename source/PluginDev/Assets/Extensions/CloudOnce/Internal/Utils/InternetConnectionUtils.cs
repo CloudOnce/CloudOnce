@@ -5,7 +5,6 @@
 
 namespace CloudOnce.Internal.Utils
 {
-    using UnityEngine;
     using System.Net;
     using System.IO;
     using System.Linq;
@@ -22,7 +21,7 @@ namespace CloudOnce.Internal.Utils
             if (string.IsNullOrEmpty(htmlText))
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log("Internet connection status: Disconnected");
+                UnityEngine.Debug.Log("Internet connection status: Disconnected");
 #endif
                 return InternetConnectionStatus.Disconnected;
             }
@@ -31,13 +30,13 @@ namespace CloudOnce.Internal.Utils
             {
                 // Expected phrase was not found
 #if CLOUDONCE_DEBUG
-                Debug.Log("Internet connection status: Unstable connection");
+                UnityEngine.Debug.Log("Internet connection status: Unstable connection");
 #endif
                 return InternetConnectionStatus.Unstable;
             }
 
 #if CLOUDONCE_DEBUG
-            Debug.Log("Internet connection status: Connected");
+            UnityEngine.Debug.Log("Internet connection status: Connected");
 #endif
             return InternetConnectionStatus.Connected;
         }

@@ -20,11 +20,13 @@ namespace CloudOnce.Internal.Providers
     /// </summary>
     public class GooglePlayGamesCloudSaveWrapper : ICloudStorageProvider
     {
-        private const string c_saveGameFileName = "GameData";
+        private const string saveGameFileName = "GameData";
+
         private static float s_timeWhenCloudSaveWasLoaded;
         private static bool s_saveInitialized;
         private static bool s_loadInitialized;
         private static bool s_isSynchronising;
+
         private readonly CloudOnceEvents cloudOnceEvents;
 
         public GooglePlayGamesCloudSaveWrapper(CloudOnceEvents events)
@@ -66,7 +68,7 @@ namespace CloudOnce.Internal.Providers
                 if (GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized && PlayGamesPlatform.Instance.IsAuthenticated())
                 {
                     PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(
-                        c_saveGameFileName,
+                        saveGameFileName,
                         DataSource.ReadCacheOrNetwork,
                         ConflictResolutionStrategy.UseLongestPlaytime,
                         OnSavedGameOpenedForSave);
@@ -91,7 +93,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Loads saved game data from the server. Filename is defined by <c>c_saveGameFileName</c>.
+        /// Loads saved game data from the server. File name is defined by <c>saveGameFileName</c>.
         /// </summary>
         public void Load()
         {
@@ -118,7 +120,7 @@ namespace CloudOnce.Internal.Providers
                 Logger.d("Loading default save game.");
 
                 PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(
-                    c_saveGameFileName,
+                    saveGameFileName,
                     DataSource.ReadCacheOrNetwork,
                     ConflictResolutionStrategy.UseLongestPlaytime,
                     OnSavedGameOpenedForLoad);

@@ -15,13 +15,13 @@ namespace CloudOnce.Internal
     public class SyncableItemMetaData : IEquatable<SyncableItemMetaData>, IJsonConvertible
     {
         // Short names for serialization
-        private const string c_oldAliasDataType = "dT";
-        private const string c_oldAliasPersistenceType = "pT";
-        private const string c_oldAliasTimestamp = "tS";
+        private const string oldAliasDataType = "dT";
+        private const string oldAliasPersistenceType = "pT";
+        private const string oldAliasTimestamp = "tS";
 
-        private const string c_aliasDataType = "d";
-        private const string c_aliasPersistenceType = "p";
-        private const string c_aliasTimestamp = "t";
+        private const string aliasDataType = "d";
+        private const string aliasPersistenceType = "p";
+        private const string aliasTimestamp = "t";
 
         #region Constructors
 
@@ -132,8 +132,8 @@ namespace CloudOnce.Internal
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the meta data.</param>
         public void FromJSONObject(JSONObject jsonObject)
         {
-            var dataTypeAlias = CloudOnceUtils.GetAlias(typeof(SyncableItemMetaData).Name, jsonObject, c_aliasDataType, c_oldAliasDataType);
-            var persistenceTypeAlias = CloudOnceUtils.GetAlias(typeof(SyncableItemMetaData).Name, jsonObject, c_aliasPersistenceType, c_oldAliasPersistenceType);
+            var dataTypeAlias = CloudOnceUtils.GetAlias(typeof(SyncableItemMetaData).Name, jsonObject, aliasDataType, oldAliasDataType);
+            var persistenceTypeAlias = CloudOnceUtils.GetAlias(typeof(SyncableItemMetaData).Name, jsonObject, aliasPersistenceType, oldAliasPersistenceType);
 
             if (!string.IsNullOrEmpty(jsonObject[dataTypeAlias].String))
             {
@@ -153,13 +153,13 @@ namespace CloudOnce.Internal
                 PersistenceType = (PersistenceType)(short)jsonObject[persistenceTypeAlias].F;
             }
 
-            if (jsonObject.HasFields(c_aliasTimestamp))
+            if (jsonObject.HasFields(aliasTimestamp))
             {
-                Timestamp = DateTime.FromBinary(Convert.ToInt64(jsonObject[c_aliasTimestamp].String));
+                Timestamp = DateTime.FromBinary(Convert.ToInt64(jsonObject[aliasTimestamp].String));
             }
-            else if (jsonObject.HasFields(c_oldAliasTimestamp))
+            else if (jsonObject.HasFields(oldAliasTimestamp))
             {
-                Timestamp = DateTime.FromBinary(Convert.ToInt64(jsonObject[c_oldAliasTimestamp].String));
+                Timestamp = DateTime.FromBinary(Convert.ToInt64(jsonObject[oldAliasTimestamp].String));
             }
         }
 
@@ -171,11 +171,11 @@ namespace CloudOnce.Internal
         {
             var jsonObject = new JSONObject(JSONObject.Type.Object);
 
-            jsonObject.AddField(c_aliasDataType, (short)DataType);
-            jsonObject.AddField(c_aliasPersistenceType, (short)PersistenceType);
+            jsonObject.AddField(aliasDataType, (short)DataType);
+            jsonObject.AddField(aliasPersistenceType, (short)PersistenceType);
             if (PersistenceType == PersistenceType.Latest)
             {
-                jsonObject.AddField(c_aliasTimestamp, Timestamp.ToBinary().ToString(CultureInfo.InvariantCulture));
+                jsonObject.AddField(aliasTimestamp, Timestamp.ToBinary().ToString(CultureInfo.InvariantCulture));
             }
 
             return jsonObject;

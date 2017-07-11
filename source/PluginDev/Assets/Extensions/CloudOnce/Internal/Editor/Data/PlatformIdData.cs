@@ -16,10 +16,10 @@ namespace CloudOnce.Internal.Editor.Data
     [Serializable]
     public class PlatformIdData : IJsonSerializeable
     {
-        private const string c_keyInternalID = "InternalID";
-        private const string c_keyAppleID = "AppleID";
-        private const string c_keyGoogleID = "GoogleID";
-        private const string c_keyAmazonID = "AmazonID";
+        private const string internalIdName = "InternalID";
+        private const string appleIdName = "AppleID";
+        private const string googleIdName = "GoogleID";
+        private const string amazonIdName = "AmazonID";
 
         [SerializeField] private string internalId;
         [SerializeField] private string appleId;
@@ -118,10 +118,10 @@ namespace CloudOnce.Internal.Editor.Data
         {
             var jsonObject = new JSONObject(JSONObject.Type.Object);
 
-            jsonObject.AddField(c_keyInternalID, InternalId);
-            jsonObject.AddField(c_keyAppleID, AppleId);
-            jsonObject.AddField(c_keyGoogleID, GoogleId);
-            jsonObject.AddField(c_keyAmazonID, AmazonId);
+            jsonObject.AddField(internalIdName, InternalId);
+            jsonObject.AddField(appleIdName, AppleId);
+            jsonObject.AddField(googleIdName, GoogleId);
+            jsonObject.AddField(amazonIdName, AmazonId);
 
             return jsonObject;
         }
@@ -132,15 +132,15 @@ namespace CloudOnce.Internal.Editor.Data
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the <see cref="PlatformIdData"/>.</param>
         private void FromJSONObject(JSONObject jsonObject)
         {
-            if (!jsonObject.HasFields(c_keyInternalID, c_keyAppleID, c_keyGoogleID, c_keyAmazonID))
+            if (!jsonObject.HasFields(internalIdName, appleIdName, googleIdName, amazonIdName))
             {
                 throw new SerializationException("JSONObject missing fields, cannot deserialize to " + typeof(PlatformIdData).Name);
             }
 
-            InternalId = jsonObject[c_keyInternalID].String;
-            AppleId = jsonObject[c_keyAppleID].String;
-            GoogleId = jsonObject[c_keyGoogleID].String;
-            AmazonId = jsonObject[c_keyAmazonID].String;
+            InternalId = jsonObject[internalIdName].String;
+            AppleId = jsonObject[appleIdName].String;
+            GoogleId = jsonObject[googleIdName].String;
+            AmazonId = jsonObject[amazonIdName].String;
         }
     }
 }

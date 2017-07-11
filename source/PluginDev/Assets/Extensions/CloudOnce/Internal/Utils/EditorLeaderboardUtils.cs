@@ -34,7 +34,10 @@ namespace CloudOnce.Internal.Utils
                 return;
             }
 
-            ReportSubmitScoreSuccess(score, onComplete, id, internalID);
+#if CLOUDONCE_DEBUG
+            Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
+#endif
+            CloudOnceUtils.SafeInvoke(onComplete, new CloudRequestResult<bool>(true));
         }
 
         /// <summary>
@@ -68,13 +71,6 @@ namespace CloudOnce.Internal.Utils
             Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
-        }
-        private static void ReportSubmitScoreSuccess(long score, Action<CloudRequestResult<bool>> callbackAction, string id, string internalID)
-        {
-#if CLOUDONCE_DEBUG
-            Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
-#endif
-            CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
         }
 
         #endregion /Private methods

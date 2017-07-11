@@ -20,25 +20,25 @@ namespace CloudOnce.Internal.Editor.Utils
     {
         #region Fields & properties
 
-        private const string c_achievementsPath = CloudOncePaths.Data + "/Achievements.cs";
-        private const string c_leaderboardsPath = CloudOncePaths.Data + "/Leaderboards.cs";
-        private const string c_cloudVariablesPath = CloudOncePaths.Data + "/CloudVariables.cs";
-        private const string c_cloudIDsPath = CloudOncePaths.Data + "/CloudIDs.cs";
+        private const string achievementsPath = CloudOncePaths.Data + "/Achievements.cs";
+        private const string leaderboardsPath = CloudOncePaths.Data + "/Leaderboards.cs";
+        private const string cloudVariablesPath = CloudOncePaths.Data + "/CloudVariables.cs";
+        private const string cloudIDsPath = CloudOncePaths.Data + "/CloudIDs.cs";
 
-        private const string c_achievementsTemplatePath = CloudOncePaths.Templates + "/AchievementsTemplate.cs.txt";
-        private const string c_leaderboardsTemplatePath = CloudOncePaths.Templates + "/LeaderboardsTemplate.cs.txt";
-        private const string c_cloudVariablesTemplatePath = CloudOncePaths.Templates + "/CloudVariablesTemplate.cs.txt";
-        private const string c_cloudIDsTemplatePath = CloudOncePaths.Templates + "/CloudIDsTemplate.cs.txt";
+        private const string achievementsTemplatePath = CloudOncePaths.Templates + "/AchievementsTemplate.cs.txt";
+        private const string leaderboardsTemplatePath = CloudOncePaths.Templates + "/LeaderboardsTemplate.cs.txt";
+        private const string cloudVariablesTemplatePath = CloudOncePaths.Templates + "/CloudVariablesTemplate.cs.txt";
+        private const string cloudIDsTemplatePath = CloudOncePaths.Templates + "/CloudIDsTemplate.cs.txt";
 
-        private const string c_achievementsPropertyTemplatePath = CloudOncePaths.Templates + "/AchievementsPropertyTemplate.cs.txt";
-        private const string c_leaderboardsPropertyTemplatePath = CloudOncePaths.Templates + "/LeaderboardsPropertyTemplate.cs.txt";
-        private const string c_cloudVariablesPropertyTemplatePath = CloudOncePaths.Templates + "/CloudVariablesPropertyTemplate.cs.txt";
-        private const string c_cloudIDsPropertyTemplatePath = CloudOncePaths.Templates + "/CloudIDsPropertyTemplate.cs.txt";
+        private const string achievementsPropertyTemplatePath = CloudOncePaths.Templates + "/AchievementsPropertyTemplate.cs.txt";
+        private const string leaderboardsPropertyTemplatePath = CloudOncePaths.Templates + "/LeaderboardsPropertyTemplate.cs.txt";
+        private const string cloudVariablesPropertyTemplatePath = CloudOncePaths.Templates + "/CloudVariablesPropertyTemplate.cs.txt";
+        private const string cloudIDsPropertyTemplatePath = CloudOncePaths.Templates + "/CloudIDsPropertyTemplate.cs.txt";
 
-        private const string c_defaultVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", PERSISTENCE_TYPE, VAR_DEFAULT_VALUE);";
-        private const string c_currencyVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", VAR_DEFAULT_VALUE, ALLOW_NEGATIVE);";
-        private const string c_dateTimeVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", PERSISTENCE_TYPE);";
-        private const string c_allAchievementsTemplate = "        public static readonly UnifiedAchievement[] All =";
+        private const string defaultVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", PERSISTENCE_TYPE, VAR_DEFAULT_VALUE);";
+        private const string currencyVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", VAR_DEFAULT_VALUE, ALLOW_NEGATIVE);";
+        private const string dateTimeVariableTemplate = "        private static readonly VAR_TYPE FIELDNAME = new VAR_TYPE(\"VAR_ID\", PERSISTENCE_TYPE);";
+        private const string allAchievementsTemplate = "        public static readonly UnifiedAchievement[] All =";
 
         #endregion /Fields & properties
 
@@ -96,16 +96,16 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>
         private static void CreateCloudIDsScript(CloudConfig cloudConfig)
         {
-            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(c_cloudIDsPath)))
+            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(cloudIDsPath)))
             {
                 string newCloudIDsScript;
                 string idPropertyTemplate;
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_cloudIDsTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(cloudIDsTemplatePath)))
                 {
                     newCloudIDsScript = reader.ReadToEnd();
                 }
 
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_cloudIDsPropertyTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(cloudIDsPropertyTemplatePath)))
                 {
                     idPropertyTemplate = reader.ReadToEnd();
                 }
@@ -149,11 +149,11 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
-                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(c_cloudIDsPath));
+                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(cloudIDsPath));
             }
             catch (Exception)
             {
-                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(c_cloudIDsPath));
+                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(cloudIDsPath));
             }
         }
 
@@ -164,16 +164,16 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>
         private static void CreateAchievementsScript(CloudConfig cloudConfig)
         {
-            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(c_achievementsPath)))
+            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(achievementsPath)))
             {
                 string newAchievementsScript;
                 string idPropertyTemplate;
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_achievementsTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(achievementsTemplatePath)))
                 {
                     newAchievementsScript = reader.ReadToEnd();
                 }
 
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_achievementsPropertyTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(achievementsPropertyTemplatePath)))
                 {
                     idPropertyTemplate = reader.ReadToEnd();
                 }
@@ -190,7 +190,7 @@ namespace CloudOnce.Internal.Editor.Utils
                     builder.AppendLine(propertyString).AppendLine();
                 }
 
-                builder.AppendLine(c_allAchievementsTemplate).AppendLine("        {");
+                builder.AppendLine(allAchievementsTemplate).AppendLine("        {");
                 foreach (var idData in cloudConfig.AchievementIDs)
                 {
                     builder.AppendLine("            s_" + FirstLetterToLowerCase(idData.InternalId) + ",");
@@ -205,11 +205,11 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
-                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(c_achievementsPath));
+                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(achievementsPath));
             }
             catch (Exception)
             {
-                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(c_achievementsPath));
+                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(achievementsPath));
             }
         }
 
@@ -220,16 +220,16 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>
         private static void CreateLeaderboardsScript(CloudConfig cloudConfig)
         {
-            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(c_leaderboardsPath)))
+            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(leaderboardsPath)))
             {
                 string newLeaderboardsScript;
                 string idPropertyTemplate;
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_leaderboardsTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(leaderboardsTemplatePath)))
                 {
                     newLeaderboardsScript = reader.ReadToEnd();
                 }
 
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_leaderboardsPropertyTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(leaderboardsPropertyTemplatePath)))
                 {
                     idPropertyTemplate = reader.ReadToEnd();
                 }
@@ -257,11 +257,11 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
-                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(c_leaderboardsPath));
+                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(leaderboardsPath));
             }
             catch (Exception)
             {
-                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(c_leaderboardsPath));
+                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(leaderboardsPath));
             }
         }
 
@@ -272,16 +272,16 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>
         private static void CreateCloudVariablesScript(CloudConfig cloudConfig)
         {
-            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(c_cloudVariablesPath)))
+            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(cloudVariablesPath)))
             {
                 string newCloudVariablesScript;
                 string varPropertyTemplate;
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_cloudVariablesTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(cloudVariablesTemplatePath)))
                 {
                     newCloudVariablesScript = reader.ReadToEnd();
                 }
 
-                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(c_cloudVariablesPropertyTemplatePath)))
+                using (TextReader reader = File.OpenText(GPGSUtil.SlashesToPlatformSeparator(cloudVariablesPropertyTemplatePath)))
                 {
                     varPropertyTemplate = reader.ReadToEnd();
                 }
@@ -300,16 +300,16 @@ namespace CloudOnce.Internal.Editor.Utils
                         case CloudVariableType.UInt:
                         case CloudVariableType.Long:
                         case CloudVariableType.Decimal:
-                            fieldString = c_defaultVariableTemplate;
+                            fieldString = defaultVariableTemplate;
                             fieldString = fieldString.Replace("PERSISTENCE_TYPE", GetPersistenceTypeString(cloudConfig.CloudVariables[i].PersistenceType));
                             break;
                         case CloudVariableType.CurrencyFloat:
                         case CloudVariableType.CurrencyInt:
-                            fieldString = c_currencyVariableTemplate;
+                            fieldString = currencyVariableTemplate;
                             fieldString = fieldString.Replace("ALLOW_NEGATIVE", FirstLetterToLowerCase(cloudConfig.CloudVariables[i].AllowNegative.ToString()));
                             break;
                         case CloudVariableType.DateTime:
-                            fieldString = c_dateTimeVariableTemplate;
+                            fieldString = dateTimeVariableTemplate;
                             fieldString = fieldString.Replace("PERSISTENCE_TYPE", GetPersistenceTypeString(cloudConfig.CloudVariables[i].PersistenceType));
                             break;
                         default:
@@ -341,11 +341,11 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
-                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(c_cloudVariablesPath));
+                AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(cloudVariablesPath));
             }
             catch (Exception)
             {
-                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(c_cloudVariablesPath));
+                Debug.LogError("Can't import asset: " + GPGSUtil.SlashesToPlatformSeparator(cloudVariablesPath));
             }
         }
 

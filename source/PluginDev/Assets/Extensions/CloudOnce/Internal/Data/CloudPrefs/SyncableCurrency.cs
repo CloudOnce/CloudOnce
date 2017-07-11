@@ -17,12 +17,12 @@ namespace CloudOnce.Internal
     {
         #region Fields & properties
 
-        private const string c_oldAliasCurrencyID = "cID";
-        private const string c_oldAliasCurrencyDatas = "cData";
+        private const string oldAliasCurrencyID = "cID";
+        private const string oldAliasCurrencyDatas = "cData";
 
         // These strings are used for serializing this class
-        private const string c_aliasCurrencyID = "i";
-        private const string c_aliasCurrencyDatas = "d";
+        private const string aliasCurrencyID = "i";
+        private const string aliasCurrencyDatas = "d";
 
         private Dictionary<string, CurrencyValue> deviceCurrencyValues = new Dictionary<string, CurrencyValue>();
 
@@ -81,8 +81,8 @@ namespace CloudOnce.Internal
 
             var container = JSONObject.Create(JSONObject.Type.Object);
 
-            container.AddField(c_aliasCurrencyID, jsonCurrencyId);
-            container.AddField(c_aliasCurrencyDatas, jsonCurrencyValue);
+            container.AddField(aliasCurrencyID, jsonCurrencyId);
+            container.AddField(aliasCurrencyDatas, jsonCurrencyValue);
 
             return container;
         }
@@ -93,8 +93,8 @@ namespace CloudOnce.Internal
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the currency data.</param>
         public void FromJSONObject(JSONObject jsonObject)
         {
-            var idAlias = CloudOnceUtils.GetAlias(typeof(SyncableCurrency).Name, jsonObject, c_aliasCurrencyID, c_oldAliasCurrencyID);
-            var dataAlias = CloudOnceUtils.GetAlias(typeof(SyncableCurrency).Name, jsonObject, c_aliasCurrencyDatas, c_oldAliasCurrencyDatas);
+            var idAlias = CloudOnceUtils.GetAlias(typeof(SyncableCurrency).Name, jsonObject, aliasCurrencyID, oldAliasCurrencyID);
+            var dataAlias = CloudOnceUtils.GetAlias(typeof(SyncableCurrency).Name, jsonObject, aliasCurrencyDatas, oldAliasCurrencyDatas);
 
             CurrencyID = jsonObject[idAlias].String;
             DeviceCurrencyValues = JsonHelper.Convert<Dictionary<string, CurrencyValue>>(jsonObject[dataAlias]);

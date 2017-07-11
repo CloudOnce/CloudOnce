@@ -8,7 +8,6 @@ namespace CloudOnce.Internal.Editor.Utils
 {
     using UnityEditor;
     using UnityEditor.Callbacks;
-    using UnityEngine;
 
     /// <summary>
     /// Automatic operations called after an iOS build.
@@ -17,8 +16,8 @@ namespace CloudOnce.Internal.Editor.Utils
     {
         #region Fields & properties
 
-        private const string c_requiredDeviceCapabilities = "UIRequiredDeviceCapabilities";
-        private const string c_gameKit = "gamekit";
+        private const string requiredDeviceCapabilities = "UIRequiredDeviceCapabilities";
+        private const string gameKit = "gamekit";
 
         #endregion /Fields & properties
 
@@ -27,17 +26,11 @@ namespace CloudOnce.Internal.Editor.Utils
         [PostProcessBuild]
         public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
         {
-#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7
-            if (target != BuildTarget.iPhone)
-            {
-                return;
-            }
-#else
             if (target != BuildTarget.iOS)
             {
                 return;
             }
-#endif
+
             EnsureGameKitExist(pathToBuiltProject + "/Info.plist");
         }
 
@@ -59,21 +52,21 @@ namespace CloudOnce.Internal.Editor.Utils
             }
 
             // If the top-level UIRequiredDeviceCapabilities field doesn't exist, add it and the GameKit entry
-            if (string.IsNullOrEmpty(buddy.EntryValue(c_requiredDeviceCapabilities)))
+            if (string.IsNullOrEmpty(buddy.EntryValue(requiredDeviceCapabilities)))
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log("Adding GameKit to Info.plist.");
+                UnityEngine.Debug.Log("Adding GameKit to Info.plist.");
 #endif
-                buddy.AddArray(c_requiredDeviceCapabilities);
-                buddy.AddString(PlistBuddyHelper.ToEntryName(c_requiredDeviceCapabilities, 0), c_gameKit);
+                buddy.AddArray(requiredDeviceCapabilities);
+                buddy.AddString(PlistBuddyHelper.ToEntryName(requiredDeviceCapabilities, 0), gameKit);
                 return;
             }
 
             // Check if GameKit already exist in UIRequiredDeviceCapabilities array
             var index = 0;
-            while (buddy.EntryValue(c_requiredDeviceCapabilities, index) != null)
+            while (buddy.EntryValue(requiredDeviceCapabilities, index) != null)
             {
-                if (c_gameKit.Equals(buddy.EntryValue(c_requiredDeviceCapabilities, index)))
+                if (gameKit.Equals(buddy.EntryValue(requiredDeviceCapabilities, index)))
                 {
                     // GameKit is already in UIRequiredDeviceCapabilities array, no need to add it
                     return;
@@ -82,11 +75,11 @@ namespace CloudOnce.Internal.Editor.Utils
                 index++;
             }
 #if CLOUDONCE_DEBUG
-            Debug.Log("Adding GameKit to Info.plist.");
+            UnityEngine.Debug.Log("Adding GameKit to Info.plist.");
 #endif
 
             // GameKit was not detected, so we add it
-            buddy.AddString(PlistBuddyHelper.ToEntryName(c_requiredDeviceCapabilities, 0), c_gameKit);
+            buddy.AddString(PlistBuddyHelper.ToEntryName(requiredDeviceCapabilities, 0), gameKit);
         }
 
         #endregion /Private methods

@@ -16,7 +16,7 @@ namespace CloudOnce.Internal
     {
         #region Fields, constructors & delegates
 
-        private const string c_deviceIdKey = "CloudOnceDeviceID";
+        private const string deviceIdKey = "CloudOnceDeviceID";
         private static string s_deviceIdCache;
 
         private Dictionary<string, CurrencyValue> deviceCurrencyValues;
@@ -162,14 +162,14 @@ namespace CloudOnce.Internal
                     return s_deviceIdCache;
                 }
 
-                if (PlayerPrefs.HasKey(c_deviceIdKey))
+                if (PlayerPrefs.HasKey(deviceIdKey))
                 {
-                    s_deviceIdCache = PlayerPrefs.GetString(c_deviceIdKey);
+                    s_deviceIdCache = PlayerPrefs.GetString(deviceIdKey);
                     return s_deviceIdCache;
                 }
 
                 s_deviceIdCache = Guid.NewGuid().ToString();
-                PlayerPrefs.SetString(c_deviceIdKey, s_deviceIdCache);
+                PlayerPrefs.SetString(deviceIdKey, s_deviceIdCache);
                 PlayerPrefs.Save();
                 return s_deviceIdCache;
             }

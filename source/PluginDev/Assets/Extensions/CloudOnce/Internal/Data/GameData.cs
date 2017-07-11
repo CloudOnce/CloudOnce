@@ -13,11 +13,11 @@ namespace CloudOnce.Internal
     /// </summary>
     public class GameData
     {
-        private const string c_oldSyncableItemsKey = "SIs";
-        private const string c_oldSyncableCurrenciesKey = "SCs";
+        private const string oldSyncableItemsKey = "SIs";
+        private const string oldSyncableCurrenciesKey = "SCs";
 
-        private const string c_syncableItemsKey = "i";
-        private const string c_syncableCurrenciesKey = "c";
+        private const string syncableItemsKey = "i";
+        private const string syncableCurrenciesKey = "c";
 
         public GameData()
         {
@@ -36,8 +36,8 @@ namespace CloudOnce.Internal
 
             var jsonObject = new JSONObject(serializedData);
 
-            var itemsAlias = CloudOnceUtils.GetAlias(typeof(GameData).Name, jsonObject, c_syncableItemsKey, c_oldSyncableItemsKey);
-            var currencyAlias = CloudOnceUtils.GetAlias(typeof(GameData).Name, jsonObject, c_syncableCurrenciesKey, c_oldSyncableCurrenciesKey);
+            var itemsAlias = CloudOnceUtils.GetAlias(typeof(GameData).Name, jsonObject, syncableItemsKey, oldSyncableItemsKey);
+            var currencyAlias = CloudOnceUtils.GetAlias(typeof(GameData).Name, jsonObject, syncableCurrenciesKey, oldSyncableCurrenciesKey);
 
             SyncableItems = JsonHelper.Convert<Dictionary<string, SyncableItem>>(jsonObject[itemsAlias]);
             SyncableCurrencies = JsonHelper.Convert<Dictionary<string, SyncableCurrency>>(jsonObject[currencyAlias]);
@@ -69,8 +69,8 @@ namespace CloudOnce.Internal
         {
             var jsonObject = new JSONObject(JSONObject.Type.Object);
 
-            jsonObject.AddField(c_syncableItemsKey, JsonHelper.ToJsonObject(SyncableItems));
-            jsonObject.AddField(c_syncableCurrenciesKey, JsonHelper.ToJsonObject(SyncableCurrencies));
+            jsonObject.AddField(syncableItemsKey, JsonHelper.ToJsonObject(SyncableItems));
+            jsonObject.AddField(syncableCurrenciesKey, JsonHelper.ToJsonObject(SyncableCurrencies));
 
             return jsonObject.ToString();
         }

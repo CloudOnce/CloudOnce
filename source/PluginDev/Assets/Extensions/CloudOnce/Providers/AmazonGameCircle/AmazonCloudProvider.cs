@@ -25,7 +25,7 @@ namespace CloudOnce.Internal.Providers
         /// <summary>
         /// Name of GameObject that is used as the Amazon native callback target.
         /// </summary>
-        private const string c_nativeCallbackTargetName = "GameCircleManager";
+        private const string nativeCallbackTargetName = "GameCircleManager";
 
         private CloudOnceEvents cloudOnceEvents;
         private bool cloudSaveEnabled = true;
@@ -433,7 +433,7 @@ namespace CloudOnce.Internal.Providers
         protected override void OnAwake()
         {
             // Native Android code sends messages into Unity using a GameObject with a specific name
-            name = c_nativeCallbackTargetName;
+            name = nativeCallbackTargetName;
         }
 
         protected override void OnOnDestroy()

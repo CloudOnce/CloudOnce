@@ -6,7 +6,6 @@
 namespace CloudOnce.Internal
 {
     using System;
-    using UnityEngine;
     using Utils;
 
     /// <summary>
@@ -81,7 +80,7 @@ namespace CloudOnce.Internal
             if (!IsUnlocked)
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log(string.Format("Attempting to unlock {0} ({1}).", internalID, ID));
+                UnityEngine.Debug.Log(string.Format("Attempting to unlock {0} ({1}).", internalID, ID));
 #endif
                 Action<CloudRequestResult<bool>> callback = response =>
                     {
@@ -109,7 +108,7 @@ namespace CloudOnce.Internal
             if (isAchievementHidden)
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log(string.Format("Attempting to reveal {0} ({1}).", internalID, ID));
+                UnityEngine.Debug.Log(string.Format("Attempting to reveal {0} ({1}).", internalID, ID));
 #endif
                 Action<CloudRequestResult<bool>> callback = response =>
                 {
@@ -176,14 +175,14 @@ namespace CloudOnce.Internal
                 if (progress.Equals(0.0))
                 {
 #if CLOUDONCE_DEBUG
-                    Debug.Log("Progress equals 0.0. Revealing achievement.");
+                    UnityEngine.Debug.Log("Progress equals 0.0. Revealing achievement.");
 #endif
                     Reveal(onComplete);
                 }
                 else if (progress >= 100.0)
                 {
 #if CLOUDONCE_DEBUG
-                    Debug.Log("Progress equals 100.0 or more. Unlocking achievement.");
+                    UnityEngine.Debug.Log("Progress equals 100.0 or more. Unlocking achievement.");
 #endif
                     Unlock(onComplete);
                 }
@@ -195,7 +194,7 @@ namespace CloudOnce.Internal
                 else
                 {
 #if CLOUDONCE_DEBUG
-                    Debug.Log(string.Format("Attempting to increment {0} ({1}) to {2:F2}%.", internalID, ID, progress));
+                    UnityEngine.Debug.Log(string.Format("Attempting to increment {0} ({1}) to {2:F2}%.", internalID, ID, progress));
 #endif
                     Action<CloudRequestResult<bool>> callback = response =>
                     {
@@ -217,12 +216,12 @@ namespace CloudOnce.Internal
         public void UpdateData(bool isUnlocked, double progress, bool isHidden)
         {
 #if CLOUDONCE_DEBUG
-            Debug.Log(string.Format("Updating data for {0} ({1}) achievement.", internalID, ID));
+            UnityEngine.Debug.Log(string.Format("Updating data for {0} ({1}) achievement.", internalID, ID));
 #endif
             if (IsUnlocked && !isUnlocked)
             {
 #if CLOUDONCE_DEBUG
-                Debug.LogWarning(
+                UnityEngine.Debug.LogWarning(
                     string.Format("Inconsistency detected between local and remote unlocked status. Achievement {0} ({1}) should be unlocked. Attempting to correct.", internalID, ID));
 #endif
                 Action<CloudRequestResult<bool>> callback = response =>
@@ -237,7 +236,7 @@ namespace CloudOnce.Internal
             if (Progress > progress)
             {
 #if CLOUDONCE_DEBUG
-                Debug.LogWarning(
+                UnityEngine.Debug.LogWarning(
                     string.Format("Inconsistency detected between local and remote progress status. Achievement {0} ({1}) should be at {2:F2}%. Attempting to correct.", internalID, ID, Progress));
 #endif
                 Action<CloudRequestResult<bool>> callback = response =>
@@ -255,7 +254,7 @@ namespace CloudOnce.Internal
             if (!IsUnlocked && Progress.Equals(100.0))
             {
 #if CLOUDONCE_DEBUG
-                Debug.LogWarning(
+                UnityEngine.Debug.LogWarning(
                     string.Format("Inconsistency detected between progress and unlocked status. Achievement {0} ({1}) should be unlocked. Attempting to correct.", internalID, ID));
 #endif
                 Action<CloudRequestResult<bool>> callback = response =>
@@ -274,7 +273,7 @@ namespace CloudOnce.Internal
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
 #if CLOUDONCE_DEBUG
-            Debug.LogWarning(errorMessage);
+            UnityEngine.Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
         }

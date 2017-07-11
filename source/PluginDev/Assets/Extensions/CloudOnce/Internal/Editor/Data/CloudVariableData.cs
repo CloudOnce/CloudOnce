@@ -31,11 +31,11 @@ namespace CloudOnce.Internal.Editor.Data
     [Serializable]
     public class CloudVariableData : IJsonSerializeable
     {
-        private const string c_keyKey = "Key";
-        private const string c_keyType = "Type";
-        private const string c_keyDefaultValue = "DefaultValue";
-        private const string c_keyPersistenceType = "PersistenceType";
-        private const string c_keyAllowNegative = "AllowNegative";
+        private const string keyName = "Key";
+        private const string typeName = "Type";
+        private const string defaultValueName = "DefaultValue";
+        private const string persistenceTypeName = "PersistenceType";
+        private const string allowNegativeName = "AllowNegative";
 
         [SerializeField] private string key;
         [SerializeField] private CloudVariableType type;
@@ -98,11 +98,11 @@ namespace CloudOnce.Internal.Editor.Data
         {
             var jsonObject = new JSONObject(JSONObject.Type.Object);
 
-            jsonObject.AddField(c_keyKey, Key);
-            jsonObject.AddField(c_keyType, Enum.Format(typeof(CloudVariableType), Type, "D"));
-            jsonObject.AddField(c_keyDefaultValue, DefaultValueString);
-            jsonObject.AddField(c_keyPersistenceType, Enum.Format(typeof(PersistenceType), PersistenceType, "D"));
-            jsonObject.AddField(c_keyAllowNegative, AllowNegative);
+            jsonObject.AddField(keyName, Key);
+            jsonObject.AddField(typeName, Enum.Format(typeof(CloudVariableType), Type, "D"));
+            jsonObject.AddField(defaultValueName, DefaultValueString);
+            jsonObject.AddField(persistenceTypeName, Enum.Format(typeof(PersistenceType), PersistenceType, "D"));
+            jsonObject.AddField(allowNegativeName, AllowNegative);
 
             return jsonObject;
         }
@@ -127,16 +127,16 @@ namespace CloudOnce.Internal.Editor.Data
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the <see cref="CloudVariableData"/>.</param>
         private void FromJSONObject(JSONObject jsonObject)
         {
-            if (!jsonObject.HasFields(c_keyKey, c_keyType, c_keyDefaultValue, c_keyPersistenceType, c_keyAllowNegative))
+            if (!jsonObject.HasFields(keyName, typeName, defaultValueName, persistenceTypeName, allowNegativeName))
             {
                 throw new SerializationException("JSONObject missing fields, cannot deserialize to " + typeof(CloudVariableData).Name);
             }
 
-            Key = jsonObject[c_keyKey].String;
-            Type = (CloudVariableType)Enum.Parse(typeof(CloudVariableType), jsonObject[c_keyType].String);
-            DefaultValueString = jsonObject[c_keyDefaultValue].String;
-            PersistenceType = (PersistenceType)Enum.Parse(typeof(PersistenceType), jsonObject[c_keyPersistenceType].String);
-            AllowNegative = jsonObject[c_keyAllowNegative].B;
+            Key = jsonObject[keyName].String;
+            Type = (CloudVariableType)Enum.Parse(typeof(CloudVariableType), jsonObject[typeName].String);
+            DefaultValueString = jsonObject[defaultValueName].String;
+            PersistenceType = (PersistenceType)Enum.Parse(typeof(PersistenceType), jsonObject[persistenceTypeName].String);
+            AllowNegative = jsonObject[allowNegativeName].B;
         }
     }
 }

@@ -19,9 +19,9 @@ namespace CloudOnce.Internal.Utils
     {
         #region Fields & properties
 
-        private const string c_unlockAction = "unlock";
-        private const string c_revealAction = "reveal";
-        private const string c_incrementAction = "increment";
+        private const string unlockAction = "unlock";
+        private const string revealAction = "reveal";
+        private const string incrementAction = "increment";
 
         private static UnityAction<bool> s_onAppleUnlockCompleted;
         private static UnityAction<bool> s_onAppleRevealCompleted;
@@ -60,7 +60,7 @@ namespace CloudOnce.Internal.Utils
             UnityAction<bool> callback = null;
             callback = response =>
             {
-                OnReportCompleted(response, onComplete, c_unlockAction, id, internalID);
+                OnReportCompleted(response, onComplete, unlockAction, id, internalID);
                 s_onAppleUnlockCompleted -= callback;
             };
 
@@ -97,7 +97,7 @@ namespace CloudOnce.Internal.Utils
             UnityAction<bool> callback = null;
             callback = response =>
             {
-                OnReportCompleted(response, onComplete, c_revealAction, id, internalID);
+                OnReportCompleted(response, onComplete, revealAction, id, internalID);
                 s_onAppleRevealCompleted -= callback;
             };
 
@@ -137,7 +137,7 @@ namespace CloudOnce.Internal.Utils
             UnityAction<bool> callback = null;
             callback = response =>
             {
-                OnReportCompleted(response, onComplete, c_incrementAction, id, internalID);
+                OnReportCompleted(response, onComplete, incrementAction, id, internalID);
                 s_onAppleIncrementCompleted -= callback;
             };
 

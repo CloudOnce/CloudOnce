@@ -21,24 +21,24 @@ namespace CloudOnce.Internal.Editor.Utils
     {
         #region Fields & properties
 
-        private const string c_androidManifestFileName = "/AndroidManifest.xml";
-        private const string c_mainAndroidManifestPath = CloudOncePaths.Android + c_androidManifestFileName;
-        private const string c_mainAndroidManifestTemplatePath = CloudOncePaths.Templates + "/AndroidManifestTemplate.xml";
-        private const string c_amazonAndroidManifestPath = CloudOncePaths.GameCircleLib + c_androidManifestFileName;
+        private const string androidManifestFileName = "/AndroidManifest.xml";
+        private const string mainAndroidManifestPath = CloudOncePaths.Android + androidManifestFileName;
+        private const string mainAndroidManifestTemplatePath = CloudOncePaths.Templates + "/AndroidManifestTemplate.xml";
+        private const string amazonAndroidManifestPath = CloudOncePaths.GameCircleLib + androidManifestFileName;
 
-        private const string c_gameCircleUserInterface = "manifest/application/activity[@android:name='com.amazon.ags.html5.overlay.GameCircleUserInterface']";
-        private const string c_authorizationActivity = "manifest/application/activity[@android:name='com.amazon.identity.auth.device.authorization.AuthorizationActivity']";
-        private const string c_gameCircleAlertUserInterface = "manifest/application/activity[@android:name='com.amazon.ags.html5.overlay.GameCircleAlertUserInterface']";
-        private const string c_gameCircleApiKey = "manifest/application/meta-data[@android:name='APIKey']";
+        private const string gameCircleUserInterface = "manifest/application/activity[@android:name='com.amazon.ags.html5.overlay.GameCircleUserInterface']";
+        private const string authorizationActivity = "manifest/application/activity[@android:name='com.amazon.identity.auth.device.authorization.AuthorizationActivity']";
+        private const string gameCircleAlertUserInterface = "manifest/application/activity[@android:name='com.amazon.ags.html5.overlay.GameCircleAlertUserInterface']";
+        private const string gameCircleApiKeyElement = "manifest/application/meta-data[@android:name='APIKey']";
 
         private readonly XNamespace xmlns = "http://schemas.android.com/apk/res/android";
 
         private readonly string[] amazonElements =
         {
-            c_gameCircleUserInterface,
-            c_gameCircleAlertUserInterface,
-            c_authorizationActivity,
-            c_gameCircleApiKey
+            gameCircleUserInterface,
+            gameCircleAlertUserInterface,
+            authorizationActivity,
+            gameCircleApiKeyElement
         };
 
         private XDocument manifest;
@@ -95,7 +95,7 @@ namespace CloudOnce.Internal.Editor.Utils
             gameCircleApiKey = apiKey;
             EnsureMainManifestExists();
 
-            manifest = XDocument.Load(c_amazonAndroidManifestPath);
+            manifest = XDocument.Load(amazonAndroidManifestPath);
 
             foreach (var element in amazonElements)
             {
@@ -107,8 +107,8 @@ namespace CloudOnce.Internal.Editor.Utils
                 AddXElementToManifest(element);
             }
 
-            manifest.Save(c_amazonAndroidManifestPath);
-            AssetDatabase.ImportAsset(c_amazonAndroidManifestPath);
+            manifest.Save(amazonAndroidManifestPath);
+            AssetDatabase.ImportAsset(amazonAndroidManifestPath);
         }
 
         /// <summary>
@@ -145,12 +145,12 @@ namespace CloudOnce.Internal.Editor.Utils
                 AssetDatabase.CreateFolder(pluginsPath, folders[folders.Length - 1]);
             }
 
-            if (!File.Exists(c_mainAndroidManifestPath))
+            if (!File.Exists(mainAndroidManifestPath))
             {
-                using (var writer = new StreamWriter(c_mainAndroidManifestPath))
+                using (var writer = new StreamWriter(mainAndroidManifestPath))
                 {
                     string newAndroidManifest;
-                    using (TextReader reader = File.OpenText(c_mainAndroidManifestTemplatePath))
+                    using (TextReader reader = File.OpenText(mainAndroidManifestTemplatePath))
                     {
                         newAndroidManifest = reader.ReadToEnd();
                     }
@@ -158,7 +158,7 @@ namespace CloudOnce.Internal.Editor.Utils
                     writer.Write(newAndroidManifest);
                 }
 
-                AssetDatabase.ImportAsset(c_mainAndroidManifestPath);
+                AssetDatabase.ImportAsset(mainAndroidManifestPath);
             }
         }
 
@@ -183,47 +183,47 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             switch (element)
             {
-                case c_gameCircleUserInterface:
+                case gameCircleUserInterface:
                 {
-                    var gameCircleUserInterface = new XElement("activity");
-                    gameCircleUserInterface.Add(new XAttribute(xmlns + "name", "com.amazon.ags.html5.overlay.GameCircleUserInterface"));
-                    gameCircleUserInterface.Add(new XAttribute(xmlns + "theme", "@style/GCOverlay"));
+                    var userInterface = new XElement("activity");
+                    userInterface.Add(new XAttribute(xmlns + "name", "com.amazon.ags.html5.overlay.GameCircleUserInterface"));
+                    userInterface.Add(new XAttribute(xmlns + "theme", "@style/GCOverlay"));
 #if !UNITY_5_6_OR_NEWER
                     if (PlayerSettings.Android.minSdkVersion > AndroidSdkVersions.AndroidApiLevel10)
                     {
 #endif
-                        gameCircleUserInterface.Add(new XAttribute(xmlns + "hardwareAccelerated", "false"));
+                        userInterface.Add(new XAttribute(xmlns + "hardwareAccelerated", "false"));
 #if !UNITY_5_6_OR_NEWER
                     }
 #endif
-                    return gameCircleUserInterface;
+                    return userInterface;
                 }
 
-                case c_gameCircleAlertUserInterface:
+                case gameCircleAlertUserInterface:
                 {
-                    var gameCircleAlertUserInterface = new XElement("activity");
-                    gameCircleAlertUserInterface.Add(new XAttribute(
+                    var alertUserInterface = new XElement("activity");
+                    alertUserInterface.Add(new XAttribute(
                         xmlns + "name", "com.amazon.ags.html5.overlay.GameCircleAlertUserInterface"));
-                    gameCircleAlertUserInterface.Add(new XAttribute(xmlns + "theme", "@style/GCAlert"));
+                    alertUserInterface.Add(new XAttribute(xmlns + "theme", "@style/GCAlert"));
 #if !UNITY_5_6_OR_NEWER
                     if (PlayerSettings.Android.minSdkVersion > AndroidSdkVersions.AndroidApiLevel10)
                     {
 #endif
-                        gameCircleAlertUserInterface.Add(new XAttribute(xmlns + "hardwareAccelerated", "false"));
+                        alertUserInterface.Add(new XAttribute(xmlns + "hardwareAccelerated", "false"));
 #if !UNITY_5_6_OR_NEWER
                     }
 #endif
-                    return gameCircleAlertUserInterface;
+                    return alertUserInterface;
                 }
 
-                case c_authorizationActivity:
+                case authorizationActivity:
                 {
-                    var authorizationActivity = new XElement("activity");
-                    authorizationActivity.Add(new XAttribute(
+                    var activity = new XElement("activity");
+                    activity.Add(new XAttribute(
                         xmlns + "name", "com.amazon.identity.auth.device.authorization.AuthorizationActivity"));
-                    authorizationActivity.Add(new XAttribute(xmlns + "theme", "@android:style/Theme.NoDisplay"));
-                    authorizationActivity.Add(new XAttribute(xmlns + "allowTaskReparenting", "true"));
-                    authorizationActivity.Add(new XAttribute(xmlns + "launchMode", "singleTask"));
+                    activity.Add(new XAttribute(xmlns + "theme", "@android:style/Theme.NoDisplay"));
+                    activity.Add(new XAttribute(xmlns + "allowTaskReparenting", "true"));
+                    activity.Add(new XAttribute(xmlns + "launchMode", "singleTask"));
 
                     var authorizationIntentFilter = new XElement("intent-filter");
                     authorizationIntentFilter.Add(new XElement("action", new XAttribute(xmlns + "name", "android.intent.action.VIEW")));
@@ -243,12 +243,12 @@ namespace CloudOnce.Internal.Editor.Utils
                     ifData.Add(new XAttribute(xmlns + "scheme", "amzn"));
 
                     authorizationIntentFilter.Add(ifData);
-                    authorizationActivity.Add(authorizationIntentFilter);
+                    activity.Add(authorizationIntentFilter);
 
-                    return authorizationActivity;
+                    return activity;
                 }
 
-                case c_gameCircleApiKey:
+                case gameCircleApiKeyElement:
                 {
                     var apiKeyMetaData = new XElement("meta-data");
                     apiKeyMetaData.Add(new XAttribute(xmlns + "name", "APIKey"));

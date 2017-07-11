@@ -28,97 +28,96 @@ namespace CloudOnce.Internal.Editor
         private const string
 
             // Folders
-            c_fontsFolder = "/Fonts/",
-            c_imagesFolder = "/Images/",
+            fontsFolder = "/Fonts/",
+            imagesFolder = "/Images/",
 
             // Fonts
-            c_akashiFontPath = c_fontsFolder + "akashi.ttf",
-            c_walkwayFontPath = c_fontsFolder + "Walkway-Bold.ttf",
-            c_robotoSlabFontPath = c_fontsFolder + "RobotoSlab-Regular.ttf",
-            c_robotoFontPath = c_fontsFolder + "Roboto-Regular.ttf",
+            walkwayFontPath = fontsFolder + "Walkway-Bold.ttf",
+            robotoSlabFontPath = fontsFolder + "RobotoSlab-Regular.ttf",
+            robotoFontPath = fontsFolder + "Roboto-Regular.ttf",
 
             // Icons
-            c_cloudOnceIconBlackPath = c_imagesFolder + "CloudOnceIconBlack.png",
-            c_cloudOnceIconWhitePath = c_imagesFolder + "CloudOnceIconWhite.png",
-            c_androidIconPath = c_imagesFolder + "AndroidIcon.png",
-            c_androidIconDarkPath = c_imagesFolder + "AndroidIconDark.png",
-            c_debugIconPath = c_imagesFolder + "DebugIcon.png",
-            c_debugIconDarkPath = c_imagesFolder + "DebugIconDark.png",
-            c_gameCenterIconPath = c_imagesFolder + "GameCenterIcon.png",
-            c_playGamesIconPath = c_imagesFolder + "PlayGamesIcon.png",
-            c_gameCircleIconPath = c_imagesFolder + "GameCircleIcon.png",
-            c_gameCenterDarkIconPath = c_imagesFolder + "GameCenterIconDark.png",
-            c_playGamesDarkIconPath = c_imagesFolder + "PlayGamesIconDark.png",
-            c_gameCircleDarkIconPath = c_imagesFolder + "GameCircleIconDark.png",
-            c_cloudVariableIconPath = c_imagesFolder + "CloudVariableIcon.png",
-            c_cloudVariableIconDarkPath = c_imagesFolder + "CloudVariableIconDark.png",
-            c_saveIcon = c_imagesFolder + "SaveIcon.png",
-            c_saveDarkIcon = c_imagesFolder + "SaveIconDark.png",
-            c_revertIcon = c_imagesFolder + "RevertIcon.png",
-            c_revertDarkIcon = c_imagesFolder + "RevertIconDark.png",
+            cloudOnceIconBlackPath = imagesFolder + "CloudOnceIconBlack.png",
+            cloudOnceIconWhitePath = imagesFolder + "CloudOnceIconWhite.png",
+            androidIconPath = imagesFolder + "AndroidIcon.png",
+            androidIconDarkPath = imagesFolder + "AndroidIconDark.png",
+            debugIconPath = imagesFolder + "DebugIcon.png",
+            debugIconDarkPath = imagesFolder + "DebugIconDark.png",
+            gameCenterIconPath = imagesFolder + "GameCenterIcon.png",
+            playGamesIconPath = imagesFolder + "PlayGamesIcon.png",
+            gameCircleIconPath = imagesFolder + "GameCircleIcon.png",
+            gameCenterDarkIconPath = imagesFolder + "GameCenterIconDark.png",
+            playGamesDarkIconPath = imagesFolder + "PlayGamesIconDark.png",
+            gameCircleDarkIconPath = imagesFolder + "GameCircleIconDark.png",
+            cloudVariableIconPath = imagesFolder + "CloudVariableIcon.png",
+            cloudVariableIconDarkPath = imagesFolder + "CloudVariableIconDark.png",
+            saveIconPath = imagesFolder + "SaveIcon.png",
+            saveDarkIconPath = imagesFolder + "SaveIconDark.png",
+            revertIconPath = imagesFolder + "RevertIcon.png",
+            revertDarkIconPath = imagesFolder + "RevertIconDark.png",
 #if !UNITY_5_0
-            c_cloudOnceIconPath = c_imagesFolder + "CloudOnceIcon.png",
-            c_cloudOnceIconDarkPath = c_imagesFolder + "CloudOnceIconDark.png",
+            cloudOnceIconPath = imagesFolder + "CloudOnceIcon.png",
+            cloudOnceIconDarkPath = imagesFolder + "CloudOnceIconDark.png",
 #endif
 
             // Images
-            c_logoPath = c_imagesFolder + "cloudonce-logo.png",
-            c_whiteXSpritePath = c_imagesFolder + "whiteX.png",
-            c_plusSpritePath = c_imagesFolder + "plus.png",
-            c_toggleOnSpritePath = c_imagesFolder + "toggle_on.png",
-            c_toggleOffSpritePath = c_imagesFolder + "toggle_off.png",
-            c_toggleOffProSpritePath = c_imagesFolder + "toggle_off_pro.png",
-            c_gameCenterOnSpritePath = c_imagesFolder + "ios-game-center.png",
-            c_playGamesOnSpritePath = c_imagesFolder + "google-play-games.png",
-            c_gameCircleOnSpritePath = c_imagesFolder + "amazon-gamecircle.png",
-            c_gameCenterOffSpritePath = c_imagesFolder + "ios-game-center-off.png",
-            c_playGamesOffSpritePath = c_imagesFolder + "google-play-games-off.png",
-            c_gameCircleOffSpritePath = c_imagesFolder + "amazon-gamecircle-off.png",
-            c_gameCenterOffDarkSpritePath = c_imagesFolder + "ios-game-center-off_Dark.png",
-            c_playGamesOffDarkSpritePath = c_imagesFolder + "google-play-games-off_Dark.png",
-            c_gameCircleOffDarkSpritePath = c_imagesFolder + "amazon-gamecircle-off_Dark.png",
-            c_freeAchievementsSpritePath = c_imagesFolder + "achievements_lightTheme.png",
-            c_proAchievementsSpritePath = c_imagesFolder + "achievements_darkTheme.png",
-            c_freeLeaderboardsSpritePath = c_imagesFolder + "leaderboards_lightTheme.png",
-            c_proLeaderboardsSpritePath = c_imagesFolder + "leaderboards_darkTheme.png",
+            logoPath = imagesFolder + "cloudonce-logo.png",
+            whiteXSpritePath = imagesFolder + "whiteX.png",
+            plusSpritePath = imagesFolder + "plus.png",
+            toggleOnSpritePath = imagesFolder + "toggle_on.png",
+            toggleOffSpritePath = imagesFolder + "toggle_off.png",
+            toggleOffProSpritePath = imagesFolder + "toggle_off_pro.png",
+            gameCenterOnSpritePath = imagesFolder + "ios-game-center.png",
+            playGamesOnSpritePath = imagesFolder + "google-play-games.png",
+            gameCircleOnSpritePath = imagesFolder + "amazon-gamecircle.png",
+            gameCenterOffSpritePath = imagesFolder + "ios-game-center-off.png",
+            playGamesOffSpritePath = imagesFolder + "google-play-games-off.png",
+            gameCircleOffSpritePath = imagesFolder + "amazon-gamecircle-off.png",
+            gameCenterOffDarkSpritePath = imagesFolder + "ios-game-center-off_Dark.png",
+            playGamesOffDarkSpritePath = imagesFolder + "google-play-games-off_Dark.png",
+            gameCircleOffDarkSpritePath = imagesFolder + "amazon-gamecircle-off_Dark.png",
+            freeAchievementsSpritePath = imagesFolder + "achievements_lightTheme.png",
+            proAchievementsSpritePath = imagesFolder + "achievements_darkTheme.png",
+            freeLeaderboardsSpritePath = imagesFolder + "leaderboards_lightTheme.png",
+            proLeaderboardsSpritePath = imagesFolder + "leaderboards_darkTheme.png",
 
             // Platform names
-            c_internalName = " Internal",
-            c_gameCenterName = "Apple Game Center",
-            c_gameCenterNameSplit = "Apple\nGame Center",
-            c_gameCenterNameShort = " Game Center",
-            c_playGamesName = "Google Play Game Services",
-            c_playGamesNameSplit = "Google Play\nGame Services",
-            c_playGamesNameShort = " Game Services",
-            c_gameCircleName = "Amazon GameCircle",
-            c_gameCircleNameSplit = "Amazon\nGameCircle",
-            c_gameCircleNameShort = " GameCircle";
+            internalName = " Internal",
+            gameCenterName = "Apple Game Center",
+            gameCenterNameSplit = "Apple\nGame Center",
+            gameCenterNameShort = " Game Center",
+            playGamesName = "Google Play Game Services",
+            playGamesNameSplit = "Google Play\nGame Services",
+            playGamesNameShort = " Game Services",
+            gameCircleName = "Amazon GameCircle",
+            gameCircleNameSplit = "Amazon\nGameCircle",
+            gameCircleNameShort = " GameCircle";
 
         #endregion /Strings
 
         #region Numbers
 
         private const int
-            c_tinyFontSize = 12,
-            c_platformButtonFontSize = 13,
-            c_largeFontSize = 18,
-            c_cloudOnceLogoFontSize = 42;
+            tinyFontSize = 12,
+            platformButtonFontSize = 13,
+            largeFontSize = 18,
+            cloudOnceLogoFontSize = 42;
 
         private const float
-            c_borderPaddingSmall = 2f,
-            c_borderPadding = 5f,
-            c_slimControlHeight = 16f,
-            c_idPlatformLabelWidth = 102f,
-            c_minimumWindowHeight = 360f,
-            c_minimumWindowWidth = 375f,
-            c_contentColumnWidth = c_minimumWindowWidth - c_indentationWidth - c_scrollbarWidth,
-            c_idPanelWidth = c_contentColumnWidth - c_helpboxMargin,
-            c_platformButtonWidth = (c_contentColumnWidth - c_helpboxMargin) / 3f,
-            c_platformButtonHeight = c_platformButtonWidth * 1.15f,
-            c_indentationWidth = 15f,
-            c_scrollbarWidth = 15f,
-            c_helpboxMargin = 4f,
-            c_footerButtonHeight = 35f;
+            borderPaddingSmall = 2f,
+            borderPadding = 5f,
+            slimControlHeight = 16f,
+            idPlatformLabelWidth = 102f,
+            minimumWindowHeight = 360f,
+            minimumWindowWidth = 375f,
+            contentColumnWidth = minimumWindowWidth - indentationWidth - scrollbarWidth,
+            idPanelWidth = contentColumnWidth - helpboxMargin,
+            platformButtonWidth = (contentColumnWidth - helpboxMargin) / 3f,
+            platformButtonHeight = platformButtonWidth * 1.15f,
+            indentationWidth = 15f,
+            scrollbarWidth = 15f,
+            helpboxMargin = 4f,
+            footerButtonHeight = 35f;
 
         #endregion /Numbers
 
@@ -298,7 +297,7 @@ namespace CloudOnce.Internal.Editor
         {
             // Get existing open window or if none, make a new one
             var window = GetWindow<CloudOnceEditor>();
-            window.minSize = new Vector2(c_minimumWindowWidth, c_minimumWindowHeight);
+            window.minSize = new Vector2(minimumWindowWidth, minimumWindowHeight);
 #if UNITY_5_0
             window.title = "CloudOnce";
 #endif
@@ -489,38 +488,38 @@ namespace CloudOnce.Internal.Editor
 
 #if !UNITY_5_0
             // Window title and icon
-            var iconSprite = GetTexture2D(EditorGUIUtility.isProSkin ? c_cloudOnceIconDarkPath : c_cloudOnceIconPath);
+            var iconSprite = GetTexture2D(EditorGUIUtility.isProSkin ? cloudOnceIconDarkPath : cloudOnceIconPath);
             titleContent = new GUIContent("CloudOnce", iconSprite);
 #endif
 
             // Fonts
-            walkwayFont = GetFont(c_walkwayFontPath);
-            robotoSlabFont = GetFont(c_robotoSlabFontPath);
-            robotoFont = GetFont(c_robotoFontPath);
+            walkwayFont = GetFont(walkwayFontPath);
+            robotoSlabFont = GetFont(robotoSlabFontPath);
+            robotoFont = GetFont(robotoFontPath);
 
             // Textures
-            whiteXSprite = GetTexture2D(c_whiteXSpritePath);
-            plusSprite = GetTexture2D(c_plusSpritePath);
-            logoSprite = GetTexture2D(c_logoPath);
-            achievementsSprite = GetTexture2D(isProSkin ? c_proAchievementsSpritePath : c_freeAchievementsSpritePath);
-            leaderboardsSprite = GetTexture2D(isProSkin ? c_proLeaderboardsSpritePath : c_freeLeaderboardsSpritePath);
-            gameCenterOnSprite = GetTexture2D(c_gameCenterOnSpritePath);
-            playGamesOnSprite = GetTexture2D(c_playGamesOnSpritePath);
-            gameCircleOnSprite = GetTexture2D(c_gameCircleOnSpritePath);
-            gameCenterOffSprite = GetTexture2D(isProSkin ? c_gameCenterOffDarkSpritePath : c_gameCenterOffSpritePath);
-            playGamesOffSprite = GetTexture2D(isProSkin ? c_playGamesOffDarkSpritePath : c_playGamesOffSpritePath);
-            gameCircleOffSprite = GetTexture2D(isProSkin ? c_gameCircleOffDarkSpritePath : c_gameCircleOffSpritePath);
-            cloudOnceIcon = GetTexture2D(isProSkin ? c_cloudOnceIconWhitePath : c_cloudOnceIconBlackPath);
-            gameCenterIcon = GetTexture2D(isProSkin ? c_gameCenterDarkIconPath : c_gameCenterIconPath);
-            playGamesIcon = GetTexture2D(isProSkin ? c_playGamesDarkIconPath : c_playGamesIconPath);
-            gameCircleIcon = GetTexture2D(isProSkin ? c_gameCircleDarkIconPath : c_gameCircleIconPath);
-            toggleOnSprite = GetTexture2D(c_toggleOnSpritePath);
-            toggleOffSprite = GetTexture2D(isProSkin ? c_toggleOffProSpritePath : c_toggleOffSpritePath);
-            debugIcon = GetTexture2D(isProSkin ? c_debugIconDarkPath : c_debugIconPath);
-            androidIcon = GetTexture2D(isProSkin ? c_androidIconDarkPath : c_androidIconPath);
-            cloudVariableIcon = GetTexture2D(isProSkin ? c_cloudVariableIconDarkPath : c_cloudVariableIconPath);
-            saveIcon = GetTexture2D(isProSkin ? c_saveDarkIcon : c_saveIcon);
-            revertIcon = GetTexture2D(isProSkin ? c_revertDarkIcon : c_revertIcon);
+            whiteXSprite = GetTexture2D(whiteXSpritePath);
+            plusSprite = GetTexture2D(plusSpritePath);
+            logoSprite = GetTexture2D(logoPath);
+            achievementsSprite = GetTexture2D(isProSkin ? proAchievementsSpritePath : freeAchievementsSpritePath);
+            leaderboardsSprite = GetTexture2D(isProSkin ? proLeaderboardsSpritePath : freeLeaderboardsSpritePath);
+            gameCenterOnSprite = GetTexture2D(gameCenterOnSpritePath);
+            playGamesOnSprite = GetTexture2D(playGamesOnSpritePath);
+            gameCircleOnSprite = GetTexture2D(gameCircleOnSpritePath);
+            gameCenterOffSprite = GetTexture2D(isProSkin ? gameCenterOffDarkSpritePath : gameCenterOffSpritePath);
+            playGamesOffSprite = GetTexture2D(isProSkin ? playGamesOffDarkSpritePath : playGamesOffSpritePath);
+            gameCircleOffSprite = GetTexture2D(isProSkin ? gameCircleOffDarkSpritePath : gameCircleOffSpritePath);
+            cloudOnceIcon = GetTexture2D(isProSkin ? cloudOnceIconWhitePath : cloudOnceIconBlackPath);
+            gameCenterIcon = GetTexture2D(isProSkin ? gameCenterDarkIconPath : gameCenterIconPath);
+            playGamesIcon = GetTexture2D(isProSkin ? playGamesDarkIconPath : playGamesIconPath);
+            gameCircleIcon = GetTexture2D(isProSkin ? gameCircleDarkIconPath : gameCircleIconPath);
+            toggleOnSprite = GetTexture2D(toggleOnSpritePath);
+            toggleOffSprite = GetTexture2D(isProSkin ? toggleOffProSpritePath : toggleOffSpritePath);
+            debugIcon = GetTexture2D(isProSkin ? debugIconDarkPath : debugIconPath);
+            androidIcon = GetTexture2D(isProSkin ? androidIconDarkPath : androidIconPath);
+            cloudVariableIcon = GetTexture2D(isProSkin ? cloudVariableIconDarkPath : cloudVariableIconPath);
+            saveIcon = GetTexture2D(isProSkin ? saveDarkIconPath : saveIconPath);
+            revertIcon = GetTexture2D(isProSkin ? revertDarkIconPath : revertIconPath);
 
             var inspectorSkin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector);
 
@@ -528,19 +527,19 @@ namespace CloudOnce.Internal.Editor
             cloudOnceLogoLabelStyle = new GUIStyle
             {
                 font = walkwayFont,
-                fontSize = c_cloudOnceLogoFontSize,
+                fontSize = cloudOnceLogoFontSize,
                 normal = new GUIStyleState { textColor = isProSkin ? headerDarkThemeColor : Color.black }
             };
             logoStyle = new GUIStyle
             {
-                fixedHeight = c_cloudOnceLogoFontSize + 2,
-                fixedWidth = (int)((c_cloudOnceLogoFontSize + 2) * 1.18f),
+                fixedHeight = cloudOnceLogoFontSize + 2,
+                fixedWidth = (int)((cloudOnceLogoFontSize + 2) * 1.18f),
                 contentOffset = new Vector2(0f, 4f)
             };
             versionLabelStyle = new GUIStyle
             {
                 font = robotoFont,
-                fontSize = c_tinyFontSize,
+                fontSize = tinyFontSize,
                 normal = new GUIStyleState { textColor = isProSkin ? headerDarkThemeColor : Color.black }
             };
 
@@ -548,7 +547,7 @@ namespace CloudOnce.Internal.Editor
             tinyLabelStyle = new GUIStyle
             {
                 font = robotoFont,
-                fontSize = c_tinyFontSize,
+                fontSize = tinyFontSize,
                 normal = new GUIStyleState { textColor = isProSkin ? defaultDarkThemeTextColor : Color.black }
             };
             headerLabelStyle = new GUIStyle
@@ -562,7 +561,7 @@ namespace CloudOnce.Internal.Editor
             idTitleStyle = new GUIStyle
             {
                 font = robotoSlabFont,
-                fontSize = c_largeFontSize,
+                fontSize = largeFontSize,
                 normal = new GUIStyleState { textColor = isProSkin ? headerDarkThemeColor : Color.black },
                 clipping = TextClipping.Clip,
                 contentOffset = new Vector2(0f, -4f),
@@ -627,12 +626,12 @@ namespace CloudOnce.Internal.Editor
             revertButtonContent = new GUIContent(" Discard changes", revertIcon, "Discards all unsaved changes made to the configuration");
 
             // Settings content
-            gameCenterOnButtonContent = new GUIContent(c_gameCenterNameSplit, gameCenterOnSprite, "Deactivate support for " + c_gameCenterName);
-            playGamesOnButtonContent = new GUIContent(c_playGamesNameSplit, playGamesOnSprite, "Deactivate support for " + c_playGamesName);
-            gameCircleOnButtonContent = new GUIContent(c_gameCircleNameSplit, gameCircleOnSprite, "Deactivate support for " + c_gameCircleName);
-            gameCenterOffButtonContent = new GUIContent(c_gameCenterNameSplit, gameCenterOffSprite, "Activate support for " + c_gameCenterName);
-            playGamesOffButtonContent = new GUIContent(c_playGamesNameSplit, playGamesOffSprite, "Activate support for " + c_playGamesName);
-            gameCircleOffButtonContent = new GUIContent(c_gameCircleNameSplit, gameCircleOffSprite, "Activate support for " + c_gameCircleName);
+            gameCenterOnButtonContent = new GUIContent(gameCenterNameSplit, gameCenterOnSprite, "Deactivate support for " + gameCenterName);
+            playGamesOnButtonContent = new GUIContent(playGamesNameSplit, playGamesOnSprite, "Deactivate support for " + playGamesName);
+            gameCircleOnButtonContent = new GUIContent(gameCircleNameSplit, gameCircleOnSprite, "Deactivate support for " + gameCircleName);
+            gameCenterOffButtonContent = new GUIContent(gameCenterNameSplit, gameCenterOffSprite, "Activate support for " + gameCenterName);
+            playGamesOffButtonContent = new GUIContent(playGamesNameSplit, playGamesOffSprite, "Activate support for " + playGamesName);
+            gameCircleOffButtonContent = new GUIContent(gameCircleNameSplit, gameCircleOffSprite, "Activate support for " + gameCircleName);
             supportedPlatformsContent = new GUIContent(" Supported Platforms", cloudOnceIcon);
             debugLabelContent = new GUIContent(" Debug Mode", debugIcon);
             androidBuildLabelContent = new GUIContent(" Android Build Platform", androidIcon);
@@ -656,10 +655,10 @@ namespace CloudOnce.Internal.Editor
                 "GameCircle IDs can contain alphanumeric characters (A-Z, a-z, 0-9) and underscores (_).");
             achievementIDsContent = new GUIContent("Achievement IDs", achievementsSprite);
             leaderboardIDsContent = new GUIContent(" Leaderboard IDs", leaderboardsSprite);
-            internalPlatformIDContent = new GUIContent(c_internalName, cloudOnceIcon);
-            gameCenterPlatformIDContent = new GUIContent(c_gameCenterNameShort, gameCenterIcon);
-            playGamesPlatformIDContent = new GUIContent(c_playGamesNameShort, playGamesIcon);
-            gameCirclePlatformIDContent = new GUIContent(c_gameCircleNameShort, gameCircleIcon);
+            internalPlatformIDContent = new GUIContent(internalName, cloudOnceIcon);
+            gameCenterPlatformIDContent = new GUIContent(gameCenterNameShort, gameCenterIcon);
+            playGamesPlatformIDContent = new GUIContent(playGamesNameShort, playGamesIcon);
+            gameCirclePlatformIDContent = new GUIContent(gameCircleNameShort, gameCircleIcon);
 
             // Cloud Variables content
             addCloudVariableButtonContent = new GUIContent(plusSprite, "Add a cloud variable to the list");
@@ -681,9 +680,9 @@ namespace CloudOnce.Internal.Editor
 
             // Padding
             EditorGUILayout.BeginVertical();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPadding);
+            GUILayout.Space(borderPadding);
 
             // Title
             EditorGUILayout.LabelField("CloudOnce", cloudOnceLogoLabelStyle);
@@ -698,7 +697,7 @@ namespace CloudOnce.Internal.Editor
 
             // Logo
             GUILayout.Box(logoSprite, logoStyle);
-            GUILayout.Space(c_borderPadding);
+            GUILayout.Space(borderPadding);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
@@ -716,10 +715,10 @@ namespace CloudOnce.Internal.Editor
         /// </summary>
         private void DrawContentArea()
         {
-            contentColumnCount = Mathf.Clamp((int)((position.width - c_scrollbarWidth - c_indentationWidth) / c_contentColumnWidth), 1, int.MaxValue);
+            contentColumnCount = Mathf.Clamp((int)((position.width - scrollbarWidth - indentationWidth) / contentColumnWidth), 1, int.MaxValue);
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
             EditorGUILayout.BeginVertical();
-            GUILayout.Space(c_borderPadding);
+            GUILayout.Space(borderPadding);
             switch (selectedTab)
             {
                 default:
@@ -750,7 +749,7 @@ namespace CloudOnce.Internal.Editor
                 EditorGUILayout.BeginHorizontal();
             }
 
-            EditorGUILayout.BeginVertical(GUILayout.Width(c_contentColumnWidth + 10f));
+            EditorGUILayout.BeginVertical(GUILayout.Width(contentColumnWidth + 10f));
 
             DrawSupportedPlatforms();
             DrawDebugMode();
@@ -759,10 +758,10 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.EndVertical();
             if (contentColumnCount > 1)
             {
-                GUILayout.Space(c_borderPaddingSmall);
+                GUILayout.Space(borderPaddingSmall);
             }
 
-            EditorGUILayout.BeginVertical(GUILayout.Width(c_contentColumnWidth + 11f));
+            EditorGUILayout.BeginVertical(GUILayout.Width(contentColumnWidth + 11f));
 
             DrawGooglePlayGamesSetup();
             DrawAmazonApiKeyField();
@@ -783,7 +782,7 @@ namespace CloudOnce.Internal.Editor
             DrawSettingsHeader(supportedPlatformsContent);
 
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_indentationWidth);
+            GUILayout.Space(indentationWidth);
 
             EditorGUILayout.BeginVertical();
             GUILayout.Label("Toggle on the platforms you want to support.");
@@ -820,7 +819,7 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.Space();
 
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_indentationWidth);
+            GUILayout.Space(indentationWidth);
             GUILayout.Label("Activating the debug mode will enable debug logs. Recommended for debugging," +
                                     " but should be disabled when building production builds.");
             EditorGUILayout.EndHorizontal();
@@ -837,7 +836,7 @@ namespace CloudOnce.Internal.Editor
             DrawSettingsHeader(androidBuildLabelContent);
 
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_indentationWidth);
+            GUILayout.Space(indentationWidth);
             EditorGUILayout.BeginVertical();
             if (tmpConfig.GoogleSupported && !tmpConfig.AmazonSupported)
             {
@@ -867,7 +866,7 @@ namespace CloudOnce.Internal.Editor
             EditorGUI.BeginDisabledGroup(!tmpConfig.GoogleSupported);
             DrawSettingsHeader(googleAppIdContent);
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_indentationWidth);
+            GUILayout.Space(indentationWidth);
             EditorGUILayout.BeginVertical();
             GUILayout.Label(GPGSStrings.Setup.AppIdBlurb);
             EditorGUILayout.BeginHorizontal();
@@ -908,7 +907,7 @@ namespace CloudOnce.Internal.Editor
 
             DrawSettingsHeader(amazonApiKeyContent);
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_indentationWidth);
+            GUILayout.Space(indentationWidth);
             EditorGUILayout.BeginVertical();
             GUILayout.Label("Enter API key from GameCircle configuration.");
             EditorGUILayout.BeginHorizontal(GUI.skin.box);
@@ -949,31 +948,31 @@ namespace CloudOnce.Internal.Editor
 
             platformToggleLeftStyle = new GUIStyle(GUI.skin.FindStyle("ButtonLeft"))
             {
-                fixedWidth = c_platformButtonWidth,
-                fixedHeight = c_platformButtonHeight,
+                fixedWidth = platformButtonWidth,
+                fixedHeight = platformButtonHeight,
                 imagePosition = ImagePosition.ImageAbove,
                 font = robotoFont,
-                fontSize = c_platformButtonFontSize,
+                fontSize = platformButtonFontSize,
                 padding = padding
             };
 
             platformToggleMiddleStyle = new GUIStyle(GUI.skin.FindStyle("ButtonMid"))
             {
-                fixedWidth = c_platformButtonWidth,
-                fixedHeight = c_platformButtonHeight,
+                fixedWidth = platformButtonWidth,
+                fixedHeight = platformButtonHeight,
                 imagePosition = ImagePosition.ImageAbove,
                 font = robotoFont,
-                fontSize = c_platformButtonFontSize,
+                fontSize = platformButtonFontSize,
                 padding = padding
             };
 
             platformToggleRightStyle = new GUIStyle(GUI.skin.FindStyle("ButtonRight"))
             {
-                fixedWidth = c_platformButtonWidth,
-                fixedHeight = c_platformButtonHeight,
+                fixedWidth = platformButtonWidth,
+                fixedHeight = platformButtonHeight,
                 imagePosition = ImagePosition.ImageAbove,
                 font = robotoFont,
-                fontSize = c_platformButtonFontSize,
+                fontSize = platformButtonFontSize,
                 padding = padding
             };
 
@@ -1049,7 +1048,7 @@ namespace CloudOnce.Internal.Editor
             }
 
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_indentationWidth);
+            GUILayout.Space(indentationWidth);
             var contentRows = ((cloudIdType == CloudIdType.Achievement ? tmpConfig.AchievementIDs.Count : tmpConfig.LeaderboardIDs.Count) / contentColumnCount) + 1;
             for (var i = 0; i < contentColumnCount; i++)
             {
@@ -1095,7 +1094,7 @@ namespace CloudOnce.Internal.Editor
                 GUI.backgroundColor = isProSkin ? leaderboardDarkThemeColor : leaderboardLightThemeColor;
             }
 
-            EditorGUILayout.BeginVertical(helpBoxStyle, GUILayout.Width(c_idPanelWidth));
+            EditorGUILayout.BeginVertical(helpBoxStyle, GUILayout.Width(idPanelWidth));
             GUI.backgroundColor = backgroundColorCache;
 
             EditorGUILayout.BeginHorizontal();
@@ -1106,9 +1105,9 @@ namespace CloudOnce.Internal.Editor
             GUILayout.Space(1f);
 
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
 
-            EditorGUILayout.LabelField(internalPlatformIDContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+            EditorGUILayout.LabelField(internalPlatformIDContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
             Undo.RecordObject(tmpConfig, "Set Internal ID");
             platformIdData.InternalId = EditorGUILayout.TextField(platformIdData.InternalId, GUILayout.ExpandWidth(true));
             platformIdData.InternalId = ValidationUtils.RemoveForbiddenCharactersFromInternalID(platformIdData.InternalId);
@@ -1116,10 +1115,10 @@ namespace CloudOnce.Internal.Editor
 
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
 
             EditorGUI.BeginDisabledGroup(!tmpConfig.AppleSupported);
-            EditorGUILayout.LabelField(gameCenterPlatformIDContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+            EditorGUILayout.LabelField(gameCenterPlatformIDContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
             Undo.RecordObject(tmpConfig, "Set Apple ID");
             platformIdData.AppleId = EditorGUILayout.TextField(platformIdData.AppleId, GUILayout.ExpandWidth(true));
             platformIdData.AppleId = ValidationUtils.RemoveForbiddenCharactersFromPlatformID(platformIdData.AppleId, CloudPlatform.iOS);
@@ -1128,10 +1127,10 @@ namespace CloudOnce.Internal.Editor
 
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
 
             EditorGUI.BeginDisabledGroup(!tmpConfig.GoogleSupported);
-            EditorGUILayout.LabelField(playGamesPlatformIDContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+            EditorGUILayout.LabelField(playGamesPlatformIDContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
             Undo.RecordObject(tmpConfig, "Set Google ID");
             platformIdData.GoogleId = EditorGUILayout.TextField(platformIdData.GoogleId, GUILayout.ExpandWidth(true));
             platformIdData.GoogleId = ValidationUtils.RemoveForbiddenCharactersFromPlatformID(platformIdData.GoogleId, CloudPlatform.GooglePlay);
@@ -1140,10 +1139,10 @@ namespace CloudOnce.Internal.Editor
 
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
 
             EditorGUI.BeginDisabledGroup(!tmpConfig.AmazonSupported);
-            EditorGUILayout.LabelField(gameCirclePlatformIDContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+            EditorGUILayout.LabelField(gameCirclePlatformIDContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
             Undo.RecordObject(tmpConfig, "Set Amazon ID");
             platformIdData.AmazonId = EditorGUILayout.TextField(platformIdData.AmazonId, GUILayout.ExpandWidth(true));
             platformIdData.AmazonId = ValidationUtils.RemoveForbiddenCharactersFromPlatformID(platformIdData.AmazonId, CloudPlatform.Amazon);
@@ -1151,7 +1150,7 @@ namespace CloudOnce.Internal.Editor
             EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.EndHorizontal();
-            GUILayout.Space(c_borderPadding);
+            GUILayout.Space(borderPadding);
             EditorGUILayout.EndVertical();
 
             GUI.backgroundColor = isProSkin ? deleteButtonProColor : deleteButtonColor;
@@ -1215,7 +1214,7 @@ namespace CloudOnce.Internal.Editor
         private void DrawCloudVariables()
         {
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_indentationWidth);
+            GUILayout.Space(indentationWidth);
             var contentRows = (tmpConfig.CloudVariables.Count / contentColumnCount) + 1;
             for (var i = 0; i < contentColumnCount; i++)
             {
@@ -1252,7 +1251,7 @@ namespace CloudOnce.Internal.Editor
         private void DrawCloudVariable(CloudVariableData data)
         {
             GUI.backgroundColor = isProSkin ? cloudVariableDarkThemeColor : cloudVariableLightThemeColor;
-            EditorGUILayout.BeginVertical(helpBoxStyle, GUILayout.Width(c_idPanelWidth));
+            EditorGUILayout.BeginVertical(helpBoxStyle, GUILayout.Width(idPanelWidth));
             GUI.backgroundColor = backgroundColorCache;
 
             EditorGUILayout.BeginHorizontal();
@@ -1263,9 +1262,9 @@ namespace CloudOnce.Internal.Editor
             GUILayout.Space(1f);
 
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
 
-            EditorGUILayout.LabelField(cloudVariableKeyContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+            EditorGUILayout.LabelField(cloudVariableKeyContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
             Undo.RecordObject(tmpConfig, "Set CloudVariable Key");
             data.Key = EditorGUILayout.TextField(data.Key, GUILayout.ExpandWidth(true));
             data.Key = ValidationUtils.RemoveForbiddenCharactersFromInternalID(data.Key);
@@ -1273,9 +1272,9 @@ namespace CloudOnce.Internal.Editor
 
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
 
-            EditorGUILayout.LabelField(cloudVariableTypeContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+            EditorGUILayout.LabelField(cloudVariableTypeContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
             Undo.RecordObject(tmpConfig, "Set CloudVariable Type");
             data.Type = (CloudVariableType)EditorGUILayout.EnumPopup(data.Type);
             GUILayout.Box(cloudVariableTypeTipContent, helpIconStyle);
@@ -1284,9 +1283,9 @@ namespace CloudOnce.Internal.Editor
             if (data.Type != CloudVariableType.DateTime)
             {
                 EditorGUILayout.BeginHorizontal();
-                GUILayout.Space(c_borderPaddingSmall);
+                GUILayout.Space(borderPaddingSmall);
 
-                EditorGUILayout.LabelField(cloudVariableDefaultValueContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+                EditorGUILayout.LabelField(cloudVariableDefaultValueContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
                 if (data.Type == CloudVariableType.Bool)
                 {
                     data.DefaultValueString = ValidationUtils.RemoveForbiddenCharactersFromDefaultValue(data.DefaultValueString, data.Type);
@@ -1311,17 +1310,17 @@ namespace CloudOnce.Internal.Editor
             }
 
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
             if (data.Type != CloudVariableType.CurrencyInt && data.Type != CloudVariableType.CurrencyFloat)
             {
-                EditorGUILayout.LabelField(cloudVariablePersistenceTypeContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+                EditorGUILayout.LabelField(cloudVariablePersistenceTypeContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
                 Undo.RecordObject(tmpConfig, "Set CloudVariable PersistenceType");
                 data.PersistenceType = (PersistenceType)EditorGUILayout.EnumPopup(data.PersistenceType);
                 GUILayout.Box(cloudVariablePersistenceTypeTipContent, helpIconStyle);
             }
             else
             {
-                EditorGUILayout.LabelField(cloudVariableAllowNegativeContent, tinyLabelStyle, GUILayout.Width(c_idPlatformLabelWidth), GUILayout.Height(c_slimControlHeight));
+                EditorGUILayout.LabelField(cloudVariableAllowNegativeContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
                 if (GUILayout.Button(data.AllowNegative ? toggleOnSprite : toggleOffSprite, cloudVariableToggleStyle))
                 {
                     Undo.RecordObject(tmpConfig, "Set CloudVariable AllowNegative");
@@ -1333,7 +1332,7 @@ namespace CloudOnce.Internal.Editor
             }
 
             EditorGUILayout.EndHorizontal();
-            GUILayout.Space(c_borderPadding);
+            GUILayout.Space(borderPadding);
 
             if (data.Type == CloudVariableType.DateTime && data.PersistenceType == PersistenceType.Latest)
             {
@@ -1376,7 +1375,7 @@ namespace CloudOnce.Internal.Editor
             if (selectedTab == 2)
             {
                 EditorGUI.BeginDisabledGroup(!PlayerPrefs.HasKey(DataManager.DevStringKey));
-                if (GUILayout.Button("Delete editor test data", GUILayout.Height(c_footerButtonHeight)))
+                if (GUILayout.Button("Delete editor test data", GUILayout.Height(footerButtonHeight)))
                 {
                     if (EditorUtility.DisplayDialog(
                         "Delete Editor Test Data",
@@ -1395,7 +1394,7 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.BeginHorizontal();
             var changesHaveBeenMade = !savedConfig.EqualsSettings(tmpConfig) || !savedConfig.EqualsCloudIDs(tmpConfig) || !savedConfig.EqualsCloudVariables(tmpConfig);
             EditorGUI.BeginDisabledGroup(!changesHaveBeenMade);
-            if (GUILayout.Button(revertButtonContent, GUILayout.Height(c_footerButtonHeight)))
+            if (GUILayout.Button(revertButtonContent, GUILayout.Height(footerButtonHeight)))
             {
                 if (EditorUtility.DisplayDialog(
                     "Discard Changes",
@@ -1413,7 +1412,7 @@ namespace CloudOnce.Internal.Editor
             DrawSaveButton();
 
             EditorGUILayout.EndHorizontal();
-            GUILayout.Space(c_borderPaddingSmall);
+            GUILayout.Space(borderPaddingSmall);
 
             EditorGUI.EndDisabledGroup();
             EditorGUILayout.EndVertical();
@@ -1425,7 +1424,7 @@ namespace CloudOnce.Internal.Editor
         /// <returns><c>true</c> if no helpbox was shown.</returns>
         private bool DrawValidationArea()
         {
-            GUILayout.Space(c_borderPadding);
+            GUILayout.Space(borderPadding);
             if (EditorApplication.isCompiling)
             {
                 EditorGUI.EndDisabledGroup();
@@ -1483,7 +1482,7 @@ namespace CloudOnce.Internal.Editor
         {
             var readyToSave = AllSettingsReadyForSave();
             EditorGUI.BeginDisabledGroup(!readyToSave);
-            if (GUILayout.Button(readyToSave ? saveButtonContent : disabledSaveButtonContent, GUILayout.Height(c_footerButtonHeight), GUILayout.MinWidth(210f)))
+            if (GUILayout.Button(readyToSave ? saveButtonContent : disabledSaveButtonContent, GUILayout.Height(footerButtonHeight), GUILayout.MinWidth(210f)))
             {
                 GUI.FocusControl(null);
                 SaveConfiguration();

@@ -5,14 +5,14 @@
 
 public static class CloudOncePaths
 {
-    public const string Data = c_cloudOnce + "/Data";
-    public const string Templates = c_cloudOnce + "/Internal/Data/Templates";
-    public const string GoogleTemplates = c_cloudOnce + "/Internal/Editor/Utils/GooglePlayGamesSetup";
-    public const string Android = c_plugins + "/Android";
+    public const string Data = cloudOnce + "/Data";
+    public const string Templates = cloudOnce + "/Internal/Data/Templates";
+    public const string GoogleTemplates = cloudOnce + "/Internal/Editor/Utils/GooglePlayGamesSetup";
+    public const string Android = plugins + "/Android";
     public const string GameCircleLib = Android + "/gamecircle_lib";
     public const string GooglePlayLib = Android + "/MainLibProj";
     public const string Settings = "ProjectSettings/CloudOnceSettings.txt";
 
-    private const string c_cloudOnce = "Assets/Extensions/CloudOnce";
-    private const string c_plugins = "Assets/Plugins";
+    private const string cloudOnce = "Assets/Extensions/CloudOnce";
+    private const string plugins = "Assets/Plugins";
 }

@@ -18,9 +18,9 @@ namespace CloudOnce.Internal.Utils
     {
         #region Fields & properties
 
-        private const string c_unlockAction = "unlock";
-        private const string c_revealAction = "reveal";
-        private const string c_incrementAction = "increment";
+        private const string unlockAction = "unlock";
+        private const string revealAction = "reveal";
+        private const string incrementAction = "increment";
 
         #endregion /Fields & properties
 
@@ -43,7 +43,7 @@ namespace CloudOnce.Internal.Utils
                 return;
             }
 
-            OnReportCompleted(true, onComplete, c_unlockAction, id, internalID);
+            OnReportCompleted(true, onComplete, unlockAction, id, internalID);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace CloudOnce.Internal.Utils
                 return;
             }
 
-            OnReportCompleted(true, onComplete, c_revealAction, id, internalID);
+            OnReportCompleted(true, onComplete, revealAction, id, internalID);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace CloudOnce.Internal.Utils
                 return;
             }
 
-            OnReportCompleted(true, onComplete, c_incrementAction, id, internalID);
+            OnReportCompleted(true, onComplete, incrementAction, id, internalID);
         }
 
         /// <summary>

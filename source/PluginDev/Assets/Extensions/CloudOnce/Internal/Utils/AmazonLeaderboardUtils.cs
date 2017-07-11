@@ -8,7 +8,6 @@ namespace CloudOnce.Internal.Utils
 {
     using System;
     using System.Collections.Generic;
-    using UnityEngine;
     using UnityEngine.SocialPlatforms;
 
     /// <summary>
@@ -83,7 +82,7 @@ namespace CloudOnce.Internal.Utils
             if (!AGSPlayerClient.IsSignedIn())
             {
 #if CLOUDONCE_DEBUG
-                Debug.LogWarning("ShowOverlay can only be called after authentication.");
+                UnityEngine.Debug.LogWarning("ShowOverlay can only be called after authentication.");
 #endif
                 return;
             }
@@ -91,14 +90,14 @@ namespace CloudOnce.Internal.Utils
             if (string.IsNullOrEmpty(id))
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log("Showing leaderboards overlay.");
+                UnityEngine.Debug.Log("Showing leaderboards overlay.");
 #endif
                 AGSLeaderboardsClient.ShowLeaderboardsOverlay();
             }
             else
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log(string.IsNullOrEmpty(internalID)
+                UnityEngine.Debug.Log(string.IsNullOrEmpty(internalID)
                     ? string.Format("Showing {0} leaderboard overlay.", id)
                     : string.Format("Showing {0} ({1}) leaderboard overlay.", internalID, id));
 #endif
@@ -124,26 +123,9 @@ namespace CloudOnce.Internal.Utils
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
 #if CLOUDONCE_DEBUG
-            Debug.LogWarning(errorMessage);
+            UnityEngine.Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
-        }
-
-        private static void ReportSubmitScoreSuccess(
-            long score,
-            Action<CloudRequestResult<bool>> callbackAction,
-            string id,
-            string internalID)
-        {
-#if CLOUDONCE_DEBUG
-            var debugMessage = string.Format(
-                "Successfully submitted a score of {0} to {1} ({2}) leaderboard.",
-                score,
-                internalID,
-                id);
-            Debug.Log(debugMessage);
-#endif
-            CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
         }
 
         private static void OnSubmitScoreCompleted(
@@ -155,7 +137,15 @@ namespace CloudOnce.Internal.Utils
         {
             if (!response.IsError())
             {
-                ReportSubmitScoreSuccess(score, callbackAction, id, internalID);
+#if CLOUDONCE_DEBUG
+                var debugMessage = string.Format(
+                    "Successfully submitted a score of {0} to {1} ({2}) leaderboard.",
+                    score,
+                    internalID,
+                    id);
+                UnityEngine.Debug.Log(debugMessage);
+#endif
+                CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }
             else
             {

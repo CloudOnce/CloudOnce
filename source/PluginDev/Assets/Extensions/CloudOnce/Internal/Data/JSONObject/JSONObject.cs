@@ -15,10 +15,10 @@ namespace CloudOnce.Internal
 
     public class JSONObject
     {
-        private const int c_maxDepth = 100;
-        private const string c_infinity = "\"INFINITY\"";
-        private const string c_negInfinity = "\"NEGINFINITY\"";
-        private const string c_nan = "\"NaN\"";
+        private const int maxDepth = 100;
+        private const string infinity = "\"INFINITY\"";
+        private const string negInfinity = "\"NEGINFINITY\"";
+        private const string nan = "\"NaN\"";
 
         private static readonly char[] s_whitespace = { ' ', '\r', '\n', '\t' };
 
@@ -462,15 +462,15 @@ namespace CloudOnce.Internal
                     {
                         switch (str)
                         {
-                            case c_infinity:
+                            case infinity:
                                 ObjectType = Type.Number;
                                 F = float.PositiveInfinity;
                                 break;
-                            case c_negInfinity:
+                            case negInfinity:
                                 ObjectType = Type.Number;
                                 F = float.NegativeInfinity;
                                 break;
-                            case c_nan:
+                            case nan:
                                 ObjectType = Type.Number;
                                 F = float.NaN;
                                 break;
@@ -673,7 +673,7 @@ namespace CloudOnce.Internal
         // Convert the JSONObject into a string
         private void Stringify(int depth, StringBuilder builder, bool pretty = false)
         {
-            if (depth++ > c_maxDepth)
+            if (depth++ > maxDepth)
             {
 #if CLOUDONCE_DEBUG
                 UnityEngine.Debug.Log("reached max depth!");
@@ -692,15 +692,15 @@ namespace CloudOnce.Internal
                 case Type.Number:
                     if (float.IsInfinity(F))
                     {
-                        builder.Append(c_infinity);
+                        builder.Append(infinity);
                     }
                     else if (float.IsNegativeInfinity(F))
                     {
-                        builder.Append(c_negInfinity);
+                        builder.Append(negInfinity);
                     }
                     else if (float.IsNaN(F))
                     {
-                        builder.Append(c_nan);
+                        builder.Append(nan);
                     }
                     else
                     {

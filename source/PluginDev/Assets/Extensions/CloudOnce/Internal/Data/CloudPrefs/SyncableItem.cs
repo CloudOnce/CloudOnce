@@ -17,12 +17,12 @@ namespace CloudOnce.Internal
     {
         #region Fields & properties
 
-        private const string c_oldAliasValueString = "_vs";
-        private const string c_oldAliasMetadata = "_md";
+        private const string oldAliasValueString = "_vs";
+        private const string oldAliasMetadata = "_md";
 
         // These two string are used in serialization
-        private const string c_aliasValueString = "v";
-        private const string c_aliasMetadata = "m";
+        private const string aliasValueString = "v";
+        private const string aliasMetadata = "m";
 
         // Backing field
         private string valueString;
@@ -107,8 +107,8 @@ namespace CloudOnce.Internal
         public JSONObject ToJSONObject()
         {
             var jsonObject = new JSONObject(JSONObject.Type.Object);
-            jsonObject.AddField(c_aliasValueString, ValueString.ToString(CultureInfo.InvariantCulture));
-            jsonObject.AddField(c_aliasMetadata, Metadata.ToJSONObject());
+            jsonObject.AddField(aliasValueString, ValueString.ToString(CultureInfo.InvariantCulture));
+            jsonObject.AddField(aliasMetadata, Metadata.ToJSONObject());
 
             return jsonObject;
         }
@@ -119,8 +119,8 @@ namespace CloudOnce.Internal
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the item data.</param>
         public void FromJSONObject(JSONObject jsonObject)
         {
-            var valueStringAlias = CloudOnceUtils.GetAlias(typeof(SyncableItem).Name, jsonObject, c_aliasValueString, c_oldAliasValueString);
-            var metaDataAlias = CloudOnceUtils.GetAlias(typeof(SyncableItem).Name, jsonObject, c_aliasMetadata, c_oldAliasMetadata);
+            var valueStringAlias = CloudOnceUtils.GetAlias(typeof(SyncableItem).Name, jsonObject, aliasValueString, oldAliasValueString);
+            var metaDataAlias = CloudOnceUtils.GetAlias(typeof(SyncableItem).Name, jsonObject, aliasMetadata, oldAliasMetadata);
 
             valueString = jsonObject[valueStringAlias].String;
             Metadata = new SyncableItemMetaData(jsonObject[metaDataAlias]);

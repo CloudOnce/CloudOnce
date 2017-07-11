@@ -8,7 +8,6 @@ namespace CloudOnce.Internal.Utils
 {
     using System;
     using System.Collections.Generic;
-    using UnityEngine;
     using UnityEngine.SocialPlatforms;
 
     /// <summary>
@@ -18,8 +17,8 @@ namespace CloudOnce.Internal.Utils
     {
         #region Fields & properties
 
-        private const string c_unlockAction = "unlock";
-        private const string c_incrementAction = "increment";
+        private const string unlockAction = "unlock";
+        private const string incrementAction = "increment";
         private readonly Dictionary<int, Action<IAchievementDescription[]>> loadAchievementDescriptionsCallbacks;
         private readonly Dictionary<int, Action<IAchievement[]>> loadAchievementsCallbacks;
 
@@ -63,7 +62,7 @@ namespace CloudOnce.Internal.Utils
             Action<AGSUpdateAchievementResponse> callback = null;
             callback = response =>
             {
-                OnReportCompleted(response, onComplete, c_unlockAction, id, internalID);
+                OnReportCompleted(response, onComplete, unlockAction, id, internalID);
                 AGSAchievementsClient.UpdateAchievementCompleted -= callback;
             };
 
@@ -120,7 +119,7 @@ namespace CloudOnce.Internal.Utils
             Action<AGSUpdateAchievementResponse> callback = null;
             callback = response =>
             {
-                OnReportCompleted(response, onComplete, c_incrementAction, id, internalID);
+                OnReportCompleted(response, onComplete, incrementAction, id, internalID);
                 AGSAchievementsClient.UpdateAchievementCompleted -= callback;
             };
 
@@ -136,12 +135,12 @@ namespace CloudOnce.Internal.Utils
             if (!AGSPlayerClient.IsSignedIn())
             {
 #if CLOUDONCE_DEBUG
-                Debug.LogWarning("ShowOverlay can only be called after authentication.");
+                UnityEngine.Debug.LogWarning("ShowOverlay can only be called after authentication.");
 #endif
                 return;
             }
 #if CLOUDONCE_DEBUG
-            Debug.Log("Showing achievements overlay.");
+            UnityEngine.Debug.Log("Showing achievements overlay.");
 #endif
             AGSAchievementsClient.ShowAchievementsOverlay();
         }
@@ -173,7 +172,7 @@ namespace CloudOnce.Internal.Utils
         private static void ReportError(string errorMessage, Action<CloudRequestResult<bool>> callbackAction)
         {
 #if CLOUDONCE_DEBUG
-            Debug.LogWarning(errorMessage);
+            UnityEngine.Debug.LogWarning(errorMessage);
 #endif
             CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(false, errorMessage));
         }
@@ -184,7 +183,7 @@ namespace CloudOnce.Internal.Utils
             if (!response.IsError())
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
+                UnityEngine.Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }

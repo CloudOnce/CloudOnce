@@ -16,7 +16,7 @@ namespace CloudOnce.Internal
     /// </summary>
     public static class AchievementsBridge
     {
-        private const string c_importInternal = "__Internal";
+        private const string importInternal = "__Internal";
 
         #region Public methods
 
@@ -67,16 +67,16 @@ namespace CloudOnce.Internal
 
         #endregion /Public methods
 
-        [DllImport(c_importInternal)]
+        [DllImport(importInternal)]
         private static extern void _LoadAchievements(LoadAchievementsDelegate callback);
 
-        [DllImport(c_importInternal)]
+        [DllImport(importInternal)]
         private static extern void _UnlockAchievement(string achievementId, BoolCallbackDelegate callback);
 
-        [DllImport(c_importInternal)]
+        [DllImport(importInternal)]
         private static extern void _RevealAchievement(string achievementId, BoolCallbackDelegate callback);
 
-        [DllImport(c_importInternal)]
+        [DllImport(importInternal)]
         private static extern void _IncrementAchievement(string achievementId, float progress, BoolCallbackDelegate callback);
     }
 }

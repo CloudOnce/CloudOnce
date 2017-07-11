@@ -12,11 +12,11 @@ namespace CloudOnce.Internal
     /// </summary>
     public class CurrencyValue : IJsonConvertible
     {
-        private const string c_oldAliasAdditions = "cdAdd";
-        private const string c_oldAliasSubtractions = "cdSub";
+        private const string oldAliasAdditions = "cdAdd";
+        private const string oldAliasSubtractions = "cdSub";
 
-        private const string c_aliasAdditions = "a";
-        private const string c_aliasSubtractions = "s";
+        private const string aliasAdditions = "a";
+        private const string aliasSubtractions = "s";
 
         /// <summary>
         /// Data-class to store currency value.
@@ -96,8 +96,8 @@ namespace CloudOnce.Internal
         {
             var jsonObject = new JSONObject(JSONObject.Type.Object);
 
-            jsonObject.AddField(c_aliasAdditions, Additions);
-            jsonObject.AddField(c_aliasSubtractions, Subtractions);
+            jsonObject.AddField(aliasAdditions, Additions);
+            jsonObject.AddField(aliasSubtractions, Subtractions);
 
             return jsonObject;
         }
@@ -108,8 +108,8 @@ namespace CloudOnce.Internal
         /// <param name="jsonObject"><see cref="JSONObject"/> containing a <see cref="CurrencyValue"/></param>
         public void FromJSONObject(JSONObject jsonObject)
         {
-            var addAlias = CloudOnceUtils.GetAlias(typeof(CurrencyValue).Name, jsonObject, c_aliasAdditions, c_oldAliasAdditions);
-            var subAlias = CloudOnceUtils.GetAlias(typeof(CurrencyValue).Name, jsonObject, c_aliasSubtractions, c_oldAliasSubtractions);
+            var addAlias = CloudOnceUtils.GetAlias(typeof(CurrencyValue).Name, jsonObject, aliasAdditions, oldAliasAdditions);
+            var subAlias = CloudOnceUtils.GetAlias(typeof(CurrencyValue).Name, jsonObject, aliasSubtractions, oldAliasSubtractions);
 
             Additions = jsonObject[addAlias].F;
             Subtractions = jsonObject[subAlias].F;
