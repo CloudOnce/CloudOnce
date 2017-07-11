@@ -1,4 +1,4 @@
-![logo_small.png](https://s26.postimg.org/nt8e0dluh/logo_small.png)
+![logo_small.png](.github/logo_small.png)
 
 # CloudOnce - Unified Game Services API
 CloudOnce is a [Unity3D](http://unity3d.com/) plug-in that provides a unified game services API for Google Play Game Services, iOS Game Center and Amazon GameCircle. Ease of use is the primary focus for the plug-in, but it also attempts to satisfy the needs of power users.
@@ -28,9 +28,9 @@ Make sure your code works in Unity3D v5.0.0f4 and up. Code that produces warning
 ## History
 This plug-in was originally developed for internal use by Trollpants Game Studio. [Sindri Jóelsson](http://github.com/sindrijo) wrote most of the original code, and [Jan Ivar Z. Carlsen](http://github.com/jizc) assisted by writing the implementations for Google Play and iOS.
 
-In January 2015 work began to make it into a commercial product. From that point, Jan Ivar has been the sole developer on the project. The first commercial version was released on the Asset Store on May 6th 2015.
+In January 2015 work began to make it into a commercial product. From that point, [Jan Ivar](http://github.com/jizc) has been the sole developer on the project. The first commercial version was released on the Asset Store on May 6th 2015.
 
 CloudOnce has evolved a lot since then, and on June 1st 2016 it was made open-source. This was done both due to time constraints (both creators have other full time jobs), and that the financial incentive wasn't large enough to justify the support responsibilities that comes from selling a commercial product.
 
 ## License
-The contents of this project is licensed under the MIT license, unless other is specified in file header. See [LICENSE file](./LICENSE) file in the project root for full license information.
+The contents of this project is licensed under the MIT license, unless other is specified in file header. See [LICENSE](./LICENSE) file in the project root for full license information.
