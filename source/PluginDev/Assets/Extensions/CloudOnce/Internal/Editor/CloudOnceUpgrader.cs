@@ -31,9 +31,16 @@ namespace CloudOnce.Internal.Editor
                 return;
             }
 
+            var upgraded = false;
             if (oldVersion < new Version(2, 4))
             {
                 Upgrade240();
+                upgraded = true;
+            }
+
+            if (upgraded)
+            {
+                AssetDatabase.Refresh();
             }
         }
 
@@ -44,9 +51,15 @@ namespace CloudOnce.Internal.Editor
                 "Assets/Extensions/GooglePlayGames/Editor/GPGSDependencies.cs",
                 "Assets/Extensions/GooglePlayGames/Editor/GPGSDependencies.cs.meta",
                 "Assets/Plugins/Android/libs/armeabi-v7a/libgpg.so",
+                "Assets/Plugins/Android/libs/armeabi-v7a/libgpg.so.meta",
                 "Assets/Plugins/Android/libs/x86/libgpg.so",
+                "Assets/Plugins/Android/libs/x86/libgpg.so.meta",
                 "Assets/Plugins/Android/MainLibProj/libs/play-games-plugin-support.jar",
-                "Assets/Plugins/Android/MainLibProj/projects.properties"
+                "Assets/Plugins/Android/MainLibProj/libs/play-games-plugin-support.jar.meta",
+                "Assets/Plugins/Android/MainLibProj/AndroidManifest.xml",
+                "Assets/Plugins/Android/MainLibProj/AndroidManifest.xml.meta",
+                "Assets/Plugins/Android/MainLibProj/project.properties",
+                "Assets/Plugins/Android/MainLibProj/project.properties.meta"
             };
 
             foreach (var file in obsoleteFiles.Where(File.Exists))
@@ -54,10 +67,22 @@ namespace CloudOnce.Internal.Editor
                 Debug.Log("Deleting obsolete file: " + file);
                 File.Delete(file);
                 var directory = Path.GetDirectoryName(file);
-                if (directory != null && Directory.GetFiles(directory).Length == 0)
+                if (directory != null)
                 {
-                    Debug.Log("Deleting obsolete directory: " + directory);
-                    Directory.Delete(directory);
+                    var directoryInfo = new DirectoryInfo(directory);
+                    if (directoryInfo.GetFiles().Length == 0)
+                    {
+                        Debug.Log("Deleting obsolete directory: " + directory);
+                        directoryInfo.Delete();
+                        if (directoryInfo.Parent != null)
+                        {
+                            var meta = Path.Combine(directoryInfo.Parent.FullName, directoryInfo.Name + ".meta");
+                            if (File.Exists(meta))
+                            {
+                                File.Delete(meta);
+                            }
+                        }
+                    }
                 }
             }
         }
