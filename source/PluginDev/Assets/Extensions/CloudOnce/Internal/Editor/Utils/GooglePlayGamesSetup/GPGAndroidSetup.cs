@@ -22,23 +22,25 @@ namespace CloudOnce.Internal.Editor.Utils
 {
 #if UNITY_ANDROID
     using GooglePlayGames;
-    using GooglePlayGames.Editor;
-    using GooglePlayServices;
 #endif
     using UnityEditor;
 
+    [InitializeOnLoad]
     public static class GPGAndroidSetup
     {
-        private const string c_manifestTemplate = CloudOncePaths.GoogleTemplates + "/template-AndroidManifest.txt";
+        static GPGAndroidSetup()
+        {
+            Google.VersionHandler.VerboseLoggingEnabled = false;
+        }
 
-        private const string c_appIdPlaceholder = "__APP_ID__";
-        private const string c_pluginVersionPlaceholder = "__PLUGIN_VERSION__";
-        private const string c_serviceIdPlaceholder = "__NEARBY_SERVICE_ID__";
+        private const string manifestTemplate = CloudOncePaths.GoogleTemplates + "/template-AndroidManifest.txt";
+
+        private const string appIdPlaceholder = "__APP_ID__";
+        private const string pluginVersionPlaceholder = "__PLUGIN_VERSION__";
+        private const string serviceIdPlaceholder = "__NEARBY_SERVICE_ID__";
 
         public static bool DoSetup(string appID)
         {
-            var projAM = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.GooglePlayLib + "/AndroidManifest.xml");
-
             // check for valid app id
             if (!GPGSUtil.LooksLikeValidAppId(appID))
             {
@@ -46,22 +48,33 @@ namespace CloudOnce.Internal.Editor.Utils
                 return false;
             }
 
+            if (!GPGSUtil.HasAndroidSdk())
+            {
+                EditorUtility.DisplayDialog(
+                    GPGSStrings.AndroidSetup.SdkNotFound,
+                    GPGSStrings.AndroidSetup.SdkNotFoundBlurb,
+                    GPGSStrings.Ok);
+                return false;
+            }
+
             // Generate AndroidManifest.xml
-            var manifestBody = GPGSUtil.ReadFile(c_manifestTemplate);
-            manifestBody = manifestBody.Replace(c_appIdPlaceholder, appID);
+            var destination = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.GooglePlayLib + "/AndroidManifest.xml");
+            var manifestBody = GPGSUtil.ReadFile(manifestTemplate);
+            manifestBody = manifestBody.Replace(appIdPlaceholder, appID);
 #if UNITY_ANDROID
-            manifestBody = manifestBody.Replace(c_pluginVersionPlaceholder, PluginVersion.VersionString);
+            manifestBody = manifestBody.Replace(pluginVersionPlaceholder, PluginVersion.VersionString);
 #endif
-            manifestBody = manifestBody.Replace(c_serviceIdPlaceholder, string.Empty);
-            GPGSUtil.WriteFile(projAM, manifestBody);
+            manifestBody = manifestBody.Replace(serviceIdPlaceholder, string.Empty);
+            GPGSUtil.WriteFile(destination, manifestBody);
 
             // Resolve dependencies
-#if UNITY_ANDROID
-            PlayServicesResolver.Resolver.DoResolution(
-                GPGSDependencies.svcSupport,
-                CloudOncePaths.Android,
-                PlayServicesResolver.HandleOverwriteConfirmation);
-#endif
+            Google.VersionHandler.UpdateVersionedAssets(true);
+            Google.VersionHandler.Enabled = true;
+            AssetDatabase.Refresh();
+            Google.VersionHandler.InvokeStaticMethod(
+                Google.VersionHandler.FindClass("Google.JarResolver", "GooglePlayServices.PlayServicesResolver"),
+                "MenuResolve",
+                null);
 
             // refresh assets, and we're done
             AssetDatabase.Refresh();
