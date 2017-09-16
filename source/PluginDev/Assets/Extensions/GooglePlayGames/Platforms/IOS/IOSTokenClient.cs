@@ -118,6 +118,12 @@ namespace GooglePlayGames.IOS {
             throw new NotImplementedException();
         }
 
+        public void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded, 
+                                             Action<string> callback)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetIdToken()
         {
             throw new NotImplementedException();
@@ -170,6 +176,10 @@ namespace GooglePlayGames.IOS {
 
         public void FetchTokens(Action callback)
         {
+            throw new NotImplementedException();
+        }
+
+        public void FetchTokens(Action<int> callback) {
             throw new NotImplementedException();
         }
     }
