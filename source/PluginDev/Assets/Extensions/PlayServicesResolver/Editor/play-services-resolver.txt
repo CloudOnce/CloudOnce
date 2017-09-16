@@ -1,2 +1,3 @@
 Assets/PlayServicesResolver/Editor/Google.JarResolver.dll
 Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll
+Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl.dll
