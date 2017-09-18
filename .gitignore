@@ -10,3 +10,7 @@ AssetStoreTools/
 Library/
 source/PluginDev/ProjectSettings/
 Temp/
+
+# Jar Resolver
+PlayServicesResolver/
+PlayServicesResolver.meta
