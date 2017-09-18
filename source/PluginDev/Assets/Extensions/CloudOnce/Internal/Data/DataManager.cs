@@ -769,6 +769,21 @@ namespace CloudOnce.Internal
         }
 
         /// <summary>
+        /// Resets a CloudPref to its default value.
+        /// </summary>
+        /// <returns>Whether or not the CloudPref was successfully reset.</returns>
+        public static bool ResetCloudPref(string key)
+        {
+            if (CloudPrefs.ContainsKey(key))
+            {
+                CloudPrefs[key].Reset();
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Deletes a specific cloud variable from local cache and the cloud.
         /// </summary>
         /// <param name="key">The unique identifier for the cloud variable you want to delete.</param>

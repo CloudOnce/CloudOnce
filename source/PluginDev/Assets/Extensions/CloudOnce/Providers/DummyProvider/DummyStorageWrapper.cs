@@ -45,6 +45,16 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
+        /// Resets a Cloud variable to the default value.
+        /// </summary>
+        /// <param name="key">The unique identifier for the Cloud variable you want to reset.</param>
+        /// <returns>Whether or not the variable was successfully reset.</returns>
+        public bool ResetVariable(string key)
+        {
+            return DataManager.ResetCloudPref(key);
+        }
+
+        /// <summary>
         /// Deletes a specific Cloud variable from the Cloud.
         /// </summary>
         /// <param name="key">The unique identifier for the CloudPref you want to delete.</param>
