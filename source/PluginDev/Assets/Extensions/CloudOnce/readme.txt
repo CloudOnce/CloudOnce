@@ -10,6 +10,10 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.4.1
+- Added Cloud.Storage.ResetVariable method
+- Improved compatibility with other plug-ins using Jar Resolver
+
 Version 2.4.0
 - Updated GPGS plugin from v0.9.39a to v0.9.41
 - Updated Jar Resolver from v1.2.31 to v1.2.48
