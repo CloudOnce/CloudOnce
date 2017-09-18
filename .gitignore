@@ -14,3 +14,6 @@ Temp/
 # Jar Resolver
 PlayServicesResolver/
 PlayServicesResolver.meta
+
+# Unitypackage build process
+build/
