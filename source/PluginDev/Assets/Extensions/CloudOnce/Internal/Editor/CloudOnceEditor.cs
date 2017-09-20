@@ -55,10 +55,8 @@ namespace CloudOnce.Internal.Editor
             saveDarkIconPath = imagesFolder + "SaveIconDark.png",
             revertIconPath = imagesFolder + "RevertIcon.png",
             revertDarkIconPath = imagesFolder + "RevertIconDark.png",
-#if !UNITY_5_0
             cloudOnceIconPath = imagesFolder + "CloudOnceIcon.png",
             cloudOnceIconDarkPath = imagesFolder + "CloudOnceIconDark.png",
-#endif
 
             // Images
             logoPath = imagesFolder + "cloudonce-logo.png",
@@ -298,9 +296,6 @@ namespace CloudOnce.Internal.Editor
             // Get existing open window or if none, make a new one
             var window = GetWindow<CloudOnceEditor>();
             window.minSize = new Vector2(minimumWindowWidth, minimumWindowHeight);
-#if UNITY_5_0
-            window.title = "CloudOnce";
-#endif
         }
 
         #region Utility methods
@@ -374,11 +369,7 @@ namespace CloudOnce.Internal.Editor
         /// <returns>A <see cref="Texture2D"/> from a specified path.</returns>
         private Texture2D GetTexture2D(string path)
         {
-#if UNITY_5_0
-            return (Texture2D)AssetDatabase.LoadAssetAtPath(GPGSUtil.SlashesToPlatformSeparator(EditorPath + path), typeof(Texture2D));
-#else
             return AssetDatabase.LoadAssetAtPath<Texture2D>(GPGSUtil.SlashesToPlatformSeparator(EditorPath + path));
-#endif
         }
 
         /// <summary>
@@ -388,11 +379,7 @@ namespace CloudOnce.Internal.Editor
         /// <returns>A <see cref="Font"/> from a specified path.</returns>
         private Font GetFont(string path)
         {
-#if UNITY_5_0
-            return (Font)AssetDatabase.LoadAssetAtPath(GPGSUtil.SlashesToPlatformSeparator(EditorPath + path), typeof(Font));
-#else
             return AssetDatabase.LoadAssetAtPath<Font>(GPGSUtil.SlashesToPlatformSeparator(EditorPath + path));
-#endif
         }
 
         #endregion /Utility methods
@@ -486,11 +473,9 @@ namespace CloudOnce.Internal.Editor
 
             isProSkin = EditorGUIUtility.isProSkin;
 
-#if !UNITY_5_0
             // Window title and icon
             var iconSprite = GetTexture2D(EditorGUIUtility.isProSkin ? cloudOnceIconDarkPath : cloudOnceIconPath);
             titleContent = new GUIContent("CloudOnce", iconSprite);
-#endif
 
             // Fonts
             walkwayFont = GetFont(walkwayFontPath);

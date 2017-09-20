@@ -1097,7 +1097,7 @@ namespace CloudOnce.Internal
                     });
             }
 #endif
-#elif !UNITY_EDITOR && UNITY_IOS
+#elif !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS)
             iCloudBridge.DeleteString(DevStringKey);
 #endif
             PlayerPrefs.DeleteKey(DevStringKey);

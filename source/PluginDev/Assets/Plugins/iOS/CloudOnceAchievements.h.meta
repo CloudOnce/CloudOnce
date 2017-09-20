@@ -67,6 +67,9 @@ PluginImporter:
       settings:
         CompileFlags: 
         FrameworkDependencies: GameKit;
+    tvOS:
+      enabled: 1
+      settings: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

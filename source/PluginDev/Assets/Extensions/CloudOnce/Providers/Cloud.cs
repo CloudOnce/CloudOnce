@@ -209,7 +209,7 @@ namespace CloudOnce
 
                 return DummyProvider.Instance;
 #endif
-#elif UNITY_IOS // If iOS is selected as current platform
+#elif UNITY_IOS || UNITY_TVOS // If iOS is selected as current platform
                 if (!s_isProviderInitialized)
                 {
                     iOSCloudProvider.Instance.InternalInit(s_cloudOnceEvents);

@@ -1,5 +1,5 @@
         private static readonly UnifiedLeaderboard FIELDNAME = new UnifiedLeaderboard("INTERNALID",
-#if !UNITY_EDITOR && UNITY_IOS
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS)
             "APPLEID"
 #elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE
             "GOOGLEID"

@@ -311,7 +311,7 @@ namespace CloudOnce.Internal
             if (response.Result)
             {
                 Progress = progress;
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
                 isAchievementHidden = false;
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));

@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_TVOS
 namespace CloudOnce.Internal
 {
     using System.Runtime.InteropServices;
