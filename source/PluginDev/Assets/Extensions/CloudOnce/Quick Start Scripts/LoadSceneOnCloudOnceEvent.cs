@@ -7,9 +7,7 @@ namespace CloudOnce.QuickStart
 {
     using System;
     using UnityEngine;
-#if !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2
     using UnityEngine.SceneManagement;
-#endif
 
     /// <summary>
     /// Loads a scene when the selected CloudOnce event is called.
@@ -92,35 +90,19 @@ namespace CloudOnce.QuickStart
 
             if (loadAdditive && loadAsync)
             {
-#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
-                Application.LoadLevelAdditiveAsync(sceneName);
-#else
                 SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-#endif
             }
             else if (loadAdditive && !loadAsync)
             {
-#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
-                Application.LoadLevelAdditive(sceneName);
-#else
                 SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-#endif
             }
             else if (!loadAdditive && loadAsync)
             {
-#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
-                Application.LoadLevelAsync(sceneName);
-#else
                 SceneManager.LoadSceneAsync(sceneName);
-#endif
             }
             else
             {
-#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
-                Application.LoadLevel(sceneName);
-#else
                 SceneManager.LoadScene(sceneName);
-#endif
             }
         }
 

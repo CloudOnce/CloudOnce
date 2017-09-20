@@ -207,11 +207,7 @@ namespace CloudOnce.Internal.Providers
         /// <returns>A <see cref="Texture2D"/> from a specified path.</returns>
         private static Texture2D GetTexture2D(string path)
         {
-#if UNITY_5_0
-            return (Texture2D)AssetDatabase.LoadAssetAtPath(SlashesToPlatformSeparator(path), typeof(Texture2D));
-#else
             return AssetDatabase.LoadAssetAtPath<Texture2D>(SlashesToPlatformSeparator(path));
-#endif
         }
 
         /// <summary>
