@@ -5,7 +5,7 @@
 
 namespace CloudOnce
 {
-#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+#if (UNITY_ANDROID || UNITY_IOS || UNITY_TVOS) && !UNITY_EDITOR
     using Internal;
     using UnityEngine;
 #endif

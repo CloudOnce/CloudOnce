@@ -19,7 +19,7 @@ namespace CloudOnce.Internal.Utils
     {
         static CloudOnceUtils()
         {
-#if !UNITY_EDITOR && UNITY_IOS
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_TVOS)
             AchievementUtils = new AppleAchievementUtils();
             LeaderboardUtils = new AppleLeaderboardUtils();
 #elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE

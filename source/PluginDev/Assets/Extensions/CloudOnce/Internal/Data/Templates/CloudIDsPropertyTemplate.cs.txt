@@ -10,7 +10,7 @@
 #else
                     return string.Empty;
 #endif
-#elif UNITY_IOS && !UNITY_EDITOR
+#elif (UNITY_IOS || UNITY_TVOS) && !UNITY_EDITOR
                     return "APPLEID";
 #elif UNITY_EDITOR
                     return "INTERNALID";
