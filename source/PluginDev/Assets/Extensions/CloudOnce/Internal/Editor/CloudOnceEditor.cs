@@ -57,6 +57,8 @@ namespace CloudOnce.Internal.Editor
             revertDarkIconPath = imagesFolder + "RevertIconDark.png",
             cloudOnceIconPath = imagesFolder + "CloudOnceIcon.png",
             cloudOnceIconDarkPath = imagesFolder + "CloudOnceIconDark.png",
+            settingsIconPath = imagesFolder + "SettingsIcon.png",
+            settingsIconDarkPath = imagesFolder + "SettingsIconDark.png",
 
             // Images
             logoPath = imagesFolder + "cloudonce-logo.png",
@@ -207,7 +209,8 @@ namespace CloudOnce.Internal.Editor
             cloudVariablePersistenceTypeTipContent,
             cloudVariableAllowNegativeTipContent,
             saveButtonContent,
-            revertButtonContent;
+            revertButtonContent,
+            settingsContent;
 
         #endregion /GUIStyles & GUIContents
 
@@ -238,7 +241,8 @@ namespace CloudOnce.Internal.Editor
             androidIcon,
             cloudVariableIcon,
             saveIcon,
-            revertIcon;
+            revertIcon,
+            settingsIcon;
 
         #endregion /Resources
 
@@ -505,6 +509,7 @@ namespace CloudOnce.Internal.Editor
             cloudVariableIcon = GetTexture2D(isProSkin ? cloudVariableIconDarkPath : cloudVariableIconPath);
             saveIcon = GetTexture2D(isProSkin ? saveDarkIconPath : saveIconPath);
             revertIcon = GetTexture2D(isProSkin ? revertDarkIconPath : revertIconPath);
+            settingsIcon = GetTexture2D(isProSkin ? settingsIconDarkPath : settingsIconPath);
 
             var inspectorSkin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector);
 
@@ -622,6 +627,7 @@ namespace CloudOnce.Internal.Editor
             androidBuildLabelContent = new GUIContent(" Android Build Platform", androidIcon);
             googleAppIdContent = new GUIContent(GPGSStrings.Setup.AppId, playGamesIcon);
             amazonApiKeyContent = new GUIContent(" GameCircle API Key", gameCircleIcon);
+            settingsContent = new GUIContent(" Settings Location", settingsIcon);
 
             // Cloud IDs content
             addAchievementButtonContent = new GUIContent(plusSprite, "Add an achievement to the list");
@@ -750,6 +756,7 @@ namespace CloudOnce.Internal.Editor
 
             DrawGooglePlayGamesSetup();
             DrawAmazonApiKeyField();
+            DrawSettingsLocation();
 
             EditorGUILayout.EndVertical();
 
@@ -910,6 +917,21 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.EndHorizontal();
 
             EditorGUI.EndDisabledGroup();
+        }
+
+        private void DrawSettingsLocation()
+        {
+            EditorGUILayout.Space();
+            DrawSettingsHeader(settingsContent);
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Space(indentationWidth);
+            EditorGUILayout.BeginVertical();
+            GUILayout.Label("Select where CloudOnce should save it's settings.");
+            Undo.RecordObject(tmpConfig, "Set Settings Location");
+            tmpConfig.SettingsLocation = (SettingsLocation)EditorGUILayout.EnumPopup(tmpConfig.SettingsLocation, GUILayout.Width(140f));
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Space();
         }
 
         /// <summary>

@@ -10,6 +10,10 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.4.4
+- Added option to save settings in Assets, for Unity Collaborate syncing
+- Updated Jar Resolver from v1.2.52 to v1.2.54
+
 Version 2.4.3
 - Fixed AndroidManifest template for GPGS
 - Updated Jar Resolver from v1.2.50 to v1.2.52

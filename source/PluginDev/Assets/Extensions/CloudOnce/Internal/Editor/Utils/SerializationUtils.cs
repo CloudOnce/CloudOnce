@@ -51,13 +51,26 @@ namespace CloudOnce.Internal.Editor.Utils
         public static CloudConfig LoadCloudConfig()
         {
             var cloudConfig = ScriptableObject.CreateInstance<CloudConfig>();
-            var settingsFile = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.Settings);
-            if (File.Exists(settingsFile))
+            var settingsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsProjectSettings);
+            var assetsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsAssets);
+
+            string settingsJson = null;
+            if (File.Exists(settingsPath))
             {
-                var sr = new StreamReader(settingsFile);
-                var body = sr.ReadToEnd();
+                var sr = new StreamReader(settingsPath);
+                settingsJson = sr.ReadToEnd();
                 sr.Close();
-                cloudConfig.ImportSettingsFromJSON(new JSONObject(body));
+            }
+            else if (File.Exists(assetsPath))
+            {
+                var sr = new StreamReader(assetsPath);
+                settingsJson = sr.ReadToEnd();
+                sr.Close();
+            }
+
+            if (!string.IsNullOrEmpty(settingsJson))
+            {
+                cloudConfig.ImportSettingsFromJSON(new JSONObject(settingsJson));
             }
 
             return cloudConfig;
@@ -71,9 +84,55 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <param name="onlySettingsFile">If you only want to save the settings file and not generate CloudIDs, Achievements and Leaderboards scripts.</param>
         public static void SerializeCloudConfig(CloudConfig cloudConfig, bool onlySettingsFile = false)
         {
-            using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.Settings)))
+            var projectSettingsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsProjectSettings);
+            var assetsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsAssets);
+            string settingsPath;
+            switch (cloudConfig.SettingsLocation)
+            {
+                case SettingsLocation.ProjectSettings:
+                    settingsPath = projectSettingsPath;
+                    if (File.Exists(assetsPath))
+                    {
+                        try
+                        {
+                            File.Delete(assetsPath);
+                            File.Delete(assetsPath + ".meta");
+                            AssetDatabase.Refresh();
+                        }
+                        catch
+                        {
+                            Debug.LogWarning("Failed to delete settings file: " + assetsPath + "\nIt should be deleted to avoid confusing CloudOnce.");
+                        }
+                    }
+
+                    break;
+                case SettingsLocation.Assets:
+                    settingsPath = assetsPath;
+                    if (File.Exists(projectSettingsPath))
+                    {
+                        try
+                        {
+                            File.Delete(projectSettingsPath);
+                        }
+                        catch
+                        {
+                            Debug.LogWarning("Failed to delete settings file: " + projectSettingsPath + "\nIt should be deleted to avoid confusing CloudOnce.");
+                        }
+                    }
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            using (var writer = new StreamWriter(settingsPath))
             {
                 writer.Write(cloudConfig.ToJSONObject().ToString(true));
+            }
+
+            if (cloudConfig.SettingsLocation == SettingsLocation.Assets)
+            {
+                AssetDatabase.Refresh();
             }
 
             if (!onlySettingsFile)

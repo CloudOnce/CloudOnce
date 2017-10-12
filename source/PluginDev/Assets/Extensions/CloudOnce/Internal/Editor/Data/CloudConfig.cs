@@ -34,7 +34,14 @@ namespace CloudOnce.Internal.Editor.Data
         AndroidPlatform,
         GoogleAppID,
         GoogleSetupRun,
-        DebugMode
+        DebugMode,
+        SettingsLocation
+    }
+
+    public enum SettingsLocation
+    {
+        ProjectSettings,
+        Assets
     }
 
     /// <summary>
@@ -55,6 +62,7 @@ namespace CloudOnce.Internal.Editor.Data
         private const string debugModeEnabledName = "DebugModeEnabled";
         private const string versionName = "Version";
         private const string apiKeyName = "APIKey";
+        private const string settingsLocationName = "SettingsLocation";
 
         [SerializeField] private List<PlatformIdData> achievementIDs;
         [SerializeField] private List<PlatformIdData> leaderboardIDs;
@@ -68,6 +76,7 @@ namespace CloudOnce.Internal.Editor.Data
         [SerializeField] private bool debugModeEnabled;
         [SerializeField] private string version;
         [SerializeField] private string apiKey;
+        [SerializeField] private SettingsLocation settingsLocation;
 
         #region Constructor & properties
 
@@ -143,6 +152,12 @@ namespace CloudOnce.Internal.Editor.Data
             set { apiKey = value; }
         }
 
+        public SettingsLocation SettingsLocation
+        {
+            get { return settingsLocation; }
+            set { settingsLocation = value; }
+        }
+
         #endregion /Constructor & properties
 
         #region Public methods
@@ -166,7 +181,8 @@ namespace CloudOnce.Internal.Editor.Data
                 && GoogleAppID == otherConfig.GoogleAppID
                 && GoogleSetupRun == otherConfig.GoogleSetupRun
                 && DebugModeEnabled == otherConfig.DebugModeEnabled
-                && ApiKey == otherConfig.ApiKey;
+                && ApiKey == otherConfig.ApiKey
+                && SettingsLocation == otherConfig.SettingsLocation;
         }
 
         /// <summary>
@@ -213,13 +229,13 @@ namespace CloudOnce.Internal.Editor.Data
             jsonObject.AddField(debugModeEnabledName, DebugModeEnabled);
             jsonObject.AddField(versionName, Version = PluginVersion.VersionString);
             jsonObject.AddField(apiKeyName, ApiKey);
+            jsonObject.AddField(settingsLocationName, Enum.Format(typeof(SettingsLocation), SettingsLocation, "D"));
 
             return jsonObject;
         }
 
         #endregion /Public methods
 
-        // ReSharper disable once UnusedMember.Local
         private void OnEnable()
         {
             hideFlags = HideFlags.HideAndDontSave;
@@ -271,6 +287,11 @@ namespace CloudOnce.Internal.Editor.Data
             if (jsonObject.HasFields(apiKeyName))
             {
                 ApiKey = jsonObject[apiKeyName].String;
+            }
+
+            if (jsonObject.HasFields(settingsLocationName))
+            {
+                SettingsLocation = (SettingsLocation)Enum.Parse(typeof(SettingsLocation), jsonObject[settingsLocationName].String);
             }
         }
     }
