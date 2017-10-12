@@ -11,7 +11,7 @@ public static class CloudOncePaths
     public const string Android = plugins + "/Android";
     public const string GameCircleLib = Android + "/gamecircle_lib";
     public const string GooglePlayLib = gpgs + "/Plugins/Android/GooglePlayGamesManifest.plugin";
-    public const string Settings = "ProjectSettings/CloudOnceSettings.txt";
+    public const string Settings = cloudOnce + "/CloudOnceSettings.txt";
 
     private const string cloudOnce = "Assets/Extensions/CloudOnce";
     private const string gpgs = "Assets/Extensions/GooglePlayGames";
