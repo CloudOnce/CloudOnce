@@ -10,10 +10,10 @@ AssetStoreTools/
 Library/
 source/PluginDev/ProjectSettings/
 Temp/
-
-# Jar Resolver
-PlayServicesResolver/
-PlayServicesResolver.meta
+UnityPackageManager/
 
 # Unitypackage build process
 build/
+
+# CloudOnce Specific
+CloudOnceSettings.txt
