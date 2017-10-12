@@ -28,10 +28,8 @@ Make sure your code works in **Unity v5.3.1f1** and up. Code that produces warni
 ### Play Services Resolver for Unity
 For the PluginDev Unity project to compile you need to download and import [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver).
 
-It's not included in this repo for the reasons described here: [Plugin Redistribution](https://github.com/googlesamples/unity-jar-resolver#plugin-redistribution)
-
 ### Building
-Building a new unitypackage needs to be done from command-line or with a build script. Below is an example of how to do it on Windows. Change the paths to fit your environment.
+Because CloudOnce includes Play Services Resolver for Unity, building a new unitypackage needs to be done from command-line or with a build script ([more info](https://github.com/googlesamples/unity-jar-resolver#plugin-redistribution)). Below is an example of how to do it on Windows. Change the paths to fit your environment.
 
 **Windows example:**
 1. Download the latest Play Services Resolver for Unity unitypackage
