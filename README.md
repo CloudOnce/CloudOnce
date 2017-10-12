@@ -23,7 +23,23 @@ Please take a moment to review the [guidelines for contributing](.github/CONTRIB
 * [Feature requests](.github/CONTRIBUTING.md#features)
 * [Pull requests](.github/CONTRIBUTING.md#pull-requests)
 
-Make sure your code works in Unity v5.3.1f1 and up. Code that produces warnings in the Unity console will not be accepted.
+Make sure your code works in **Unity v5.3.1f1** and up. Code that produces warnings in the Unity console will not be accepted. Please try to follow the same code style.
+
+### Play Services Resolver for Unity
+For the PluginDev Unity project to compile you need to download and import [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver).
+
+It's not included in this repo for the reasons described here: [Plugin Redistribution](https://github.com/googlesamples/unity-jar-resolver#plugin-redistribution)
+
+### Building
+Building a new unitypackage needs to be done from command-line or with a build script. Below is an example of how to do it on Windows. Change the paths to fit your environment.
+
+**Windows example:**
+1. Download the latest Play Services Resolver for Unity unitypackage
+2. Open cmd
+3. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -projectPath "C:\GitHub\CloudOnce\source\PluginDev" -exportPackage Assets/Extensions Assets/Plugins "C:\GitHub\CloudOnce\build\source.unitypackage" -quit`
+4. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -gvh_disable -createProject ./CloudOnce -importPackage "C:\GitHub\CloudOnce\build\play-services-resolver-1.2.54.0.unitypackage" -quit`
+5. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -gvh_disable -projectPath "C:\GitHub\CloudOnce\build\CloudOnce" -importPackage "C:\GitHub\CloudOnce\build\source.unitypackage" -exportPackage Assets "C:\GitHub\CloudOnce\current-build\CloudOnce-v2.4.4.unitypackage" -quit`
+6. Party hard
 
 ## History
 This plug-in was originally developed for internal use by Trollpants Game Studio. [Sindri Jóelsson](http://github.com/sindrijo) wrote most of the original code, and [Jan Ivar Z. Carlsen](http://github.com/jizc) assisted by writing the implementations for Google Play and iOS.
