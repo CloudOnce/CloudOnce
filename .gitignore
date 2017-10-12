@@ -17,3 +17,13 @@ PlayServicesResolver.meta
 
 # Unitypackage build process
 build/
+
+# Playmaker Development
+source/PluginDev/Assets/PlayMaker
+source/PluginDev/Assets/PlayMaker.meta
+source/PluginDev/Assets/Gizmos
+source/PluginDev/Assets/Gizmos.meta
+source/PluginDev/Assets/iTween
+source/PluginDev/Assets/iTween.meta
+source/PluginDev/Assets/Plugins/PlayMaker
+source/PluginDev/Assets/Plugins/PlayMaker.meta
