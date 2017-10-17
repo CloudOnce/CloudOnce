@@ -440,8 +440,8 @@ namespace CloudOnce.Internal.Editor
                 && (!savedConfig.EqualsSettings(tmpConfig) || !savedConfig.EqualsCloudIDs(tmpConfig) || !savedConfig.EqualsCloudVariables(tmpConfig)))
             {
                 if (EditorUtility.DisplayDialog(
-                    "Configuration Has Been Modified",
-                    "Do you want to save the changes you made to the configuration?\n\nYour changes will be lost if you don't save them.",
+                    "CloudOnce Configuration Has Been Modified",
+                    "Do you want to save the changes you made to the CloudOnce configuration?\n\nYour changes will be lost if you do not save them now.",
                     "Save",
                     "Discard changes"))
                 {
@@ -879,6 +879,7 @@ namespace CloudOnce.Internal.Editor
                 else
                 {
                     tmpConfig.GoogleSetupRun = GPGAndroidSetup.DoSetup(tmpConfig.GoogleAppID);
+                    GUIUtility.ExitGUI();
                 }
             }
 
