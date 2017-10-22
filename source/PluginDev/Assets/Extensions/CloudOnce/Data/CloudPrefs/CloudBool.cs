@@ -26,7 +26,7 @@ namespace CloudOnce.CloudPrefs
         public CloudBool(string key, PersistenceType persistenceType, bool value = false)
             : base(key, persistenceType, value, value, DataManager.GetBool, DataManager.SetBool)
         {
-            DataManager.InitializeBool(key, persistenceType, value);
+            DataManager.SetBool(key, value, persistenceType);
             Load();
         }
 
@@ -45,7 +45,7 @@ namespace CloudOnce.CloudPrefs
         public CloudBool(string key, PersistenceType persistenceType, bool value, bool defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetBool, DataManager.SetBool)
         {
-            DataManager.InitializeBool(key, persistenceType, value);
+            DataManager.SetBool(key, value, persistenceType);
             Load();
         }
     }

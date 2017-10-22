@@ -61,8 +61,6 @@ namespace CloudOnce.Internal
 
         #region Public methods
 
-        #region Initialization methods
-
         /// <summary>
         /// Loads any stored local data as part of the initialization.
         /// </summary>
@@ -75,258 +73,6 @@ namespace CloudOnce.Internal
             }
         }
 
-        /// <summary>
-        /// Ensures that a specified currency exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">The unique identifier for this particular currency.</param>
-        public static void InitializeCurrency(string key)
-        {
-            if (!s_localGameData.SyncableCurrencies.ContainsKey(key))
-            {
-                s_localGameData.SyncableCurrencies.Add(key, new SyncableCurrency(key));
-                IsLocalDataDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="bool"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will always prefer the newest data.
-        /// <see cref="PersistenceType.Highest"/> will prefer <c>true</c>.
-        /// <see cref="PersistenceType.Lowest"/> will prefer <c>false</c>.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="bool"/>.</param>
-        public static void InitializeBool(string key, PersistenceType persistenceType, bool value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.Bool,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToString(),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="int"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will always prefer the newest data.
-        /// <see cref="PersistenceType.Highest"/> will prefer the highest value.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the lowest value.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="int"/>.</param>
-        public static void InitializeInt(string key, PersistenceType persistenceType, int value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.Int,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToString(CultureInfo.InvariantCulture),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="uint"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will always prefer the newest data.
-        /// <see cref="PersistenceType.Highest"/> will prefer the highest value.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the lowest value.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="uint"/>.</param>
-        public static void InitializeUInt(string key, PersistenceType persistenceType, uint value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.UInt,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToString(CultureInfo.InvariantCulture),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="float"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will always prefer the newest data.
-        /// <see cref="PersistenceType.Highest"/> will prefer the highest value.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the lowest value.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="float"/>.</param>
-        public static void InitializeFloat(string key, PersistenceType persistenceType, float value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.Float,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToString("R", CultureInfo.InvariantCulture),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="double"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will always prefer the newest data.
-        /// <see cref="PersistenceType.Highest"/> will prefer the highest value.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the lowest value.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="double"/>.</param>
-        public static void InitializeDouble(string key, PersistenceType persistenceType, double value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.Double,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToString("R", CultureInfo.InvariantCulture),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="string"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The method of conflict resolution to be used in case of a data conflict. Can happen if the data is altered by a different device.
-        /// <see cref="PersistenceType.Latest"/> will prefer the latest (newest) <see cref="string"/>.
-        /// <see cref="PersistenceType.Highest"/> will prefer the longest <see cref="string"/>.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the shortest <see cref="string"/>.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="string"/>.</param>
-        public static void InitializeString(string key, PersistenceType persistenceType, string value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(DataType.String, persistenceType);
-                var syncableItem = new SyncableItem(value, metaData);
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="long"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will always prefer the newest data.
-        /// <see cref="PersistenceType.Highest"/> will prefer the highest value.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the lowest value.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="long"/>.</param>
-        public static void InitializeLong(string key, PersistenceType persistenceType, long value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.Long,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToString(CultureInfo.InvariantCulture),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="DateTime"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will prefer the <see cref="DateTime"/> that was SAVED last.
-        /// <see cref="PersistenceType.Highest"/> will prefer the newest <see cref="DateTime"/> value in ticks.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the oldest <see cref="DateTime"/> value in ticks.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="DateTime"/>.</param>
-        public static void InitializeDateTime(string key, PersistenceType persistenceType, DateTime value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.Long,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToBinary().ToString(CultureInfo.InvariantCulture),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        /// <summary>
-        /// Ensures that a specified <see cref="decimal"/> exists in the local <see cref="GameData"/>.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="persistenceType">
-        /// The persistence type to use in case of a data conflict.
-        /// <see cref="PersistenceType.Latest"/> will always prefer the newest data.
-        /// <see cref="PersistenceType.Highest"/> will prefer the highest value.
-        /// <see cref="PersistenceType.Lowest"/> will prefer the lowest value.
-        /// </param>
-        /// <param name="value">The initial value for this <see cref="decimal"/>.</param>
-        public static void InitializeDecimal(string key, PersistenceType persistenceType, decimal value)
-        {
-            if (!s_localGameData.SyncableItems.ContainsKey(key))
-            {
-                var metaData = new SyncableItemMetaData(
-                    DataType.Decimal,
-                    persistenceType);
-
-                var syncableItem = new SyncableItem(
-                    value.ToString(CultureInfo.InvariantCulture),
-                    metaData);
-
-                CreateItem(key, syncableItem);
-            }
-        }
-
-        #endregion /Initialization methods
-
         #region Set methods
 
         /// <summary>
@@ -336,16 +82,13 @@ namespace CloudOnce.Internal
         /// <param name="currencyValues"><c>Dictionary</c> containing device IDs and currency values for each.</param>
         public static void SetCurrencyValues(string key, Dictionary<string, CurrencyValue> currencyValues)
         {
-            SyncableCurrency value;
-            if (s_localGameData.SyncableCurrencies.TryGetValue(key, out value))
+            if (!s_localGameData.SyncableCurrencies.ContainsKey(key))
             {
-                value.DeviceCurrencyValues = currencyValues;
-                IsLocalDataDirty = true;
+                s_localGameData.SyncableCurrencies.Add(key, new SyncableCurrency(key));
             }
-            else
-            {
-                throw new KeyNotFoundException(key);
-            }
+
+            s_localGameData.SyncableCurrencies[key].DeviceCurrencyValues = currencyValues;
+            IsLocalDataDirty = true;
         }
 
         /// <summary>
@@ -353,8 +96,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="bool"/>.</param>
-        public static void SetBool(string key, bool value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetBool(string key, bool value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.Bool, persistenceType);
+                var syncableItem = new SyncableItem(value.ToString(), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.Bool)
             {
                 s_localGameData.SyncableItems[key].ValueString = value
@@ -373,8 +125,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="int"/>.</param>
-        public static void SetInt(string key, int value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetInt(string key, int value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.Int, persistenceType);
+                var syncableItem = new SyncableItem(value.ToString(CultureInfo.InvariantCulture), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.Int)
             {
                 s_localGameData.SyncableItems[key].ValueString = value.ToString(CultureInfo.InvariantCulture);
@@ -391,8 +152,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="uint"/>.</param>
-        public static void SetUInt(string key, uint value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetUInt(string key, uint value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.UInt, persistenceType);
+                var syncableItem = new SyncableItem(value.ToString(CultureInfo.InvariantCulture), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.UInt)
             {
                 s_localGameData.SyncableItems[key].ValueString = value.ToString(CultureInfo.InvariantCulture);
@@ -409,8 +179,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="float"/>.</param>
-        public static void SetFloat(string key, float value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetFloat(string key, float value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.Float, persistenceType);
+                var syncableItem = new SyncableItem(value.ToString("R", CultureInfo.InvariantCulture), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.Float)
             {
                 s_localGameData.SyncableItems[key].ValueString = value.ToString("R", CultureInfo.InvariantCulture);
@@ -427,8 +206,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="double"/>.</param>
-        public static void SetDouble(string key, double value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetDouble(string key, double value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.Double, persistenceType);
+                var syncableItem = new SyncableItem(value.ToString("R", CultureInfo.InvariantCulture), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.Double)
             {
                 s_localGameData.SyncableItems[key].ValueString = value.ToString("R", CultureInfo.InvariantCulture);
@@ -445,8 +233,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="string"/>.</param>
-        public static void SetString(string key, string value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetString(string key, string value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.String, persistenceType);
+                var syncableItem = new SyncableItem(value, metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.String)
             {
                 s_localGameData.SyncableItems[key].ValueString = value;
@@ -463,8 +260,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="long"/>.</param>
-        public static void SetLong(string key, long value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetLong(string key, long value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.Long, persistenceType);
+                var syncableItem = new SyncableItem(value.ToString(CultureInfo.InvariantCulture), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.Long)
             {
                 s_localGameData.SyncableItems[key].ValueString = value.ToString(CultureInfo.InvariantCulture);
@@ -481,8 +287,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="DateTime"/>.</param>
-        public static void SetDateTime(string key, DateTime value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetDateTime(string key, DateTime value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.Long, persistenceType);
+                var syncableItem = new SyncableItem(value.ToBinary().ToString(CultureInfo.InvariantCulture), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.Long)
             {
                 s_localGameData.SyncableItems[key].ValueString = value.ToBinary().ToString(CultureInfo.InvariantCulture);
@@ -499,8 +314,17 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="key">Must be a unique identifier for this specific value.</param>
         /// <param name="value">The value for this <see cref="decimal"/>.</param>
-        public static void SetDecimal(string key, decimal value)
+        /// <param name="persistenceType">The persistence type to use in case of a data conflict (ignored if value has been set before).</param>
+        public static void SetDecimal(string key, decimal value, PersistenceType persistenceType)
         {
+            if (!s_localGameData.SyncableItems.ContainsKey(key))
+            {
+                var metaData = new SyncableItemMetaData(DataType.Decimal, persistenceType);
+                var syncableItem = new SyncableItem(value.ToString(CultureInfo.InvariantCulture), metaData);
+                s_localGameData.SyncableItems.Add(key, syncableItem);
+                IsLocalDataDirty = true;
+            }
+
             if (s_localGameData.SyncableItems[key].Metadata.DataType == DataType.Decimal)
             {
                 s_localGameData.SyncableItems[key].ValueString = value.ToString(CultureInfo.InvariantCulture);
@@ -533,8 +357,9 @@ namespace CloudOnce.Internal
         /// Returns the value of a specified <see cref="bool"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="bool"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="bool"/>.</returns>
-        public static bool GetBool(string key)
+        public static bool GetBool(string key, bool defaultValue)
         {
             SyncableItem localItem;
 
@@ -554,15 +379,16 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(bool));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="int"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="int"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="int"/>.</returns>
-        public static int GetInt(string key)
+        public static int GetInt(string key, int defaultValue)
         {
             SyncableItem localItem;
 
@@ -576,15 +402,16 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(int));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="uint"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="uint"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="uint"/>.</returns>
-        public static uint GetUInt(string key)
+        public static uint GetUInt(string key, uint defaultValue)
         {
             SyncableItem localItem;
 
@@ -600,15 +427,16 @@ namespace CloudOnce.Internal
                 return default(uint);
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="float"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="float"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="float"/>.</returns>
-        public static float GetFloat(string key)
+        public static float GetFloat(string key, float defaultValue)
         {
             SyncableItem localItem;
 
@@ -622,15 +450,16 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(float));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="double"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="double"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="double"/>.</returns>
-        public static double GetDouble(string key)
+        public static double GetDouble(string key, double defaultValue)
         {
             SyncableItem localItem;
 
@@ -644,15 +473,16 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(double));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="string"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="string"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="string"/>.</returns>
-        public static string GetString(string key)
+        public static string GetString(string key, string defaultValue)
         {
             SyncableItem localItem;
 
@@ -666,15 +496,16 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(string));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="long"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="long"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="long"/>.</returns>
-        public static long GetLong(string key)
+        public static long GetLong(string key, long defaultValue)
         {
             SyncableItem localItem;
 
@@ -688,15 +519,16 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(long));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="DateTime"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="DateTime"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="DateTime"/>.</returns>
-        public static DateTime GetDateTime(string key)
+        public static DateTime GetDateTime(string key, DateTime defaultValue)
         {
             SyncableItem localItem;
 
@@ -710,15 +542,16 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(long));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         /// <summary>
         /// Returns the value of a specified <see cref="decimal"/>.
         /// </summary>
         /// <param name="key">The unique identifier for the <see cref="decimal"/>.</param>
+        /// <param name="defaultValue">Value to return if key does not exist.</param>
         /// <returns>The value of the specified <see cref="decimal"/>.</returns>
-        public static decimal GetDecimal(string key)
+        public static decimal GetDecimal(string key, decimal defaultValue)
         {
             SyncableItem localItem;
 
@@ -732,7 +565,7 @@ namespace CloudOnce.Internal
                 throw new UnexpectedCollectionElementTypeException(key, typeof(decimal));
             }
 
-            throw new KeyNotFoundException(key);
+            return defaultValue;
         }
 
         #endregion /Get methods
@@ -755,17 +588,16 @@ namespace CloudOnce.Internal
         /// <param name="key">The unique identifier for the <see cref="SyncableCurrency"/> you want to reset.</param>
         public static void ResetSyncableCurrency(string key)
         {
-            SyncableCurrency localCurrency;
-
-            if (s_localGameData.SyncableCurrencies.TryGetValue(key, out localCurrency))
+            if (!s_localGameData.SyncableCurrencies.ContainsKey(key))
             {
-                localCurrency.ResetCurrency();
-                IsLocalDataDirty = true;
+                s_localGameData.SyncableCurrencies.Add(key, new SyncableCurrency(key));
             }
             else
             {
-                throw new KeyNotFoundException(key);
+                s_localGameData.SyncableCurrencies[key].ResetCurrency();
             }
+            
+            IsLocalDataDirty = true;
         }
 
         /// <summary>
@@ -990,10 +822,9 @@ namespace CloudOnce.Internal
             s_localGameData = new GameData(otherData);
             foreach (var playerPreference in CloudPrefs)
             {
-                playerPreference.Value.Reset();
+                playerPreference.Value.Load(true);
             }
 
-            RefreshCloudValues();
             SaveToDisk();
             return s_localGameData.GetAllKeys();
         }
@@ -1024,37 +855,6 @@ namespace CloudOnce.Internal
         #endregion /Public methods
 
         #region Private methods
-
-        /// <summary>
-        /// Used by above initialize methods to create any type of cloud preference.
-        /// </summary>
-        /// <param name="key">Must be a unique identifier for this specific value.</param>
-        /// <param name="item">The <see cref="SyncableItem"/> you want to store in the local <see cref="GameData"/>.</param>
-        private static void CreateItem(string key, SyncableItem item)
-        {
-            SyncableItem localItem;
-
-            // If the item already exists, update it instead of creating a new item
-            if (s_localGameData.SyncableItems.TryGetValue(key, out localItem))
-            {
-                // Ignore if the new item doesn't have the same persistence type as the current item
-                if (localItem.Metadata.PersistenceType == item.Metadata.PersistenceType)
-                {
-                    // Only set item if the value is different from the current value
-                    if (!localItem.Equals(item))
-                    {
-                        s_localGameData.SyncableItems[key] = ConflictResolver.ResolveConflict(localItem, item);
-                        IsLocalDataDirty = true;
-                    }
-                }
-            }
-            else
-            {
-                // Create new item
-                s_localGameData.SyncableItems.Add(key, item);
-                IsLocalDataDirty = true;
-            }
-        }
 
         /// <summary>
         /// Clears all cloud variables currently stored in the cloud.

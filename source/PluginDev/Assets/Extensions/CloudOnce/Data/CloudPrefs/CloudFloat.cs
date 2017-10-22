@@ -26,7 +26,7 @@ namespace CloudOnce.CloudPrefs
         public CloudFloat(string key, PersistenceType persistenceType, float value = 0f)
             : base(key, persistenceType, value, value, DataManager.GetFloat, DataManager.SetFloat)
         {
-            DataManager.InitializeFloat(key, persistenceType, value);
+            DataManager.SetFloat(key, value, persistenceType);
             Load();
         }
 
@@ -45,7 +45,7 @@ namespace CloudOnce.CloudPrefs
         public CloudFloat(string key, PersistenceType persistenceType, float value, float defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetFloat, DataManager.SetFloat)
         {
-            DataManager.InitializeFloat(key, persistenceType, value);
+            DataManager.SetFloat(key, value, persistenceType);
             Load();
         }
     }

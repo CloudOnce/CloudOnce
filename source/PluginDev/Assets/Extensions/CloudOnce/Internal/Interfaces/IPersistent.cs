@@ -18,7 +18,8 @@ namespace CloudOnce.Internal
         /// <summary>
         /// Invokes the cloud preference's <c>delegate</c> used to load data.
         /// </summary>
-        void Load();
+        /// <param name="force">Force load, ignoring <see cref="PersistenceType"/>.</param>
+        void Load(bool force = false);
 
         /// <summary>
         /// Resets the <see cref="IPersistent"/> to default/initial value.

@@ -29,7 +29,7 @@ namespace CloudOnce.Internal
         #region Private methods
 
         /// <summary>
-        /// Callback method for <c>CloudOnceSave</c> iOS plug-in. Name MUST be "ExternalChange".
+        /// Callback method for <c>CloudOnceCloudSave</c> iOS plug-in. Name MUST be "ExternalChange".
         /// </summary>
         /// <param name="message">The callback string.</param>
         private void ExternalChange(string message)

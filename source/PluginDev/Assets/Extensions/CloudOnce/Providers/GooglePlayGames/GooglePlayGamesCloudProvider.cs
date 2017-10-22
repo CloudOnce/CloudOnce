@@ -27,6 +27,8 @@ namespace CloudOnce.Internal.Providers
         private CloudOnceEvents cloudOnceEvents;
         private bool cloudSaveEnabled = true;
         private Texture2D playerImage;
+        private string playerIdCache;
+        private bool autoLoadEnabled;
 
         /// <summary>
         /// Used to make sure we don't trigger another initialization of the Cloud Provider once one has started.
@@ -215,10 +217,7 @@ namespace CloudOnce.Internal.Providers
                 return;
             }
 
-            if (autoCloudLoad)
-            {
-                SetUpAutoCloudLoad();
-            }
+            autoLoadEnabled = autoCloudLoad;
 
             IsGuestUserDefault = false;
             Logger.d("Attempting to sign in to Google Play Game Services.");
@@ -353,13 +352,6 @@ namespace CloudOnce.Internal.Providers
             }
         }
 
-        private void SetUpAutoCloudLoad()
-        {
-            // Setting up loading of the default save game when user is signed in
-            var cloudSaveWrapper = (GooglePlayGamesCloudSaveWrapper)Storage;
-            cloudSaveWrapper.SubscribeToAuthenticationEvent();
-        }
-
         private void SubscribeOnAuthenticatedEvent()
         {
             PlayGamesPlatform.Instance.OnAuthenticated -= OnAuthenticated;
@@ -372,14 +364,40 @@ namespace CloudOnce.Internal.Providers
                 () =>
                 {
                     cloudOnceEvents.RaiseOnSignedInChanged(true);
-                    Logger.d("Successfully signed in to Google Play Game Services.");
+                    Logger.d("Successfully signed in to Google Play Game Services. Player: " + PlayerDisplayName);
                     IsGuestUserDefault = false;
                     GetPlayerImage();
+                    if (playerIdCache != null && !string.Equals(playerIdCache, PlayerID, StringComparison.InvariantCulture))
+                    {
+                        // Switching user
+                        foreach (var achievement in Achievements.All)
+                        {
+                            achievement.ResetLocalState();
+                        }
+
+                        if (cloudSaveEnabled)
+                        {
+                            GooglePlayGamesCloudSaveWrapper.LoadDataString(OnDataStringLoaded);
+                        }
+                    }
+                    else if (autoLoadEnabled && cloudSaveEnabled)
+                    {
+                        Cloud.Storage.Load();
+                    }
+
+                    playerIdCache = PlayerID;
                     if (Achievements.All.Length > 0)
                     {
                         PlayGamesPlatform.Instance.LoadAchievements(UpdateAchievementsData);
                     }
                 });
+        }
+
+        private void OnDataStringLoaded(string dataString)
+        {
+            var allKeys = DataManager.ReplaceLocalDataWith(dataString);
+            cloudOnceEvents.RaiseOnNewCloudValues(allKeys);
+            cloudOnceEvents.RaiseOnCloudLoadComplete(true);
         }
 
         private void GetPlayerImage()

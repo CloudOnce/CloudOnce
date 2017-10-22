@@ -37,9 +37,9 @@ namespace CloudOnce.Internal
             DataManager.InitDataManager();
         }
 
-        protected delegate T ValueLoaderDelegate(string key);
+        protected delegate T ValueLoaderDelegate(string key, T defaultValue);
 
-        protected delegate void ValueSetterDelegate(string key, T value);
+        protected delegate void ValueSetterDelegate(string key, T value, PersistenceType persistenceType);
 
         #region Properties
 
@@ -94,11 +94,18 @@ namespace CloudOnce.Internal
         /// <summary>
         /// Invokes the <see cref="ValueLoader"/>.
         /// </summary>
-        public void Load()
+        public void Load(bool force = false)
         {
             if (ValueLoader != null)
             {
-                Value = ValueLoader.Invoke(Key);
+                if (force)
+                {
+                    value = ValueLoader.Invoke(Key, DefaultValue);
+                }
+                else
+                {
+                    Value = ValueLoader.Invoke(Key, DefaultValue);
+                }
             }
         }
 
@@ -109,7 +116,7 @@ namespace CloudOnce.Internal
         {
             if (ValueSetter != null)
             {
-                ValueSetter.Invoke(Key, Value);
+                ValueSetter.Invoke(Key, Value, PersistenceType);
             }
         }
 
