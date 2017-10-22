@@ -26,8 +26,6 @@ namespace CloudOnce.CloudPrefs
         public CloudDecimal(string key, PersistenceType persistenceType, decimal value = default(decimal))
             : base(key, persistenceType, value, value, DataManager.GetDecimal, DataManager.SetDecimal)
         {
-            DataManager.SetDecimal(key, value, persistenceType);
-            Load();
         }
 
         /// <summary>
@@ -45,8 +43,6 @@ namespace CloudOnce.CloudPrefs
         public CloudDecimal(string key, PersistenceType persistenceType, decimal value, decimal defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetDecimal, DataManager.SetDecimal)
         {
-            DataManager.SetDecimal(key, value, persistenceType);
-            Load();
         }
     }
 }

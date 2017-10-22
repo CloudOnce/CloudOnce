@@ -35,6 +35,7 @@ namespace CloudOnce.Internal
 
             DataManager.CloudPrefs[key] = this;
             DataManager.InitDataManager();
+            Load();
         }
 
         protected delegate T ValueLoaderDelegate(string key, T defaultValue);

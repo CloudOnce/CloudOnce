@@ -26,8 +26,6 @@ namespace CloudOnce.CloudPrefs
         public CloudInt(string key, PersistenceType persistenceType, int value = 0)
             : base(key, persistenceType, value, value, DataManager.GetInt, DataManager.SetInt)
         {
-            DataManager.SetInt(key, value, persistenceType);
-            Load();
         }
 
         /// <summary>
@@ -45,8 +43,6 @@ namespace CloudOnce.CloudPrefs
         public CloudInt(string key, PersistenceType persistenceType, int value, int defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetInt, DataManager.SetInt)
         {
-            DataManager.SetInt(key, value, persistenceType);
-            Load();
         }
     }
 }

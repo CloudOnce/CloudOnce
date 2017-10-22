@@ -24,8 +24,6 @@ namespace CloudOnce.CloudPrefs
         public CloudDateTime(string key, PersistenceType persistenceType, DateTime value = default(DateTime))
             : base(key, persistenceType, value, value, DataManager.GetDateTime, DataManager.SetDateTime)
         {
-            DataManager.SetDateTime(key, value, persistenceType);
-            Load();
         }
 
         /// <summary>
@@ -43,8 +41,6 @@ namespace CloudOnce.CloudPrefs
         public CloudDateTime(string key, PersistenceType persistenceType, DateTime value, DateTime defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetDateTime, DataManager.SetDateTime)
         {
-            DataManager.SetDateTime(key, value, persistenceType);
-            Load();
         }
     }
 }

@@ -31,6 +31,7 @@ namespace CloudOnce.Internal
 
             DataManager.CloudPrefs[key] = this;
             DataManager.InitDataManager();
+            Load();
         }
 
         #endregion /Fields, constructors & delegates

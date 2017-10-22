@@ -23,8 +23,6 @@ namespace CloudOnce.CloudPrefs
         public CloudLong(string key, PersistenceType persistenceType, long value = 0)
             : base(key, persistenceType, value, value, DataManager.GetLong, DataManager.SetLong)
         {
-            DataManager.SetLong(key, value, persistenceType);
-            Load();
         }
 
         /// <summary>
@@ -42,8 +40,6 @@ namespace CloudOnce.CloudPrefs
         public CloudLong(string key, PersistenceType persistenceType, long value, long defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetLong, DataManager.SetLong)
         {
-            DataManager.SetLong(key, value, persistenceType);
-            Load();
         }
     }
 }

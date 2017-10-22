@@ -25,7 +25,6 @@ namespace CloudOnce.CloudPrefs
         public CloudCurrencyInt(string key, int defaultValue = 0, bool allowNegative = false)
             : base(key, defaultValue, allowNegative)
         {
-            Load();
         }
 
         #region Properties

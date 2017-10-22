@@ -25,7 +25,6 @@ namespace CloudOnce.CloudPrefs
         public CloudCurrencyFloat(string key, float defaultValue = 0f, bool allowNegative = false)
             : base(key, defaultValue, allowNegative)
         {
-            Load();
         }
     }
 }

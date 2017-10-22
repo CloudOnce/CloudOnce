@@ -27,8 +27,6 @@ namespace CloudOnce.CloudPrefs
         public CloudString(string key, PersistenceType persistenceType = PersistenceType.Latest, string value = "")
             : base(key, persistenceType, value, value, DataManager.GetString, DataManager.SetString)
         {
-            DataManager.SetString(key, value, persistenceType);
-            Load();
         }
 
         /// <summary>
@@ -47,8 +45,6 @@ namespace CloudOnce.CloudPrefs
         public CloudString(string key, PersistenceType persistenceType, string value, string defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetString, DataManager.SetString)
         {
-            DataManager.SetString(key, value, persistenceType);
-            Load();
         }
     }
 }
