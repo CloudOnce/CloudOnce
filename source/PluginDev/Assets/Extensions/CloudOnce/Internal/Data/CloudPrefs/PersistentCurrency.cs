@@ -190,7 +190,7 @@ namespace CloudOnce.Internal
             DataManager.SetCurrencyValues(Key, deviceCurrencyValues);
         }
 
-        public void Load()
+        public void Load(bool force = false)
         {
             deviceCurrencyValues = DataManager.GetCurrencyValues(Key);
             if (deviceCurrencyValues != null)

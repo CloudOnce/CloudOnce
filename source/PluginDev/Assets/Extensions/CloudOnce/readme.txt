@@ -10,6 +10,10 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.4.6
+- Fixed issues related to switching user on Google Play
+- Updated Play Services Resolver from v1.2.56 to v1.2.59
+
 Version 2.4.5
 - Fixed exception related to Play Services Resolver on macOS
 - Updated Play Services Resolver from v1.2.54 to v1.2.56

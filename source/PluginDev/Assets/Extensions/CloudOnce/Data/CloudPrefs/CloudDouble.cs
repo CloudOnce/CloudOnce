@@ -26,7 +26,7 @@ namespace CloudOnce.CloudPrefs
         public CloudDouble(string key, PersistenceType persistenceType, double value = 0.0)
             : base(key, persistenceType, value, value, DataManager.GetDouble, DataManager.SetDouble)
         {
-            DataManager.InitializeDouble(key, persistenceType, value);
+            DataManager.SetDouble(key, value, persistenceType);
             Load();
         }
 
@@ -45,7 +45,7 @@ namespace CloudOnce.CloudPrefs
         public CloudDouble(string key, PersistenceType persistenceType, double value, double defaultValue)
             : base(key, persistenceType, value, defaultValue, DataManager.GetDouble, DataManager.SetDouble)
         {
-            DataManager.InitializeDouble(key, persistenceType, value);
+            DataManager.SetDouble(key, value, persistenceType);
             Load();
         }
     }

@@ -162,7 +162,11 @@ namespace CloudOnce.Internal
         /// </summary>
         public void ResetCurrency()
         {
-            deviceCurrencyValues = new Dictionary<string, CurrencyValue>();
+            foreach (var kvp in DeviceCurrencyValues)
+            {
+                kvp.Value.Additions = 0f;
+                kvp.Value.Subtractions = 0f;
+            }
         }
 
         #endregion /Public methods

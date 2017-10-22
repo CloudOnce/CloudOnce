@@ -266,6 +266,16 @@ namespace CloudOnce.Internal
             }
         }
 
+        public void ResetLocalState()
+        {
+#if CLOUDONCE_DEBUG
+            UnityEngine.Debug.Log(string.Format("Resetting local state for achievement {0} ({1})", internalID, ID));
+#endif
+            IsUnlocked = false;
+            isAchievementHidden = true;
+            achievementProgress = 0.0;
+        }
+
         #endregion /Public methods
 
         #region Private methods

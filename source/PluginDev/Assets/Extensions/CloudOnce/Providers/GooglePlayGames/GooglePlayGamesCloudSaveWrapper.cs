@@ -12,6 +12,7 @@ namespace CloudOnce.Internal.Providers
     using GooglePlayGames.BasicApi;
     using GooglePlayGames.BasicApi.SavedGame;
     using UnityEngine;
+    using UnityEngine.Events;
     using Utils;
     using Logger = GooglePlayGames.OurUtils.Logger;
 
@@ -188,13 +189,44 @@ namespace CloudOnce.Internal.Providers
             DataManager.DeleteAllCloudVariables();
         }
 
-        public void SubscribeToAuthenticationEvent()
+        /// <summary>
+        /// Used internally when switching user.
+        /// </summary>
+        /// <param name="onDataLoaded">Action to invoke when data has been loaded.</param>
+        public static void LoadDataString(UnityAction<string> onDataLoaded)
         {
 #if CLOUDONCE_DEBUG
-            Debug.Log("Subscribing to OnAuthenticated event.");
+            Logger.d("Switching user. Loading default save game.");
 #endif
-            PlayGamesPlatform.Instance.OnAuthenticated -= Load;
-            PlayGamesPlatform.Instance.OnAuthenticated += Load;
+            PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(
+                saveGameFileName,
+                DataSource.ReadCacheOrNetwork,
+                ConflictResolutionStrategy.UseLongestPlaytime,
+                (status, metadata) =>
+                {
+                    if (status == SavedGameRequestStatus.Success)
+                    {
+                        PlayGamesPlatform.Instance.SavedGame.ReadBinaryData(
+                            metadata,
+                            (requestStatus, bytes) =>
+                            {
+                                if (requestStatus == SavedGameRequestStatus.Success)
+                                {
+                                    s_timeWhenCloudSaveWasLoaded = Time.realtimeSinceStartup;
+                                    var dataString = GetDataString(bytes);
+                                    onDataLoaded.Invoke(dataString);
+                                }
+                                else
+                                {
+                                    onDataLoaded.Invoke(null);
+                                }
+                            });
+                    }
+                    else
+                    {
+                        onDataLoaded.Invoke(null);
+                    }
+                });
         }
 
         #endregion /Public methods
@@ -300,23 +332,9 @@ namespace CloudOnce.Internal.Providers
                 return;
             }
 
-            var dataString = BytesToString(cloudData);
+            var dataString = GetDataString(cloudData);
             if (!string.IsNullOrEmpty(dataString))
             {
-                if (!dataString.IsJson())
-                {
-                    try
-                    {
-                        dataString = dataString.FromBase64StringToString();
-                    }
-                    catch (FormatException)
-                    {
-                        Debug.LogWarning("Unable to deserialize cloud data!");
-                        cloudOnceEvents.RaiseOnCloudLoadComplete(false);
-                        return;
-                    }
-                }
-
                 var changedKeys = DataManager.MergeLocalDataWith(dataString);
                 if (changedKeys.Length > 0)
                 {
@@ -329,11 +347,38 @@ namespace CloudOnce.Internal.Providers
             else
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log("No data saved to the cloud yet.");
+                if (dataString != null)
+                {
+                    Debug.Log("No data saved to the cloud yet.");
+                }
 #endif
                 s_loadInitialized = false;
                 cloudOnceEvents.RaiseOnCloudLoadComplete(true);
             }
+        }
+
+        private static string GetDataString(byte[] bytes)
+        {
+            var dataString = BytesToString(bytes);
+            if (!string.IsNullOrEmpty(dataString))
+            {
+                if (dataString.IsJson())
+                {
+                    return dataString;
+                }
+
+                try
+                {
+                    return dataString.FromBase64StringToString();
+                }
+                catch
+                {
+                    Debug.LogWarning("Unable to deserialize cloud data!");
+                    return null;
+                }
+            }
+
+            return string.Empty;
         }
 
         private void OnCloudLoadComplete(bool arg0)
