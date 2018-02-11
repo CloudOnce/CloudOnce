@@ -86,23 +86,7 @@ namespace GooglePlayGames.Native.PInvoke
 
         public MilestoneState State
         {
-            get
-            {
-                var state = C.QuestMilestone_State(SelfPtr());
-                switch (state)
-                {
-                    case Types.QuestMilestoneState.CLAIMED:
-                        return MilestoneState.Claimed;
-                    case Types.QuestMilestoneState.COMPLETED_NOT_CLAIMED:
-                        return MilestoneState.CompletedNotClaimed;
-                    case Types.QuestMilestoneState.NOT_COMPLETED:
-                        return MilestoneState.NotCompleted;
-                    case Types.QuestMilestoneState.NOT_STARTED:
-                        return MilestoneState.NotStarted;
-                    default:
-                        throw new InvalidOperationException("Unknown state: " + state);
-                }
-            }
+            get { return MilestoneState.NotStarted; }
         }
 
         internal bool Valid()

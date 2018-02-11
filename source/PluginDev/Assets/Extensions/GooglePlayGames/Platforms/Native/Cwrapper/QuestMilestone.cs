@@ -60,10 +60,6 @@ namespace GooglePlayGames.Native.Cwrapper
          /* from(size_t) */UIntPtr out_size);
 
         [DllImport(SymbolLocation.NativeSymbolLocation)]
-        internal static extern /* from(QuestMilestoneState_t) */ Types.QuestMilestoneState QuestMilestone_State(
-            HandleRef self);
-
-        [DllImport(SymbolLocation.NativeSymbolLocation)]
         [return: MarshalAs(UnmanagedType.I1)]
         internal static extern /* from(bool) */ bool QuestMilestone_Valid(
             HandleRef self);

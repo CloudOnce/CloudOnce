@@ -128,27 +128,7 @@ namespace GooglePlayGames.Native.PInvoke
 
         public QuestState State
         {
-            get
-            {
-                var state = C.Quest_State(SelfPtr());
-                switch (state)
-                {
-                    case Types.QuestState.UPCOMING:
-                        return QuestState.Upcoming;
-                    case Types.QuestState.OPEN:
-                        return QuestState.Open;
-                    case Types.QuestState.ACCEPTED:
-                        return QuestState.Accepted;
-                    case Types.QuestState.COMPLETED:
-                        return QuestState.Completed;
-                    case Types.QuestState.EXPIRED:
-                        return QuestState.Expired;
-                    case Types.QuestState.FAILED:
-                        return QuestState.Failed;
-                    default:
-                        throw new InvalidOperationException("Unknown state: " + state);
-                }
-            }
+            get { return QuestState.Failed; }
         }
 
         internal bool Valid()

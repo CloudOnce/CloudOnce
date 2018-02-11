@@ -49,10 +49,6 @@ namespace GooglePlayGames.Native.Cwrapper
          /* from(size_t) */UIntPtr out_size);
 
         [DllImport(SymbolLocation.NativeSymbolLocation)]
-        internal static extern /* from(QuestState_t) */ Types.QuestState Quest_State(
-            HandleRef self);
-
-        [DllImport(SymbolLocation.NativeSymbolLocation)]
         internal static extern /* from(Quest_t) */ IntPtr Quest_Copy(
             HandleRef self);
 
