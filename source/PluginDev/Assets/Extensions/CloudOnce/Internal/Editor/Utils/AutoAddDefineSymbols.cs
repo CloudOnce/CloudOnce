@@ -7,16 +7,40 @@
 namespace CloudOnce.Internal.Editor.Utils
 {
     using UnityEditor;
+#if UNITY_2017
+    using UnityEditor.Build;
+#endif
 
     /// <summary>
     /// Automatically adds the NO_GPGS scipt define symbol to iOS player settings.
     /// </summary>
     [InitializeOnLoad]
     public class AutoAddDefineSymbols
+#if UNITY_2017
+        : IActiveBuildTargetChanged
+#endif
     {
         private const string defineSymbol = "NO_GPGS";
 
         static AutoAddDefineSymbols()
+        {
+            SetNoGPGS();
+        }
+#if UNITY_2017
+        public int callbackOrder
+        {
+            get { return 0; }
+        }
+
+        public void OnActiveBuildTargetChanged(BuildTarget previousTarget, BuildTarget newTarget)
+        {
+            if (newTarget == BuildTarget.iOS)
+            {
+                SetNoGPGS();
+            }
+        }
+#endif
+        private static void SetNoGPGS()
         {
             var defineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS).Trim();
             if (!defineSymbols.Contains(defineSymbol))
@@ -27,7 +51,9 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
                 else
                 {
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, defineSymbols + ";" + defineSymbol);
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(
+                        BuildTargetGroup.iOS,
+                        defineSymbols + ";" + defineSymbol);
                 }
             }
 

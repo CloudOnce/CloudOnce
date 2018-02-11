@@ -44,9 +44,6 @@ namespace CloudOnce.Internal.Editor.Utils
             public const string NearbyServiceBlurb = "Enter the service id that identifies the " +
                                                      "nearby connections service scope";
 
-            public const string ServiceIdError = "Invalid service ID.  The service id should follow " +
-                                     "namespace naming rules.";
-
             public const string SetupButton = "Run setup";
         }
 

@@ -2,6 +2,7 @@
 .vs/
 *.sln
 *.csproj
+*.user
 source/PluginDev/obj/
 
 # Unity3D

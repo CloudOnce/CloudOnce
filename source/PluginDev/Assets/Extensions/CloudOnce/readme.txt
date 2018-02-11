@@ -10,6 +10,11 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.5.0
+- Updated GPGS plugin from v0.9.41 to v0.9.50
+- Updated Jar Resolver from v1.2.59 to v1.2.61
+- Fixed editor override in DeactivateOnAwakeIfNotGoogle script
+
 Version 2.4.6
 - Fixed issues related to switching user on Google Play
 - Updated Play Services Resolver from v1.2.56 to v1.2.59

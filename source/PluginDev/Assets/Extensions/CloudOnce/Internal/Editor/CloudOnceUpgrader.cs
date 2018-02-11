@@ -7,6 +7,7 @@
 namespace CloudOnce.Internal.Editor
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using Data;
@@ -38,6 +39,12 @@ namespace CloudOnce.Internal.Editor
                 upgraded = true;
             }
 
+            if (oldVersion < new Version(2, 5))
+            {
+                Upgrade250();
+                upgraded = true;
+            }
+
             if (upgraded)
             {
                 AssetDatabase.Refresh();
@@ -49,39 +56,69 @@ namespace CloudOnce.Internal.Editor
             var obsoleteFiles = new[]
             {
                 "Assets/Extensions/GooglePlayGames/Editor/GPGSDependencies.cs",
-                "Assets/Extensions/GooglePlayGames/Editor/GPGSDependencies.cs.meta",
                 "Assets/Plugins/Android/libs/armeabi-v7a/libgpg.so",
-                "Assets/Plugins/Android/libs/armeabi-v7a/libgpg.so.meta",
                 "Assets/Plugins/Android/libs/x86/libgpg.so",
-                "Assets/Plugins/Android/libs/x86/libgpg.so.meta",
                 "Assets/Plugins/Android/MainLibProj/libs/play-games-plugin-support.jar",
-                "Assets/Plugins/Android/MainLibProj/libs/play-games-plugin-support.jar.meta",
                 "Assets/Plugins/Android/MainLibProj/AndroidManifest.xml",
-                "Assets/Plugins/Android/MainLibProj/AndroidManifest.xml.meta",
-                "Assets/Plugins/Android/MainLibProj/project.properties",
-                "Assets/Plugins/Android/MainLibProj/project.properties.meta"
+                "Assets/Plugins/Android/MainLibProj/project.properties"
             };
 
+            DeleteObsoleteFiles(obsoleteFiles);
+        }
+
+        private static void Upgrade250()
+        {
+            var obsoleteFiles = new[]
+            {
+                "Assets/Extensions/GooglePlayGames/BasicApi/Quests/IQuest.cs",
+                "Assets/Extensions/GooglePlayGames/BasicApi/Quests/IQuestMilestone.cs",
+                "Assets/Extensions/GooglePlayGames/BasicApi/Quests/IQuestsClient.cs",
+                "Assets/Extensions/GooglePlayGames/Editor/GPGSDependencies.xml",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/Cwrapper/Quest.cs",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/Cwrapper/QuestManager.cs",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/Cwrapper/QuestMilestone.cs",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/NativeQuestClient.cs",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/PInvoke/NativeQuest.cs",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/PInvoke/NativeQuestMilestone.cs",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/PInvoke/QuestManager.cs",
+                "Assets/Plugins/Android/play-games-plugin-support.aar"
+            };
+
+            DeleteObsoleteFiles(obsoleteFiles);
+        }
+
+        private static void DeleteObsoleteFiles(IEnumerable<string> obsoleteFiles)
+        {
             foreach (var file in obsoleteFiles.Where(File.Exists))
             {
                 Debug.Log("Deleting obsolete file: " + file);
                 File.Delete(file);
-                var directory = Path.GetDirectoryName(file);
-                if (directory != null)
+                var metaFile = file + ".meta";
+                if (File.Exists(metaFile))
                 {
-                    var directoryInfo = new DirectoryInfo(directory);
-                    if (directoryInfo.GetFiles().Length == 0)
+                    File.Delete(metaFile);
+                }
+
+                var directory = Path.GetDirectoryName(file);
+                if (directory == null)
+                {
+                    continue;
+                }
+
+                var directoryInfo = new DirectoryInfo(directory);
+                if (directoryInfo.GetFiles().Length != 0)
+                {
+                    continue;
+                }
+
+                Debug.Log("Deleting obsolete directory: " + directory);
+                directoryInfo.Delete();
+                if (directoryInfo.Parent != null)
+                {
+                    var meta = Path.Combine(directoryInfo.Parent.FullName, directoryInfo.Name + ".meta");
+                    if (File.Exists(meta))
                     {
-                        Debug.Log("Deleting obsolete directory: " + directory);
-                        directoryInfo.Delete();
-                        if (directoryInfo.Parent != null)
-                        {
-                            var meta = Path.Combine(directoryInfo.Parent.FullName, directoryInfo.Name + ".meta");
-                            if (File.Exists(meta))
-                            {
-                                File.Delete(meta);
-                            }
-                        }
+                        File.Delete(meta);
                     }
                 }
             }
