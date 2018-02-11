@@ -9,26 +9,11 @@ Check out the [Getting Started](http://jizc.github.io/CloudOnce/gettingStarted.h
 ## API Documentation
 If you need more technical or more complete documentation of the plug-in, you can check out the [API documentation](http://jizc.github.io/CloudOnce/api-docs/index.html).
 
-## Support
-Please **do not** use the issue tracker for personal support requests (use [Stack Overflow](https://stackoverflow.com/search?q=cloudonce)).
-
-## Contributing to this project
-Did you stumble upon a bug? If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
-
-If you've improved CloudOnce and think that other people would enjoy it, submit a pull request. Anyone and everyone is welcome to contribute.
-
-Please take a moment to review the [guidelines for contributing](.github/CONTRIBUTING.md).
-
-* [Bug reports](.github/CONTRIBUTING.md#bugs)
-* [Feature requests](.github/CONTRIBUTING.md#features)
-* [Pull requests](.github/CONTRIBUTING.md#pull-requests)
-
-Make sure your code works in **Unity v5.3.1f1** and up. Code that produces warnings in the Unity console will not be accepted. Please try to follow the same code style.
-
-### Play Services Resolver for Unity
+## Building
 For the PluginDev Unity project to compile you need to download and import [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver).
 
-### Building
+### Unity package
+
 Because CloudOnce includes Play Services Resolver for Unity, building a new unitypackage needs to be done from command-line or with a build script ([more info](https://github.com/googlesamples/unity-jar-resolver#plugin-redistribution)). Below is an example of how to do it on Windows. Change the paths to fit your environment.
 
 **Windows example:**
