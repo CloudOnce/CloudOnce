@@ -22,9 +22,11 @@ namespace CloudOnce.QuickStart
         private void Awake()
         {
 #if UNITY_EDITOR
-            if (activeInEditor)
+            if (!activeInEditor)
             {
-                return;
+#if !CLOUDONCE_GOOGLE
+                gameObject.SetActive(false);
+#endif
             }
 #elif !CLOUDONCE_GOOGLE
             gameObject.SetActive(false);
