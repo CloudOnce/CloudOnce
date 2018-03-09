@@ -4,15 +4,15 @@
 CloudOnce is a [Unity](http://unity3d.com/) plug-in that provides a unified game services API for Google Play Game Services, Apple Game Center (iOS & tvOS) and Amazon GameCircle. Ease of use is the primary focus for the plug-in, but it also attempts to satisfy the needs of power users.
 
 ## Getting Started
-Check out the [Getting Started](http://jizc.github.io/CloudOnce/gettingStarted.html) guide for an overview of available features and how to implement them.
+Download the [latest release](https://github.com/jizc/CloudOnce/releases/latest) and then check out the [Getting Started](http://jizc.github.io/CloudOnce/gettingStarted.html) guide for an overview of available features and how to implement them.
 
 ## API Documentation
 If you need more technical or more complete documentation of the plug-in, you can check out the [API documentation](http://jizc.github.io/CloudOnce/api-docs/index.html).
 
 ## Building
-For the PluginDev Unity project to compile you need to download and import [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver).
+If you want to modify CloudOnce and build your own unitypackage, there are a few required steps.
 
-### Unity package
+For the PluginDev Unity project to compile you need to download and import [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver).
 
 Because CloudOnce includes Play Services Resolver for Unity, building a new unitypackage needs to be done from command-line or with a build script ([more info](https://github.com/googlesamples/unity-jar-resolver#plugin-redistribution)). Below is an example of how to do it on Windows. Change the paths to fit your environment.
 
