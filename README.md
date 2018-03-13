@@ -33,11 +33,8 @@ CloudOnce has evolved a lot since then, and on June 1st 2016 it was made open-so
 
 ## Trollpants Game Studio games
 All the games created by Trollpants Game Studio have been released as open source. They all use CloudOnce and have been updated to run in Unity 2017.3. Check them out for examples of how CloudOnce can be used.
-* [Witch Wing](https://github.com/jizc/WitchWing)
-* [52 Swipe Up](https://github.com/jizc/52SwipeUp)
-* [Mini Planet Run](https://github.com/jizc/MiniPlanetRun)
-* [Bucket Knight: River Adventures](https://github.com/jizc/BucketKnight)
-* [Interstellar Drift](https://github.com/jizc/InterstellarDrift)
+* [Trollpants repository](https://github.com/jizc/Trollpants)
+* [Trollpants WebGL builds](https://jizc.github.io/Trollpants)
 
 ## License
 The contents of this project is licensed under the MIT license, unless other is specified in file header. See [LICENSE](./LICENSE) file in the project root for full license information.
