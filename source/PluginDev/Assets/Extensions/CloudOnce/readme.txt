@@ -10,6 +10,10 @@ the plug-in, but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.5.1
+- Unity 2018 support
+- Updated Jar Resolver from v1.2.61 to v1.2.66
+
 Version 2.5.0
 - Updated GPGS plugin from v0.9.41 to v0.9.50
 - Updated Jar Resolver from v1.2.59 to v1.2.61
