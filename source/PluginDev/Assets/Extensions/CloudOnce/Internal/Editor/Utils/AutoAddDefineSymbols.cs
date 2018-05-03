@@ -7,7 +7,7 @@
 namespace CloudOnce.Internal.Editor.Utils
 {
     using UnityEditor;
-#if UNITY_2017
+#if UNITY_2017_1_OR_NEWER
     using UnityEditor.Build;
 #endif
 
@@ -16,7 +16,7 @@ namespace CloudOnce.Internal.Editor.Utils
     /// </summary>
     [InitializeOnLoad]
     public class AutoAddDefineSymbols
-#if UNITY_2017
+#if UNITY_2017_1_OR_NEWER
         : IActiveBuildTargetChanged
 #endif
     {
@@ -26,7 +26,7 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             SetNoGPGS();
         }
-#if UNITY_2017
+#if UNITY_2017_1_OR_NEWER
         public int callbackOrder
         {
             get { return 0; }
