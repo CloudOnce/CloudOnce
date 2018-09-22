@@ -12,7 +12,7 @@ namespace CloudOnce.Internal.Editor.Utils
 #endif
 
     /// <summary>
-    /// Automatically adds the NO_GPGS scipt define symbol to iOS player settings.
+    /// Automatically adds the NO_GPGS script define symbol to iOS player settings.
     /// </summary>
     [InitializeOnLoad]
     public class AutoAddDefineSymbols

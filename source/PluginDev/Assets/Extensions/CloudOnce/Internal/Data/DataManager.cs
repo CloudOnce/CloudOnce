@@ -744,17 +744,17 @@ namespace CloudOnce.Internal
         /// </summary>
         public static void LoadFromDisk()
         {
-            var devstring = PlayerPrefs.GetString(DevStringKey);
-            if (string.IsNullOrEmpty(devstring))
+            var devString = PlayerPrefs.GetString(DevStringKey);
+            if (string.IsNullOrEmpty(devString))
             {
                 return;
             }
 
-            if (!devstring.IsJson())
+            if (!devString.IsJson())
             {
                 try
                 {
-                    devstring = devstring.FromBase64StringToString();
+                    devString = devString.FromBase64StringToString();
                 }
                 catch (FormatException)
                 {
@@ -765,11 +765,11 @@ namespace CloudOnce.Internal
 
             if (!s_isInitialized)
             {
-                s_localGameData = new GameData(devstring);
+                s_localGameData = new GameData(devString);
             }
             else
             {
-                var changedKeys = MergeLocalDataWith(devstring);
+                var changedKeys = MergeLocalDataWith(devString);
                 if (changedKeys.Length > 0)
                 {
                     RefreshCloudValues();

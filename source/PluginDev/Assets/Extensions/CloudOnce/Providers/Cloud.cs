@@ -65,7 +65,7 @@ namespace CloudOnce
         }
 
         /// <summary>
-        /// Raised after an attempt has been made to save cloud data. Parameter idicates success.
+        /// Raised after an attempt has been made to save cloud data. Parameter indicates success.
         /// </summary>
         public static event UnityAction<bool> OnCloudSaveComplete
         {
@@ -83,7 +83,7 @@ namespace CloudOnce
         }
 
         /// <summary>
-        /// Raised if local data is changed as a result of loading cloud data. Returns a <see cref="string"/> array of the changed interal IDs.
+        /// Raised if local data is changed as a result of loading cloud data. Returns a <see cref="string"/> array of the changed internal IDs.
         /// </summary>
         public static event UnityAction<string[]> OnNewCloudValues
         {
@@ -262,7 +262,7 @@ namespace CloudOnce
         }
 
         /// <summary>
-        /// Load the user profiles accociated with the given array of user IDs.
+        /// Load the user profiles associated with the given array of user IDs.
         /// </summary>
         /// <param name="userIDs">The users to retrieve profiles for.</param>
         /// <param name="callback">Callback to handle the user profiles.</param>

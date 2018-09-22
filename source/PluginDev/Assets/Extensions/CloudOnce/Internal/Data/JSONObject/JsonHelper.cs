@@ -20,7 +20,7 @@ namespace CloudOnce.Internal
         }
 
         public static JSONObject ToJsonObject<T>(Dictionary<string, T> serializableDictionary)
-            where T : IJsonSerializeable
+            where T : IJsonSerializable
         {
             var convertedDictionary = ConvertToSerializable(serializableDictionary);
 
@@ -34,7 +34,7 @@ namespace CloudOnce.Internal
         }
 
         public static JSONObject ToJsonObject<T>(List<T> serializableList)
-            where T : IJsonSerializeable
+            where T : IJsonSerializable
         {
             var list = new List<JSONObject>();
             foreach (var item in serializableList)
@@ -71,10 +71,10 @@ namespace CloudOnce.Internal
             return null;
         }
 
-        private static Dictionary<string, IJsonSerializeable> ConvertToSerializable<T>(Dictionary<string, T> dictionary)
-            where T : IJsonSerializeable
+        private static Dictionary<string, IJsonSerializable> ConvertToSerializable<T>(Dictionary<string, T> dictionary)
+            where T : IJsonSerializable
         {
-            var serializableDictionary = new Dictionary<string, IJsonSerializeable>();
+            var serializableDictionary = new Dictionary<string, IJsonSerializable>();
             foreach (var pair in dictionary)
             {
                 serializableDictionary.Add(pair.Key, pair.Value);

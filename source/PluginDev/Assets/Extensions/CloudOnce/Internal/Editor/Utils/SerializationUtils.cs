@@ -215,7 +215,7 @@ namespace CloudOnce.Internal.Editor.Utils
         }
 
         /// <summary>
-        /// Generates a static script that provides acces to all achievements created in the CloudOnce Editor.
+        /// Generates a static script that provides access to all achievements created in the CloudOnce Editor.
         /// If the Achievements.cs script already exists it will be overwritten.
         /// </summary>
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>
@@ -270,7 +270,7 @@ namespace CloudOnce.Internal.Editor.Utils
         }
 
         /// <summary>
-        /// Generates a static script that provides acces to all leaderboards created in the CloudOnce Editor.
+        /// Generates a static script that provides access to all leaderboards created in the CloudOnce Editor.
         /// If the Leaderboards.cs script already exists it will be overwritten.
         /// </summary>
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>
@@ -321,7 +321,7 @@ namespace CloudOnce.Internal.Editor.Utils
         }
 
         /// <summary>
-        /// Generates a static script that provides acces to all cloud variables created in the CloudOnce Editor.
+        /// Generates a static script that provides access to all cloud variables created in the CloudOnce Editor.
         /// If the CloudVariables.cs script already exists it will be overwritten.
         /// </summary>
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>

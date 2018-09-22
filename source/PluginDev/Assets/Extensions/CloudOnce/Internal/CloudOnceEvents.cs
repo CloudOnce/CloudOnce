@@ -32,7 +32,7 @@ namespace CloudOnce.Internal
         public event UnityAction<Texture2D> OnPlayerImageDownloaded;
 
         /// <summary>
-        /// Raised after an attempt has been made to save cloud data. Parameter idicates success.
+        /// Raised after an attempt has been made to save cloud data. Parameter indicates success.
         /// </summary>
         public event UnityAction<bool> OnCloudSaveComplete;
 
@@ -42,7 +42,7 @@ namespace CloudOnce.Internal
         public event UnityAction<bool> OnCloudLoadComplete;
 
         /// <summary>
-        /// Raised if local data is changed as a result of loading cloud data. Returns a <see cref="string"/> array of the changed interal IDs.
+        /// Raised if local data is changed as a result of loading cloud data. Returns a <see cref="string"/> array of the changed internal IDs.
         /// </summary>
         public event UnityAction<string[]> OnNewCloudValues;
 
@@ -117,7 +117,7 @@ namespace CloudOnce.Internal
         /// <summary>
         /// Raises the <see cref="OnNewCloudValues"/> event.
         /// </summary>
-        /// <param name="changedKeys">A <see cref="string"/> array of the changed interal IDs.</param>
+        /// <param name="changedKeys">A <see cref="string"/> array of the changed internal IDs.</param>
         public void RaiseOnNewCloudValues(string[] changedKeys)
         {
 #if CLOUDONCE_DEBUG

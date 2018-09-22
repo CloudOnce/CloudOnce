@@ -14,7 +14,7 @@ namespace CloudOnce.Internal.Editor.Data
     /// Stores achievement/leaderboard IDs for each supported platform as well as an internal ID.
     /// </summary>
     [Serializable]
-    public class PlatformIdData : IJsonSerializeable
+    public class PlatformIdData : IJsonSerializable
     {
         private const string internalIdName = "InternalID";
         private const string appleIdName = "AppleID";

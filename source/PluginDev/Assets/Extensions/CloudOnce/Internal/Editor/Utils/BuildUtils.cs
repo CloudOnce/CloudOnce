@@ -19,7 +19,7 @@ namespace CloudOnce.Internal.Editor.Utils
         #region Fields & properties
 
         private const string debugBuildSymbolConstraint = "CLOUDONCE_DEBUG";
-        private const string googleBuildSymbolConstaint = "CLOUDONCE_GOOGLE";
+        private const string googleBuildSymbolConstraint = "CLOUDONCE_GOOGLE";
 
         private static readonly AndroidManifestModifier s_manifestModifier = new AndroidManifestModifier();
 
@@ -64,9 +64,9 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             s_manifestModifier.EnableGoogleBuildPlatform();
 
-            if (!AndroidBuildSymbolIsDefined(googleBuildSymbolConstaint))
+            if (!AndroidBuildSymbolIsDefined(googleBuildSymbolConstraint))
             {
-                SetAndroidBuildSymbolImpl(new[] { googleBuildSymbolConstaint }, null);
+                SetAndroidBuildSymbolImpl(new[] { googleBuildSymbolConstraint }, null);
             }
         }
 
@@ -75,9 +75,9 @@ namespace CloudOnce.Internal.Editor.Utils
         /// </summary>
         public static void DisableAndroidBuildSymbolConstraints()
         {
-            if (AndroidBuildSymbolIsDefined(googleBuildSymbolConstaint))
+            if (AndroidBuildSymbolIsDefined(googleBuildSymbolConstraint))
             {
-                SetAndroidBuildSymbolImpl(null, new[] { googleBuildSymbolConstaint });
+                SetAndroidBuildSymbolImpl(null, new[] { googleBuildSymbolConstraint });
             }
         }
 

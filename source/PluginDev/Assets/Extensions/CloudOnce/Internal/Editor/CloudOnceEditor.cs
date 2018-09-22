@@ -101,12 +101,12 @@ namespace CloudOnce.Internal.Editor
             minimumWindowHeight = 360f,
             minimumWindowWidth = 375f,
             contentColumnWidth = minimumWindowWidth - indentationWidth - scrollbarWidth,
-            idPanelWidth = contentColumnWidth - helpboxMargin,
-            platformButtonWidth = (contentColumnWidth - helpboxMargin) / 3f,
+            idPanelWidth = contentColumnWidth - helpBoxMargin,
+            platformButtonWidth = (contentColumnWidth - helpBoxMargin) / 3f,
             platformButtonHeight = platformButtonWidth * 1.15f,
             indentationWidth = 15f,
             scrollbarWidth = 15f,
-            helpboxMargin = 4f,
+            helpBoxMargin = 4f,
             footerButtonHeight = 35f;
 
         #endregion /Numbers
@@ -238,10 +238,10 @@ namespace CloudOnce.Internal.Editor
         private bool triggerRepaint;
         private bool isProSkin;
 
-        // bools used to validate the configuration
+        // booleans used to validate the configuration
         private bool
             noErrorsFoundInPlatformSettings,
-            noDuplicateAchievmentIDs,
+            noDuplicateAchievementIDs,
             noDuplicateLeaderboardIDs,
             noDuplicateCloudVariableKeys,
             noInvalidDefaultValues,
@@ -283,12 +283,12 @@ namespace CloudOnce.Internal.Editor
         #region Utility methods
 
         /// <summary>
-        /// Attempts to seperate words in a <see cref="string"/> and capitalize the first letter of each word.
-        /// The <see cref="string"/> can be using lower or upper camel case, hypens or underscores.
+        /// Attempts to separate words in a <see cref="string"/> and capitalize the first letter of each word.
+        /// The <see cref="string"/> can be using lower or upper camel case, hyphens or underscores.
         /// It also attempts to preserve acronyms.
         /// </summary>
         /// <param name="str">The <see cref="string"/> to change.</param>
-        /// <returns>A <see cref="string"/> with seperated words.</returns>
+        /// <returns>A <see cref="string"/> with separated words.</returns>
         private static string SplitCamelCase(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -312,7 +312,7 @@ namespace CloudOnce.Internal.Editor
         }
 
         /// <summary>
-        /// Converts a <see cref="string"/> that uses underscores or hyphens to seperate words into upper camel case.
+        /// Converts a <see cref="string"/> that uses underscores or hyphens to separate words into upper camel case.
         /// </summary>
         /// <param name="str">The <see cref="string"/> to convert to upper camel case.</param>
         /// <returns>A upper camel case <see cref="string"/>.</returns>
@@ -393,7 +393,7 @@ namespace CloudOnce.Internal.Editor
             // Draw scroll area, affected by what tab is selected
             DrawContentArea();
 
-            // Draw helpbox and save button
+            // Draw help box and save button
             DrawFooter();
         }
 
@@ -1304,9 +1304,9 @@ namespace CloudOnce.Internal.Editor
         }
 
         /// <summary>
-        /// Draws an area for displaying any problems with validating the condiguration.
+        /// Draws an area for displaying any problems with validating the configuration.
         /// </summary>
-        /// <returns><c>true</c> if no helpbox was shown.</returns>
+        /// <returns><c>true</c> if no help box was shown.</returns>
         private bool DrawValidationArea()
         {
             GUILayout.Space(borderPadding);
@@ -1328,14 +1328,14 @@ namespace CloudOnce.Internal.Editor
 
             if (!tmpConfig.AppleSupported && !tmpConfig.GoogleSupported)
             {
-                EditorGUILayout.HelpBox("Must support at least one plaform.", MessageType.Warning);
+                EditorGUILayout.HelpBox("Must support at least one platform.", MessageType.Warning);
                 noErrorsFoundInPlatformSettings = false;
                 return false;
             }
 
             noErrorsFoundInPlatformSettings = true;
             noEmptyInternalIdFields = ValidationUtils.ConfigHasNoEmptyInternalIdFields(tmpConfig);
-            noDuplicateAchievmentIDs = ValidationUtils.ConfigHasNoDuplicateIDs(
+            noDuplicateAchievementIDs = ValidationUtils.ConfigHasNoDuplicateIDs(
                 tmpConfig.AchievementIDs, tmpConfig.AppleSupported, tmpConfig.GoogleSupported, "achievement");
             noDuplicateLeaderboardIDs = ValidationUtils.ConfigHasNoDuplicateIDs(
                 tmpConfig.LeaderboardIDs, tmpConfig.AppleSupported, tmpConfig.GoogleSupported, "leaderboard");
@@ -1349,7 +1349,7 @@ namespace CloudOnce.Internal.Editor
                 return false;
             }
 
-            return noEmptyInternalIdFields && noDuplicateAchievmentIDs && noDuplicateLeaderboardIDs
+            return noEmptyInternalIdFields && noDuplicateAchievementIDs && noDuplicateLeaderboardIDs
                 && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyPlatformIdFields
                 && noAchievementsNamedAll;
         }
@@ -1377,7 +1377,7 @@ namespace CloudOnce.Internal.Editor
         /// <returns>Returns <c>true</c> if there are no errors, <c>false</c> if an error has been detected.</returns>
         private bool AllSettingsReadyForSave()
         {
-            return noErrorsFoundInPlatformSettings && noDuplicateAchievmentIDs && noDuplicateLeaderboardIDs
+            return noErrorsFoundInPlatformSettings && noDuplicateAchievementIDs && noDuplicateLeaderboardIDs
                 && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyInternalIdFields
                 && noAchievementsNamedAll;
         }

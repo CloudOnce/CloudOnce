@@ -38,7 +38,7 @@ namespace CloudOnce.Internal.Editor.Data
     /// Data-class for storing CloudOnce configuration.
     /// </summary>
     [Serializable]
-    public class CloudConfig : ScriptableObject, IJsonSerializeable
+    public class CloudConfig : ScriptableObject, IJsonSerializable
     {
         private const string achievementIDsName = "AchievementIDs";
         private const string leaderboardIDsName = "LeaderboardIDs";

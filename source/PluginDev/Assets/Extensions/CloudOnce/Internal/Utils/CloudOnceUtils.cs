@@ -150,7 +150,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Provides backwards compatibilty for old aliases. Used when a serialization alias has been changed.
+        /// Provides backwards compatibility for old aliases. Used when a serialization alias has been changed.
         /// </summary>
         /// <param name="className">The name of the class that is being deserialized.</param>
         /// <param name="jsonObject">The <see cref="JSONObject"/> to check for the aliases.</param>

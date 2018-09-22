@@ -29,7 +29,7 @@ namespace CloudOnce.Internal.Editor.Data
     /// Stores info about cloud variables declared in the CloudOnce Editor
     /// </summary>
     [Serializable]
-    public class CloudVariableData : IJsonSerializeable
+    public class CloudVariableData : IJsonSerializable
     {
         private const string keyName = "Key";
         private const string typeName = "Type";
