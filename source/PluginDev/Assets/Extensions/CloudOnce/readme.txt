@@ -10,6 +10,10 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.6.0
+- Removed Amazon GameCircle support, due to Amazon discontinuing the service
+- Updated Play Services Resolver from v1.2.79 to v1.2.90
+
 Version 2.5.2
 - Fixed tvOS support
 - Updated Play Services Resolver from v1.2.66 to v1.2.79
