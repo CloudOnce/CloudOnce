@@ -174,7 +174,6 @@ namespace CloudOnce.Internal.Editor.Utils
                 {
                     var propertyString = idPropertyTemplate;
                     propertyString = propertyString.Replace("INTERNALID", cloudConfig.AchievementIDs[i].InternalId);
-                    propertyString = propertyString.Replace("AMAZONID", cloudConfig.AchievementIDs[i].AmazonId);
                     propertyString = propertyString.Replace("GOOGLEID", cloudConfig.AchievementIDs[i].GoogleId);
                     propertyString = propertyString.Replace("APPLEID", cloudConfig.AchievementIDs[i].AppleId);
                     builder.AppendLine(propertyString);
@@ -191,7 +190,6 @@ namespace CloudOnce.Internal.Editor.Utils
                 {
                     var propertyString = idPropertyTemplate;
                     propertyString = propertyString.Replace("INTERNALID", cloudConfig.LeaderboardIDs[i].InternalId);
-                    propertyString = propertyString.Replace("AMAZONID", cloudConfig.LeaderboardIDs[i].AmazonId);
                     propertyString = propertyString.Replace("GOOGLEID", cloudConfig.LeaderboardIDs[i].GoogleId);
                     propertyString = propertyString.Replace("APPLEID", cloudConfig.LeaderboardIDs[i].AppleId);
                     builder.AppendLine(propertyString);
@@ -245,7 +243,6 @@ namespace CloudOnce.Internal.Editor.Utils
                     propertyString = propertyString.Replace("INTERNALID", idData.InternalId);
                     propertyString = propertyString.Replace("APPLEID", idData.AppleId);
                     propertyString = propertyString.Replace("GOOGLEID", idData.GoogleId);
-                    propertyString = propertyString.Replace("AMAZONID", idData.AmazonId);
                     builder.AppendLine(propertyString).AppendLine();
                 }
 
@@ -301,7 +298,6 @@ namespace CloudOnce.Internal.Editor.Utils
                     propertyString = propertyString.Replace("INTERNALID", cloudConfig.LeaderboardIDs[i].InternalId);
                     propertyString = propertyString.Replace("APPLEID", cloudConfig.LeaderboardIDs[i].AppleId);
                     propertyString = propertyString.Replace("GOOGLEID", cloudConfig.LeaderboardIDs[i].GoogleId);
-                    propertyString = propertyString.Replace("AMAZONID", cloudConfig.LeaderboardIDs[i].AmazonId);
                     builder.AppendLine(propertyString);
                     if (i != cloudConfig.LeaderboardIDs.Count - 1)
                     {

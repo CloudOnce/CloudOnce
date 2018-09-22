@@ -25,9 +25,6 @@ namespace CloudOnce.Internal.Utils
 #elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE
             AchievementUtils = new GoogleAchievementUtils();
             LeaderboardUtils = new GoogleLeaderboardUtils();
-#elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_AMAZON
-            AchievementUtils = new AmazonAchievementUtils();
-            LeaderboardUtils = new AmazonLeaderboardUtils();
 #else
             AchievementUtils = new EditorAchievementUtils();
             LeaderboardUtils = new EditorLeaderboardUtils();

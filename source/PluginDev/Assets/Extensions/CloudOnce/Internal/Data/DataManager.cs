@@ -862,26 +862,7 @@ namespace CloudOnce.Internal
         private static void DeleteCloudData()
         {
 #if !UNITY_EDITOR && UNITY_ANDROID
-#if CLOUDONCE_AMAZON
-            if (AGSClient.IsServiceReady())
-            {
-                using (var dataMap = AGSWhispersyncClient.GetGameData())
-                {
-                    using (var developerString = dataMap.getDeveloperString(DevStringKey))
-                    {
-                        developerString.setValue(string.Empty);
-                        if (AGSPlayerClient.IsSignedIn())
-                        {
-                            AGSWhispersyncClient.Synchronize();
-                        }
-                        else
-                        {
-                            AGSWhispersyncClient.Flush();
-                        }
-                    }
-                }
-            }
-#elif CLOUDONCE_GOOGLE
+#if CLOUDONCE_GOOGLE
             if (GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized && PlayGamesPlatform.Instance.IsAuthenticated())
             {
                 PlayGamesPlatform.Instance.SavedGame.OpenWithAutomaticConflictResolution(

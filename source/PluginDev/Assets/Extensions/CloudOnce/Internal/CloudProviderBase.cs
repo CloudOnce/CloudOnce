@@ -116,7 +116,6 @@ namespace CloudOnce.Internal
         /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
         /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
-        /// Ignored on Amazon GameCircle as there is no way of avoiding auto sign in.
         /// </param>
         /// <param name="autoCloudLoad">
         /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.

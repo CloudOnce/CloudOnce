@@ -39,16 +39,12 @@ namespace CloudOnce.Internal.Editor
             // Icons
             cloudOnceIconBlackPath = imagesFolder + "CloudOnceIconBlack.png",
             cloudOnceIconWhitePath = imagesFolder + "CloudOnceIconWhite.png",
-            androidIconPath = imagesFolder + "AndroidIcon.png",
-            androidIconDarkPath = imagesFolder + "AndroidIconDark.png",
             debugIconPath = imagesFolder + "DebugIcon.png",
             debugIconDarkPath = imagesFolder + "DebugIconDark.png",
             gameCenterIconPath = imagesFolder + "GameCenterIcon.png",
             playGamesIconPath = imagesFolder + "PlayGamesIcon.png",
-            gameCircleIconPath = imagesFolder + "GameCircleIcon.png",
             gameCenterDarkIconPath = imagesFolder + "GameCenterIconDark.png",
             playGamesDarkIconPath = imagesFolder + "PlayGamesIconDark.png",
-            gameCircleDarkIconPath = imagesFolder + "GameCircleIconDark.png",
             cloudVariableIconPath = imagesFolder + "CloudVariableIcon.png",
             cloudVariableIconDarkPath = imagesFolder + "CloudVariableIconDark.png",
             saveIconPath = imagesFolder + "SaveIcon.png",
@@ -69,13 +65,10 @@ namespace CloudOnce.Internal.Editor
             toggleOffProSpritePath = imagesFolder + "toggle_off_pro.png",
             gameCenterOnSpritePath = imagesFolder + "ios-game-center.png",
             playGamesOnSpritePath = imagesFolder + "google-play-games.png",
-            gameCircleOnSpritePath = imagesFolder + "amazon-gamecircle.png",
             gameCenterOffSpritePath = imagesFolder + "ios-game-center-off.png",
             playGamesOffSpritePath = imagesFolder + "google-play-games-off.png",
-            gameCircleOffSpritePath = imagesFolder + "amazon-gamecircle-off.png",
             gameCenterOffDarkSpritePath = imagesFolder + "ios-game-center-off_Dark.png",
             playGamesOffDarkSpritePath = imagesFolder + "google-play-games-off_Dark.png",
-            gameCircleOffDarkSpritePath = imagesFolder + "amazon-gamecircle-off_Dark.png",
             freeAchievementsSpritePath = imagesFolder + "achievements_lightTheme.png",
             proAchievementsSpritePath = imagesFolder + "achievements_darkTheme.png",
             freeLeaderboardsSpritePath = imagesFolder + "leaderboards_lightTheme.png",
@@ -88,10 +81,7 @@ namespace CloudOnce.Internal.Editor
             gameCenterNameShort = " Game Center",
             playGamesName = "Google Play Game Services",
             playGamesNameSplit = "Google Play\nGame Services",
-            playGamesNameShort = " Game Services",
-            gameCircleName = "Amazon GameCircle",
-            gameCircleNameSplit = "Amazon\nGameCircle",
-            gameCircleNameShort = " GameCircle";
+            playGamesNameShort = " Game Services";
 
         #endregion /Strings
 
@@ -168,13 +158,11 @@ namespace CloudOnce.Internal.Editor
             headerBackgroundStyle,
             footerBackgroundStyle,
             platformToggleLeftStyle,
-            platformToggleMiddleStyle,
             platformToggleRightStyle,
             debugToggleStyle,
             cloudVariableToggleStyle,
             versionLabelStyle,
-            helpBoxStyle,
-            apiKeyTextAreaStyle;
+            helpBoxStyle;
 
         private GUIContent
             addAchievementButtonContent,
@@ -183,25 +171,19 @@ namespace CloudOnce.Internal.Editor
             deleteButtonContent,
             gameCenterOnButtonContent,
             playGamesOnButtonContent,
-            gameCircleOnButtonContent,
             gameCenterOffButtonContent,
             playGamesOffButtonContent,
-            gameCircleOffButtonContent,
             internalIdAllowedCharactersTipContent,
             appleIdAllowedCharactersTipContent,
             googleIdAllowedCharactersTipContent,
-            amazonIdAllowedCharactersTipContent,
             achievementIDsContent,
             leaderboardIDsContent,
             internalPlatformIDContent,
             gameCenterPlatformIDContent,
             playGamesPlatformIDContent,
-            gameCirclePlatformIDContent,
             supportedPlatformsContent,
             debugLabelContent,
-            androidBuildLabelContent,
             googleAppIdContent,
-            amazonApiKeyContent,
             cloudVariablesHeaderContent,
             cloudVariableKeyTipContent,
             cloudVariableTypeTipContent,
@@ -226,19 +208,15 @@ namespace CloudOnce.Internal.Editor
             leaderboardsSprite,
             gameCenterOnSprite,
             playGamesOnSprite,
-            gameCircleOnSprite,
             gameCenterOffSprite,
             playGamesOffSprite,
-            gameCircleOffSprite,
             cloudOnceIcon,
             gameCenterIcon,
             playGamesIcon,
-            gameCircleIcon,
             toggleOnSprite,
             toggleOffSprite,
             helpIcon,
             debugIcon,
-            androidIcon,
             cloudVariableIcon,
             saveIcon,
             revertIcon,
@@ -494,18 +472,14 @@ namespace CloudOnce.Internal.Editor
             leaderboardsSprite = GetTexture2D(isProSkin ? proLeaderboardsSpritePath : freeLeaderboardsSpritePath);
             gameCenterOnSprite = GetTexture2D(gameCenterOnSpritePath);
             playGamesOnSprite = GetTexture2D(playGamesOnSpritePath);
-            gameCircleOnSprite = GetTexture2D(gameCircleOnSpritePath);
             gameCenterOffSprite = GetTexture2D(isProSkin ? gameCenterOffDarkSpritePath : gameCenterOffSpritePath);
             playGamesOffSprite = GetTexture2D(isProSkin ? playGamesOffDarkSpritePath : playGamesOffSpritePath);
-            gameCircleOffSprite = GetTexture2D(isProSkin ? gameCircleOffDarkSpritePath : gameCircleOffSpritePath);
             cloudOnceIcon = GetTexture2D(isProSkin ? cloudOnceIconWhitePath : cloudOnceIconBlackPath);
             gameCenterIcon = GetTexture2D(isProSkin ? gameCenterDarkIconPath : gameCenterIconPath);
             playGamesIcon = GetTexture2D(isProSkin ? playGamesDarkIconPath : playGamesIconPath);
-            gameCircleIcon = GetTexture2D(isProSkin ? gameCircleDarkIconPath : gameCircleIconPath);
             toggleOnSprite = GetTexture2D(toggleOnSpritePath);
             toggleOffSprite = GetTexture2D(isProSkin ? toggleOffProSpritePath : toggleOffSpritePath);
             debugIcon = GetTexture2D(isProSkin ? debugIconDarkPath : debugIconPath);
-            androidIcon = GetTexture2D(isProSkin ? androidIconDarkPath : androidIconPath);
             cloudVariableIcon = GetTexture2D(isProSkin ? cloudVariableIconDarkPath : cloudVariableIconPath);
             saveIcon = GetTexture2D(isProSkin ? saveDarkIconPath : saveIconPath);
             revertIcon = GetTexture2D(isProSkin ? revertDarkIconPath : revertIconPath);
@@ -618,15 +592,11 @@ namespace CloudOnce.Internal.Editor
             // Settings content
             gameCenterOnButtonContent = new GUIContent(gameCenterNameSplit, gameCenterOnSprite, "Deactivate support for " + gameCenterName);
             playGamesOnButtonContent = new GUIContent(playGamesNameSplit, playGamesOnSprite, "Deactivate support for " + playGamesName);
-            gameCircleOnButtonContent = new GUIContent(gameCircleNameSplit, gameCircleOnSprite, "Deactivate support for " + gameCircleName);
             gameCenterOffButtonContent = new GUIContent(gameCenterNameSplit, gameCenterOffSprite, "Activate support for " + gameCenterName);
             playGamesOffButtonContent = new GUIContent(playGamesNameSplit, playGamesOffSprite, "Activate support for " + playGamesName);
-            gameCircleOffButtonContent = new GUIContent(gameCircleNameSplit, gameCircleOffSprite, "Activate support for " + gameCircleName);
             supportedPlatformsContent = new GUIContent(" Supported Platforms", cloudOnceIcon);
             debugLabelContent = new GUIContent(" Debug Mode", debugIcon);
-            androidBuildLabelContent = new GUIContent(" Android Build Platform", androidIcon);
             googleAppIdContent = new GUIContent(GPGSStrings.Setup.AppId, playGamesIcon);
-            amazonApiKeyContent = new GUIContent(" GameCircle API Key", gameCircleIcon);
             settingsContent = new GUIContent(" Settings Location", settingsIcon);
 
             // Cloud IDs content
@@ -641,15 +611,11 @@ namespace CloudOnce.Internal.Editor
             googleIdAllowedCharactersTipContent = new GUIContent(
                 helpIcon,
                 "Play Games IDs can contain alphanumeric characters (A-Z, a-z, 0-9), hyphens (-) and underscores (_).");
-            amazonIdAllowedCharactersTipContent = new GUIContent(
-                helpIcon,
-                "GameCircle IDs can contain alphanumeric characters (A-Z, a-z, 0-9) and underscores (_).");
             achievementIDsContent = new GUIContent("Achievement IDs", achievementsSprite);
             leaderboardIDsContent = new GUIContent(" Leaderboard IDs", leaderboardsSprite);
             internalPlatformIDContent = new GUIContent(internalName, cloudOnceIcon);
             gameCenterPlatformIDContent = new GUIContent(gameCenterNameShort, gameCenterIcon);
             playGamesPlatformIDContent = new GUIContent(playGamesNameShort, playGamesIcon);
-            gameCirclePlatformIDContent = new GUIContent(gameCircleNameShort, gameCircleIcon);
 
             // Cloud Variables content
             addCloudVariableButtonContent = new GUIContent(plusSprite, "Add a cloud variable to the list");
@@ -744,7 +710,6 @@ namespace CloudOnce.Internal.Editor
 
             DrawSupportedPlatforms();
             DrawDebugMode();
-            DrawAndroidBuildPlatform();
 
             EditorGUILayout.EndVertical();
             if (contentColumnCount > 1)
@@ -755,7 +720,6 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.BeginVertical(GUILayout.Width(contentColumnWidth + 11f));
 
             DrawGooglePlayGamesSetup();
-            DrawAmazonApiKeyField();
             DrawSettingsLocation();
 
             EditorGUILayout.EndVertical();
@@ -783,9 +747,7 @@ namespace CloudOnce.Internal.Editor
             Undo.RecordObject(tmpConfig, "Toggle Apple Support");
             tmpConfig.AppleSupported = GUILayout.Toggle(tmpConfig.AppleSupported, tmpConfig.AppleSupported ? gameCenterOnButtonContent : gameCenterOffButtonContent, platformToggleLeftStyle);
             Undo.RecordObject(tmpConfig, "Toggle Google Support");
-            tmpConfig.GoogleSupported = GUILayout.Toggle(tmpConfig.GoogleSupported, tmpConfig.GoogleSupported ? playGamesOnButtonContent : playGamesOffButtonContent, platformToggleMiddleStyle);
-            Undo.RecordObject(tmpConfig, "Toggle Amazon Support");
-            tmpConfig.AmazonSupported = GUILayout.Toggle(tmpConfig.AmazonSupported, tmpConfig.AmazonSupported ? gameCircleOnButtonContent : gameCircleOffButtonContent, platformToggleRightStyle);
+            tmpConfig.GoogleSupported = GUILayout.Toggle(tmpConfig.GoogleSupported, tmpConfig.GoogleSupported ? playGamesOnButtonContent : playGamesOffButtonContent, platformToggleRightStyle);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.EndVertical();
@@ -816,37 +778,6 @@ namespace CloudOnce.Internal.Editor
                                     " but should be disabled when building production builds.");
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space();
-        }
-
-        /// <summary>
-        /// Draws the android build platform section.
-        /// </summary>
-        private void DrawAndroidBuildPlatform()
-        {
-            EditorGUI.BeginDisabledGroup(!(tmpConfig.GoogleSupported && tmpConfig.AmazonSupported));
-
-            DrawSettingsHeader(androidBuildLabelContent);
-
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(indentationWidth);
-            EditorGUILayout.BeginVertical();
-            if (tmpConfig.GoogleSupported && !tmpConfig.AmazonSupported)
-            {
-                tmpConfig.AndroidPlatform = AndroidBuildPlatform.GooglePlay;
-            }
-            else if (!tmpConfig.GoogleSupported && tmpConfig.AmazonSupported)
-            {
-                tmpConfig.AndroidPlatform = AndroidBuildPlatform.Amazon;
-            }
-
-            GUILayout.Label("Select current Android build platform. Only necessary when supporting both Google Play and Amazon.");
-            GUILayout.Label("It is very important that this setting is set correctly before building to an Android platform.", EditorStyles.boldLabel);
-            Undo.RecordObject(tmpConfig, "Set Android Build Platform");
-            tmpConfig.AndroidPlatform = (AndroidBuildPlatform)EditorGUILayout.EnumPopup(tmpConfig.AndroidPlatform, GUILayout.Width(140f));
-            EditorGUILayout.EndVertical();
-            EditorGUILayout.EndHorizontal();
-            EditorGUILayout.Space();
-            EditorGUI.EndDisabledGroup();
         }
 
         /// <summary>
@@ -888,35 +819,6 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space();
-            EditorGUI.EndDisabledGroup();
-        }
-
-        /// <summary>
-        /// Draws the GameCircle API key section.
-        /// </summary>
-        private void DrawAmazonApiKeyField()
-        {
-            EditorGUI.BeginDisabledGroup(!tmpConfig.AmazonSupported);
-
-            DrawSettingsHeader(amazonApiKeyContent);
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(indentationWidth);
-            EditorGUILayout.BeginVertical();
-            GUILayout.Label("Enter API key from GameCircle configuration.");
-            EditorGUILayout.BeginHorizontal(GUI.skin.box);
-            apiKeyScrollPosition = EditorGUILayout.BeginScrollView(apiKeyScrollPosition, GUILayout.Height(100));
-            Undo.RecordObject(tmpConfig, "Set Amazon GameCircle API Key");
-            tmpConfig.ApiKey = EditorGUILayout.TextArea(tmpConfig.ApiKey, apiKeyTextAreaStyle);
-            if (!string.IsNullOrEmpty(tmpConfig.ApiKey))
-            {
-                tmpConfig.ApiKey = Regex.Replace(tmpConfig.ApiKey, @"\s", string.Empty);
-            }
-
-            EditorGUILayout.EndScrollView();
-            EditorGUILayout.EndHorizontal();
-            EditorGUILayout.EndVertical();
-            EditorGUILayout.EndHorizontal();
-
             EditorGUI.EndDisabledGroup();
         }
 
@@ -964,16 +866,6 @@ namespace CloudOnce.Internal.Editor
                 padding = padding
             };
 
-            platformToggleMiddleStyle = new GUIStyle(GUI.skin.FindStyle("ButtonMid"))
-            {
-                fixedWidth = platformButtonWidth,
-                fixedHeight = platformButtonHeight,
-                imagePosition = ImagePosition.ImageAbove,
-                font = robotoFont,
-                fontSize = platformButtonFontSize,
-                padding = padding
-            };
-
             platformToggleRightStyle = new GUIStyle(GUI.skin.FindStyle("ButtonRight"))
             {
                 fixedWidth = platformButtonWidth,
@@ -982,13 +874,6 @@ namespace CloudOnce.Internal.Editor
                 font = robotoFont,
                 fontSize = platformButtonFontSize,
                 padding = padding
-            };
-
-            apiKeyTextAreaStyle = new GUIStyle(GUI.skin.FindStyle("TextArea"))
-            {
-                margin = new RectOffset(0, 0, 0, 0),
-                stretchHeight = true,
-                wordWrap = true
             };
         }
 
@@ -1148,14 +1033,6 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             GUILayout.Space(borderPaddingSmall);
-
-            EditorGUI.BeginDisabledGroup(!tmpConfig.AmazonSupported);
-            EditorGUILayout.LabelField(gameCirclePlatformIDContent, tinyLabelStyle, GUILayout.Width(idPlatformLabelWidth), GUILayout.Height(slimControlHeight));
-            Undo.RecordObject(tmpConfig, "Set Amazon ID");
-            platformIdData.AmazonId = EditorGUILayout.TextField(platformIdData.AmazonId, GUILayout.ExpandWidth(true));
-            platformIdData.AmazonId = ValidationUtils.RemoveForbiddenCharactersFromPlatformID(platformIdData.AmazonId, CloudPlatform.Amazon);
-            GUILayout.Box(amazonIdAllowedCharactersTipContent, helpIconStyle);
-            EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(borderPadding);
@@ -1449,7 +1326,7 @@ namespace CloudOnce.Internal.Editor
                 return false;
             }
 
-            if (!tmpConfig.AppleSupported && !tmpConfig.GoogleSupported && !tmpConfig.AmazonSupported)
+            if (!tmpConfig.AppleSupported && !tmpConfig.GoogleSupported)
             {
                 EditorGUILayout.HelpBox("Must support at least one plaform.", MessageType.Warning);
                 noErrorsFoundInPlatformSettings = false;
@@ -1459,9 +1336,9 @@ namespace CloudOnce.Internal.Editor
             noErrorsFoundInPlatformSettings = true;
             noEmptyInternalIdFields = ValidationUtils.ConfigHasNoEmptyInternalIdFields(tmpConfig);
             noDuplicateAchievmentIDs = ValidationUtils.ConfigHasNoDuplicateIDs(
-                tmpConfig.AchievementIDs, tmpConfig.AppleSupported, tmpConfig.GoogleSupported, tmpConfig.AmazonSupported, "achievement");
+                tmpConfig.AchievementIDs, tmpConfig.AppleSupported, tmpConfig.GoogleSupported, "achievement");
             noDuplicateLeaderboardIDs = ValidationUtils.ConfigHasNoDuplicateIDs(
-                tmpConfig.LeaderboardIDs, tmpConfig.AppleSupported, tmpConfig.GoogleSupported, tmpConfig.AmazonSupported, "leaderboard");
+                tmpConfig.LeaderboardIDs, tmpConfig.AppleSupported, tmpConfig.GoogleSupported, "leaderboard");
             noDuplicateCloudVariableKeys = ValidationUtils.ConfigHasNoDuplicateCloudVariableKeys(tmpConfig.CloudVariables);
             noInvalidDefaultValues = ValidationUtils.ConfigHasNoInvalidDefaultValues(tmpConfig.CloudVariables);
             noEmptyPlatformIdFields = ValidationUtils.ConfigHasNoEmptyPlatformIDs(tmpConfig);
@@ -1469,12 +1346,6 @@ namespace CloudOnce.Internal.Editor
             if (tmpConfig.GoogleSupported && !tmpConfig.GoogleSetupRun)
             {
                 EditorGUILayout.HelpBox("You have chosen to support Google Play, but you have not successfully run Google Application ID setup.", MessageType.Info);
-                return false;
-            }
-
-            if (tmpConfig.AmazonSupported && string.IsNullOrEmpty(tmpConfig.ApiKey))
-            {
-                EditorGUILayout.HelpBox("You have chosen to support Amazon GameCircle, but you have not entrered a GameCircle API key.", MessageType.Info);
                 return false;
             }
 
@@ -1518,19 +1389,9 @@ namespace CloudOnce.Internal.Editor
         /// </summary>
         private void SaveConfiguration()
         {
-            if (tmpConfig.GoogleSupported || tmpConfig.AmazonSupported)
+            if (tmpConfig.GoogleSupported)
             {
-                switch (tmpConfig.AndroidPlatform)
-                {
-                    case AndroidBuildPlatform.Amazon:
-                        BuildUtils.EnableAmazonBuildPlatform(tmpConfig.ApiKey);
-                        break;
-                    case AndroidBuildPlatform.GooglePlay:
-                        BuildUtils.EnableGoogleBuildPlatform();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                BuildUtils.EnableGoogleBuildPlatform();
             }
             else
             {
@@ -1539,7 +1400,7 @@ namespace CloudOnce.Internal.Editor
 
             if (tmpConfig.DebugModeEnabled)
             {
-                BuildUtils.ToggleDebugBuildSymbolConstraints(tmpConfig.AppleSupported, tmpConfig.GoogleSupported || tmpConfig.AmazonSupported);
+                BuildUtils.ToggleDebugBuildSymbolConstraints(tmpConfig.AppleSupported, tmpConfig.GoogleSupported);
             }
             else
             {

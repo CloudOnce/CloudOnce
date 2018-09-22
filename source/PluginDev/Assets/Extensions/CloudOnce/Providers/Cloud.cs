@@ -182,15 +182,7 @@ namespace CloudOnce
 
                 return TestProvider.Instance;
 #elif UNITY_ANDROID
-#if CLOUDONCE_AMAZON // If Amazon is selected as current Android platform in CloudOnce Editor
-                if (!s_isProviderInitialized)
-                {
-                    AmazonCloudProvider.Instance.InternalInit(s_cloudOnceEvents);
-                    s_isProviderInitialized = true;
-                }
-
-                return AmazonCloudProvider.Instance;
-#elif CLOUDONCE_GOOGLE // If Google is selected as current Android platform in CloudOnce Editor
+#if CLOUDONCE_GOOGLE // If Google is selected as current Android platform in CloudOnce Editor
                 if (!s_isProviderInitialized)
                 {
                     GooglePlayGamesCloudProvider.Instance.InternalInit(s_cloudOnceEvents);
@@ -235,7 +227,6 @@ namespace CloudOnce
         /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
         /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
-        /// Ignored on Amazon GameCircle as there is no way of avoiding auto sign in.
         /// </param>
         /// <param name="autoCloudLoad">
         /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.

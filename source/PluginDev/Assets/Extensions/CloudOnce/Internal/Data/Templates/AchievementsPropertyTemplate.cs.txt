@@ -3,8 +3,6 @@
             "APPLEID"
 #elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_GOOGLE
             "GOOGLEID"
-#elif !UNITY_EDITOR && UNITY_ANDROID && CLOUDONCE_AMAZON
-            "AMAZONID"
 #else
             "INTERNALID"
 #endif
