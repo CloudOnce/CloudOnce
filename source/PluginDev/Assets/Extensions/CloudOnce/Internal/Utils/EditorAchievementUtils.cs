@@ -98,7 +98,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Loads the achievement descriptions accociated with this application.
+        /// Loads the achievement descriptions associated with this application.
         /// </summary>
         /// <param name="callback">Callback to handle the achievement descriptions.</param>
         public void LoadAchievementDescriptions(Action<IAchievementDescription[]> callback)
@@ -253,12 +253,12 @@ namespace CloudOnce.Internal.Utils
             public Texture2D image { get; private set; }
 
             /// <summary>
-            /// Description when the achivement is completed.
+            /// Description when the achievement is completed.
             /// </summary>
             public string achievedDescription { get; private set; }
 
             /// <summary>
-            /// Description when the achivement has not been completed.
+            /// Description when the achievement has not been completed.
             /// </summary>
             public string unachievedDescription { get; private set; }
 

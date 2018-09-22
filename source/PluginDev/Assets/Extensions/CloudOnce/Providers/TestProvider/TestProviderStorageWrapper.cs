@@ -15,7 +15,7 @@ namespace CloudOnce.Internal.Providers
     public class TestProviderStorageWrapper : ICloudStorageProvider
     {
         private readonly CloudOnceEvents cloudOnceEvents;
-        private bool isSynchronising;
+        private bool isSynchronizing;
 
         public TestProviderStorageWrapper(CloudOnceEvents events)
         {
@@ -92,12 +92,12 @@ namespace CloudOnce.Internal.Providers
         /// </summary>
         public void Synchronize()
         {
-            if (isSynchronising)
+            if (isSynchronizing)
             {
                 return;
             }
 
-            isSynchronising = true;
+            isSynchronizing = true;
             Cloud.OnCloudLoadComplete += OnCloudLoadComplete;
             Load();
         }
@@ -147,7 +147,7 @@ namespace CloudOnce.Internal.Providers
         {
             Cloud.OnCloudLoadComplete -= OnCloudLoadComplete;
             Save();
-            isSynchronising = false;
+            isSynchronizing = false;
         }
     }
 }

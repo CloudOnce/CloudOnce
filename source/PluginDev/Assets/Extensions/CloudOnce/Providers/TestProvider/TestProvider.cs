@@ -58,7 +58,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not Cloud Save has been initialized. Is initilized with <see cref="Cloud.Initialize"/> method.
+        /// Whether or not Cloud Save has been initialized. Is initialized with <see cref="Cloud.Initialize"/> method.
         /// </summary>
         public bool CloudSaveInitialized { get; private set; }
 
@@ -166,7 +166,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Load the user profiles accociated with the given array of user IDs.
+        /// Load the user profiles associated with the given array of user IDs.
         /// </summary>
         /// <param name="userIDs">The users to retrieve profiles for.</param>
         /// <param name="callback">Callback to handle the user profiles.</param>
@@ -211,10 +211,10 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Will convert any slashes ('/') to the current platform's directory seperator.
+        /// Will convert any slashes ('/') to the current platform's directory separator.
         /// </summary>
         /// <param name="path">The string containing the slashes.</param>
-        /// <returns>Resturn a string with all the slashes converted to the current platform's directory seperator.</returns>
+        /// <returns>A string with all the slashes converted to the current platform's directory separator.</returns>
         private static string SlashesToPlatformSeparator(string path)
         {
             return path.Replace("/", Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture));

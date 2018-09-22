@@ -9,8 +9,7 @@ namespace CloudOnce.Internal
     {
         NotSupported,
         iOS,
-        GooglePlay,
-        Amazon
+        GooglePlay
     }
 
     public enum InternetConnectionStatus

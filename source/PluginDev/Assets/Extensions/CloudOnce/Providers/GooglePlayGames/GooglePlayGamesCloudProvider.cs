@@ -224,7 +224,7 @@ namespace CloudOnce.Internal.Providers
 
             PlayGamesPlatform.Instance.Authenticate(success =>
             {
-                // Success is handled by OnAutenticated method
+                // Success is handled by OnAuthenticated method
                 if (!success)
                 {
                     Logger.w("Failed to sign in to Google Play Game Services.");

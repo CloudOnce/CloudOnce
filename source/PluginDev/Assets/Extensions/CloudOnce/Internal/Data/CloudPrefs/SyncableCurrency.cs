@@ -18,11 +18,11 @@ namespace CloudOnce.Internal
         #region Fields & properties
 
         private const string oldAliasCurrencyID = "cID";
-        private const string oldAliasCurrencyDatas = "cData";
+        private const string oldAliasCurrencyData = "cData";
 
         // These strings are used for serializing this class
         private const string aliasCurrencyID = "i";
-        private const string aliasCurrencyDatas = "d";
+        private const string aliasCurrencyData = "d";
 
         private Dictionary<string, CurrencyValue> deviceCurrencyValues = new Dictionary<string, CurrencyValue>();
 
@@ -82,7 +82,7 @@ namespace CloudOnce.Internal
             var container = JSONObject.Create(JSONObject.Type.Object);
 
             container.AddField(aliasCurrencyID, jsonCurrencyId);
-            container.AddField(aliasCurrencyDatas, jsonCurrencyValue);
+            container.AddField(aliasCurrencyData, jsonCurrencyValue);
 
             return container;
         }
@@ -94,7 +94,7 @@ namespace CloudOnce.Internal
         public void FromJSONObject(JSONObject jsonObject)
         {
             var idAlias = CloudOnceUtils.GetAlias(typeof(SyncableCurrency).Name, jsonObject, aliasCurrencyID, oldAliasCurrencyID);
-            var dataAlias = CloudOnceUtils.GetAlias(typeof(SyncableCurrency).Name, jsonObject, aliasCurrencyDatas, oldAliasCurrencyDatas);
+            var dataAlias = CloudOnceUtils.GetAlias(typeof(SyncableCurrency).Name, jsonObject, aliasCurrencyData, oldAliasCurrencyData);
 
             CurrencyID = jsonObject[idAlias].String;
             DeviceCurrencyValues = JsonHelper.Convert<Dictionary<string, CurrencyValue>>(jsonObject[dataAlias]);
