@@ -289,15 +289,21 @@ namespace CloudOnce.Internal.Editor.Utils
             return true;
         }
 
-        public static bool ConfigHasNoAchievementsNamedAll(List<PlatformIdData> achievementIds)
+        public static bool ConfigHasNoReservedIDs(List<PlatformIdData> platformIds, params string[] ids)
         {
-            var result = !achievementIds.Any(id => string.Equals(
-                id.InternalId,
-                "All",
-                StringComparison.InvariantCultureIgnoreCase));
-            if (!result)
+            if (ids == null || ids.Length == 0)
             {
-                EditorGUILayout.HelpBox("\"All\" internal achievement ID is reserved.", MessageType.Warning);
+                return true;
+            }
+
+            var result = true;
+            foreach (var id in ids)
+            {
+                if (platformIds.Any(p => string.Equals(p.InternalId, id, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    result = false;
+                    EditorGUILayout.HelpBox("\"" + id + "\" internal achievement ID is reserved.", MessageType.Warning);
+                }
             }
 
             return result;

@@ -236,6 +236,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
 
                 var builder = new StringBuilder();
+                var dictionaryBuilder = new StringBuilder();
                 foreach (var idData in cloudConfig.AchievementIDs)
                 {
                     var propertyString = idPropertyTemplate;
@@ -244,6 +245,16 @@ namespace CloudOnce.Internal.Editor.Utils
                     propertyString = propertyString.Replace("APPLEID", idData.AppleId);
                     propertyString = propertyString.Replace("GOOGLEID", idData.GoogleId);
                     builder.AppendLine(propertyString).AppendLine();
+
+                    var dictionaryString = "            { \"INTERNALID\", FIELDNAME },";
+                    dictionaryString = dictionaryString.Replace("FIELDNAME", "s_" + FirstLetterToLowerCase(idData.InternalId));
+                    dictionaryString = dictionaryString.Replace("INTERNALID", idData.InternalId);
+                    dictionaryBuilder.AppendLine(dictionaryString);
+                }
+
+                if (cloudConfig.AchievementIDs.Count > 0)
+                {
+                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
                 }
 
                 builder.AppendLine(allAchievementsTemplate).AppendLine("        {");
@@ -255,6 +266,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 builder.AppendLine("        };");
 
                 newAchievementsScript = newAchievementsScript.Replace("// ACHIEVEMENT_IDS", builder.ToString());
+                newAchievementsScript = newAchievementsScript.Replace("// ACHIEVEMENT_DICTIONARY", dictionaryBuilder.ToString());
 
                 writer.Write(newAchievementsScript);
             }
@@ -291,6 +303,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
 
                 var builder = new StringBuilder();
+                var dictionaryBuilder = new StringBuilder();
                 for (var i = 0; i < cloudConfig.LeaderboardIDs.Count; i++)
                 {
                     var propertyString = idPropertyTemplate;
@@ -299,13 +312,25 @@ namespace CloudOnce.Internal.Editor.Utils
                     propertyString = propertyString.Replace("APPLEID", cloudConfig.LeaderboardIDs[i].AppleId);
                     propertyString = propertyString.Replace("GOOGLEID", cloudConfig.LeaderboardIDs[i].GoogleId);
                     builder.AppendLine(propertyString);
+
+                    var dictionaryString = "            { \"INTERNALID\", FIELDNAME },";
+                    dictionaryString = dictionaryString.Replace("FIELDNAME", "s_" + FirstLetterToLowerCase(cloudConfig.LeaderboardIDs[i].InternalId));
+                    dictionaryString = dictionaryString.Replace("INTERNALID", cloudConfig.LeaderboardIDs[i].InternalId);
+                    dictionaryBuilder.AppendLine(dictionaryString);
+
                     if (i != cloudConfig.LeaderboardIDs.Count - 1)
                     {
                         builder.AppendLine();
                     }
                 }
 
+                if (cloudConfig.LeaderboardIDs.Count > 0)
+                {
+                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
+                }
+
                 newLeaderboardsScript = newLeaderboardsScript.Replace("// LEADERBOARD_IDS", builder.ToString());
+                newLeaderboardsScript = newLeaderboardsScript.Replace("// LEADERBOARD_DICTIONARY", dictionaryBuilder.ToString());
 
                 writer.Write(newLeaderboardsScript);
             }

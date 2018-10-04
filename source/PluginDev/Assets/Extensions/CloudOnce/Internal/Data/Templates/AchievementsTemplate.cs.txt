@@ -5,6 +5,7 @@
 
 namespace CloudOnce
 {
+    using System.Collections.Generic;
     using Internal;
 
     /// <summary>
@@ -13,5 +14,17 @@ namespace CloudOnce
     /// </summary>
     public static class Achievements
     {
-// ACHIEVEMENT_IDS    }
+// ACHIEVEMENT_IDS
+        public static string GetPlatformID(string internalId)
+        {
+            return s_achievementDictionary.ContainsKey(internalId)
+                ? s_achievementDictionary[internalId].ID
+                : string.Empty;
+        }
+
+        private static readonly Dictionary<string, UnifiedAchievement> s_achievementDictionary = new Dictionary<string, UnifiedAchievement>
+        {
+// ACHIEVEMENT_DICTIONARY
+        };
+    }
 }
