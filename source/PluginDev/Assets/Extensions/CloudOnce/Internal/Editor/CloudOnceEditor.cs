@@ -247,7 +247,7 @@ namespace CloudOnce.Internal.Editor
             noInvalidDefaultValues,
             noEmptyInternalIdFields,
             noEmptyPlatformIdFields,
-            noAchievementsNamedAll;
+            noReservedIdsUsed;
 
         #endregion /Fields
 
@@ -1342,7 +1342,8 @@ namespace CloudOnce.Internal.Editor
             noDuplicateCloudVariableKeys = ValidationUtils.ConfigHasNoDuplicateCloudVariableKeys(tmpConfig.CloudVariables);
             noInvalidDefaultValues = ValidationUtils.ConfigHasNoInvalidDefaultValues(tmpConfig.CloudVariables);
             noEmptyPlatformIdFields = ValidationUtils.ConfigHasNoEmptyPlatformIDs(tmpConfig);
-            noAchievementsNamedAll = ValidationUtils.ConfigHasNoAchievementsNamedAll(tmpConfig.AchievementIDs);
+            noReservedIdsUsed = ValidationUtils.ConfigHasNoReservedIDs(tmpConfig.AchievementIDs, "All", "GetPlatformID", "AchievementDictionary")
+                                && ValidationUtils.ConfigHasNoReservedIDs(tmpConfig.LeaderboardIDs, "GetPlatformID", "LeaderboardDictionary");
             if (tmpConfig.GoogleSupported && !tmpConfig.GoogleSetupRun)
             {
                 EditorGUILayout.HelpBox("You have chosen to support Google Play, but you have not successfully run Google Application ID setup.", MessageType.Info);
@@ -1351,7 +1352,7 @@ namespace CloudOnce.Internal.Editor
 
             return noEmptyInternalIdFields && noDuplicateAchievementIDs && noDuplicateLeaderboardIDs
                 && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyPlatformIdFields
-                && noAchievementsNamedAll;
+                && noReservedIdsUsed;
         }
 
         /// <summary>
@@ -1379,7 +1380,7 @@ namespace CloudOnce.Internal.Editor
         {
             return noErrorsFoundInPlatformSettings && noDuplicateAchievementIDs && noDuplicateLeaderboardIDs
                 && noDuplicateCloudVariableKeys && noInvalidDefaultValues && noEmptyInternalIdFields
-                && noAchievementsNamedAll;
+                && noReservedIdsUsed;
         }
 
         #endregion /Footer
