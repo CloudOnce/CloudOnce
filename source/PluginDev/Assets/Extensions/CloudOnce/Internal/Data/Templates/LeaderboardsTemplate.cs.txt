@@ -2,10 +2,10 @@
 // Copyright (c) 2016 Jan Ivar Z. Carlsen, Sindri Jóelsson. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
-using System.Collections.Generic;
 
 namespace CloudOnce
 {
+    using System.Collections.Generic;
     using Internal;
 
     /// <summary>
@@ -15,17 +15,14 @@ namespace CloudOnce
     public static class Leaderboards
     {
 // LEADERBOARD_IDS
-    
         public static string GetPlatformID(string internalId)
         {
-            if (allLeaderboards.ContainsKey(internalId)) {
-                return allLeaderboards[internalId].ID;
-            } else {
-                return "";
-            }
+            return s_leaderboardDictionary.ContainsKey(internalId)
+                ? s_leaderboardDictionary[internalId].ID
+                : string.Empty;
         }
 
-        private static Dictionary<string, UnifiedLeaderboard> allLeaderboards = new Dictionary<string, UnifiedLeaderboard>
+        private static readonly Dictionary<string, UnifiedLeaderboard> s_leaderboardDictionary = new Dictionary<string, UnifiedLeaderboard>
         {
 // LEADERBOARD_DICTIONARY
         };

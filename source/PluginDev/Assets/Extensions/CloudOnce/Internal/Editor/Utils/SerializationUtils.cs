@@ -251,7 +251,11 @@ namespace CloudOnce.Internal.Editor.Utils
                     dictionaryString = dictionaryString.Replace("INTERNALID", idData.InternalId);
                     dictionaryBuilder.AppendLine(dictionaryString);
                 }
-                if (cloudConfig.AchievementIDs.Count > 0) dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
+
+                if (cloudConfig.AchievementIDs.Count > 0)
+                {
+                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
+                }
 
                 builder.AppendLine(allAchievementsTemplate).AppendLine("        {");
                 foreach (var idData in cloudConfig.AchievementIDs)
@@ -319,7 +323,11 @@ namespace CloudOnce.Internal.Editor.Utils
                         builder.AppendLine();
                     }
                 }
-                if (cloudConfig.LeaderboardIDs.Count > 0) dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
+
+                if (cloudConfig.LeaderboardIDs.Count > 0)
+                {
+                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
+                }
 
                 newLeaderboardsScript = newLeaderboardsScript.Replace("// LEADERBOARD_IDS", builder.ToString());
                 newLeaderboardsScript = newLeaderboardsScript.Replace("// LEADERBOARD_DICTIONARY", dictionaryBuilder.ToString());
