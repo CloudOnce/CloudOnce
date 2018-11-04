@@ -85,7 +85,6 @@ namespace GooglePlayGames.BasicApi
         /// <summary>
         /// Retrieves an id token, which can be verified server side, if they are logged in.
         /// </summary>
-        /// <param name="idTokenCallback">The callback invoked with the token</param>
         /// <returns>The identifier token.</returns>
         public string GetIdToken()
         {
@@ -112,7 +111,7 @@ namespace GooglePlayGames.BasicApi
         }
 
         public void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded,
-            Action<string> callback)
+                                             Action<string> callback)
         {
             LogUsage();
             callback(null);
@@ -398,7 +397,7 @@ namespace GooglePlayGames.BasicApi
         /// <summary>
         /// Returns a real-time multiplayer client.
         /// </summary>
-        /// <seealso cref="GooglePlayGames.Multiplayer.IRealTimeMultiplayerClient"></seealso>
+        /// <seealso cref="GooglePlayGames.BasicApi.Multiplayer.IRealTimeMultiplayerClient"></seealso>
         /// <returns>The rtmp client.</returns>
         public IRealTimeMultiplayerClient GetRtmpClient()
         {

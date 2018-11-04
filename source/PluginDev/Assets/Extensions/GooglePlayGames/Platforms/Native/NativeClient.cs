@@ -363,10 +363,10 @@ namespace GooglePlayGames.Native
         }
 
         public void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded,
-            Action<string> callback)
+                                             Action<string> callback)
         {
             mTokenClient.GetAnotherServerAuthCode(reAuthenticateIfNeeded,
-                callback);
+                                                  callback);
         }
 
         ///<summary></summary>
