@@ -10,6 +10,10 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.6.3
+- Updated GPGS plugin from v0.9.53 to v0.9.58
+- Updated Play Services Resolver from v1.2.95 to v1.2.98
+
 Version 2.6.2
 - Fixed AndroidManifest issues
 - Updated GPGS plugin from v0.9.50 to v0.9.53
