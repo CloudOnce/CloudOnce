@@ -14,13 +14,13 @@
 //    limitations under the License.
 // </copyright>
 
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
+#if UNITY_ANDROID
 
 using System;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.Native.PInvoke;
 
-namespace GooglePlayGames
+namespace GooglePlayGames.Native
 {
     /// <summary>
     /// Interface defining platform specific functionality.

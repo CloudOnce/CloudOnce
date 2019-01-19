@@ -14,7 +14,7 @@
 //  limitations under the License.
 // </copyright>
 
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
+#if UNITY_ANDROID
 namespace GooglePlayGames
 {
     using System;
@@ -61,13 +61,11 @@ namespace GooglePlayGames
 
         void SetAccountName(string accountName);
 
-        void AddOauthScopes(string[] scopes);
+        void AddOauthScopes(params string[] scopes);
 
         void SetHidePopups(bool flag);
 
-        bool NeedsToRun();
-
-        void FetchTokens(Action<int> callback);
+        void FetchTokens(bool silent, Action<int> callback);
     }
 }
 #endif

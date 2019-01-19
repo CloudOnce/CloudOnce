@@ -16,7 +16,7 @@
 
 // Modified by Jan Ivar Z. Carlsen.
 // Added OnAuthenticatedProxy event
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
+#if UNITY_ANDROID
 
 namespace GooglePlayGames.BasicApi
 {
