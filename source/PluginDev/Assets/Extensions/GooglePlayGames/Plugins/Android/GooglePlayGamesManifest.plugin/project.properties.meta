@@ -1,5 +1,8 @@
 fileFormatVersion: 2
 guid: 85950e65e8c820d43a35678d1057bb7a
+labels:
+- gvh
+- gvh_version-0.9.58
 DefaultImporter:
   userData: 
   assetBundleName: 

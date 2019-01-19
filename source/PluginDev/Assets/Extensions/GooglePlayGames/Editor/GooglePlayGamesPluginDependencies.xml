@@ -4,7 +4,7 @@
     It also defines the transitive dependencies on play-services
 -->
   <androidPackages>
-    <androidPackage spec="com.google.games:gpgs-plugin-support:0.9.53">
+    <androidPackage spec="com.google.games:gpgs-plugin-support:0.9.58">
       <repositories>
         <repository>Assets/Extensions/GooglePlayGames/Editor/m2repository</repository>
       </repositories>
