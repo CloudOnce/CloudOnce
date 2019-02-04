@@ -1,7 +1,7 @@
 ![logo_small.png](.github/logo_small.png)
 
 # CloudOnce - Unified Game Services API
-CloudOnce is a [Unity](http://unity3d.com/) plug-in that provides a unified game services API for Google Play Game Services and Apple Game Center (iOS & tvOS). Ease of use is the primary focus for the plug-in, but it also attempts to satisfy the needs of power users.
+CloudOnce is a [Unity](http://unity3d.com/) plug-in that provides a unified game services API for [Google Play Game Services](https://github.com/playgameservices/play-games-plugin-for-unity/) and Apple Game Center (iOS & tvOS). Ease of use is the primary focus for the plug-in, but it also attempts to satisfy the needs of power users.
 
 ## Getting Started
 Download the [latest release](https://github.com/jizc/CloudOnce/releases/latest) and then check out the [Getting Started](http://jizc.github.io/CloudOnce/gettingStarted.html) guide for an overview of available features and how to implement them.
@@ -14,7 +14,7 @@ If you want to modify CloudOnce and build your own unitypackage, there are a few
 
 For the PluginDev Unity project to compile you need to download and import [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver).
 
-Because CloudOnce includes Play Services Resolver for Unity, building a new unitypackage needs to be done from command-line or with a build script ([more info](https://github.com/googlesamples/unity-jar-resolver#plugin-redistribution)). Below is an example of how to do it on Windows. Change the paths to fit your environment.
+Because CloudOnce includes Play Services Resolver for Unity, building a new unitypackage needs to be done from command-line or with a build script ([more info](https://github.com/googlesamples/unity-jar-resolver#getting-started)). Below is an example of how to do it on Windows. Change the paths to fit your environment.
 
 **Windows example:**
 1. Download the latest [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver) unitypackage
