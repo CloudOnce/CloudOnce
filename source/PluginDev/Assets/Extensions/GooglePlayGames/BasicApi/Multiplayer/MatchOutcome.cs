@@ -13,7 +13,7 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
+#if UNITY_ANDROID
 
 namespace GooglePlayGames.BasicApi.Multiplayer
 {
@@ -64,7 +64,7 @@ namespace GooglePlayGames.BasicApi.Multiplayer
         }
 
         /// <summary>
-        /// <see cref="SetParticipantResult(string,ParticipantResult,int)"/>
+        /// <see cref="SetParticipantResult(string,ParticipantResult,uint)"/>
         /// </summary>
         public void SetParticipantResult(string participantId, ParticipantResult result)
         {
@@ -72,7 +72,7 @@ namespace GooglePlayGames.BasicApi.Multiplayer
         }
 
         /// <summary>
-        /// <see cref="SetParticipantResult(string,ParticipantResult,int)"/>
+        /// <see cref="SetParticipantResult(string,ParticipantResult,uint)"/>
         /// </summary>
         public void SetParticipantResult(string participantId, uint placement)
         {

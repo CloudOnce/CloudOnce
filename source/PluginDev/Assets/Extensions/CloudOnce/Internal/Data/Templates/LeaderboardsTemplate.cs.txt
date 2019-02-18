@@ -5,6 +5,7 @@
 
 namespace CloudOnce
 {
+    using System.Collections.Generic;
     using Internal;
 
     /// <summary>
@@ -13,5 +14,17 @@ namespace CloudOnce
     /// </summary>
     public static class Leaderboards
     {
-// LEADERBOARD_IDS    }
+// LEADERBOARD_IDS
+        public static string GetPlatformID(string internalId)
+        {
+            return s_leaderboardDictionary.ContainsKey(internalId)
+                ? s_leaderboardDictionary[internalId].ID
+                : string.Empty;
+        }
+
+        private static readonly Dictionary<string, UnifiedLeaderboard> s_leaderboardDictionary = new Dictionary<string, UnifiedLeaderboard>
+        {
+// LEADERBOARD_DICTIONARY
+        };
+    }
 }

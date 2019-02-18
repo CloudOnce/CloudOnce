@@ -17,7 +17,7 @@
 // Modified by Jan Ivar Z. Carlsen.
 // Added OnAuthenticated event and subscribed it to mClient.OnAuthenticatedProxy
 // Removed 0-1 range warning in ReportProgress
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
+#if UNITY_ANDROID
 
 namespace GooglePlayGames
 {
@@ -549,24 +549,20 @@ namespace GooglePlayGames
         /// <param name="callback">Callback returning the auth code or null
         /// if there was an error.  NOTE: This callback can return immediately.</param>
         public void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded,
-            Action<string> callback)
+                                             Action<string> callback)
         {
-            if (mClient != null && mClient.IsAuthenticated())
-            {
+            if(mClient != null && mClient.IsAuthenticated()) {
                 mClient.GetAnotherServerAuthCode(reAuthenticateIfNeeded, callback);
             }
             else if (mClient != null && reAuthenticateIfNeeded)
             {
                 mClient.Authenticate((success, msg) => {
-                    if (success)
-                    {
-                        callback(mClient.GetServerAuthCode());
-                    }
-                    else
-                    {
-                        OurUtils.Logger.e("Re-authentication failed: " + msg);
-                        callback(null);
-                    }
+                        if (success) {
+                            callback(mClient.GetServerAuthCode());
+                        } else {
+                            OurUtils.Logger.e("Re-authentication failed: " + msg);
+                            callback(null);
+                        }
                 }, false);
             }
             else
@@ -763,6 +759,10 @@ namespace GooglePlayGames
                 {
                     mClient.IncrementAchievement(achievementID, numSteps, callback);
                 }
+                else if (callback != null)
+                {
+                    callback.Invoke(false);
+                }
             }
             else if (progress >= 100)
             {
@@ -776,6 +776,10 @@ namespace GooglePlayGames
                 // not enough to unlock
                 GooglePlayGames.OurUtils.Logger.d("Progress " + progress +
                     " not enough to unlock non-incremental achievement.");
+                if (callback != null)
+                {
+                    callback.Invoke(false);
+                }
             }
         }
 
@@ -1187,7 +1191,7 @@ namespace GooglePlayGames
         /// Shows the standard Google Play Games leaderboards user interface,
         /// which allows the player to browse their leaderboards. If you have
         /// configured a specific leaderboard as the default through a call to
-        /// <see cref="SetDefaultLeaderboardForUi" />, the UI will show that
+        /// <see cref="SetDefaultLeaderboardForUI" />, the UI will show that
         /// specific leaderboard only. Otherwise, a list of all the leaderboards
         /// will be shown.
         /// </summary>

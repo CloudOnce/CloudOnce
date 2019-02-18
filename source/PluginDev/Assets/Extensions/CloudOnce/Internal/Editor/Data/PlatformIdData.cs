@@ -14,17 +14,15 @@ namespace CloudOnce.Internal.Editor.Data
     /// Stores achievement/leaderboard IDs for each supported platform as well as an internal ID.
     /// </summary>
     [Serializable]
-    public class PlatformIdData : IJsonSerializeable
+    public class PlatformIdData : IJsonSerializable
     {
         private const string internalIdName = "InternalID";
         private const string appleIdName = "AppleID";
         private const string googleIdName = "GoogleID";
-        private const string amazonIdName = "AmazonID";
 
         [SerializeField] private string internalId;
         [SerializeField] private string appleId;
         [SerializeField] private string googleId;
-        [SerializeField] private string amazonId;
 
         #region Constructor & properties
 
@@ -49,7 +47,6 @@ namespace CloudOnce.Internal.Editor.Data
             InternalId = strings[0];
             AppleId = strings[1];
             GoogleId = strings[2];
-            AmazonId = strings[3];
         }
 
         /// <summary>
@@ -86,15 +83,6 @@ namespace CloudOnce.Internal.Editor.Data
             set { googleId = value; }
         }
 
-        /// <summary>
-        /// The Amazon GameCircle ID for an achievement or leaderboard.
-        /// </summary>
-        public string AmazonId
-        {
-            get { return amazonId; }
-            set { amazonId = value; }
-        }
-
         #endregion /Constructor & properties
 
         /// <summary>
@@ -106,8 +94,7 @@ namespace CloudOnce.Internal.Editor.Data
         {
             return InternalId == otherData.InternalId
                 && AppleId == otherData.AppleId
-                && GoogleId == otherData.GoogleId
-                && AmazonId == otherData.AmazonId;
+                && GoogleId == otherData.GoogleId;
         }
 
         /// <summary>
@@ -121,7 +108,6 @@ namespace CloudOnce.Internal.Editor.Data
             jsonObject.AddField(internalIdName, InternalId);
             jsonObject.AddField(appleIdName, AppleId);
             jsonObject.AddField(googleIdName, GoogleId);
-            jsonObject.AddField(amazonIdName, AmazonId);
 
             return jsonObject;
         }
@@ -132,7 +118,7 @@ namespace CloudOnce.Internal.Editor.Data
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the <see cref="PlatformIdData"/>.</param>
         private void FromJSONObject(JSONObject jsonObject)
         {
-            if (!jsonObject.HasFields(internalIdName, appleIdName, googleIdName, amazonIdName))
+            if (!jsonObject.HasFields(internalIdName, appleIdName, googleIdName))
             {
                 throw new SerializationException("JSONObject missing fields, cannot deserialize to " + typeof(PlatformIdData).Name);
             }
@@ -140,7 +126,6 @@ namespace CloudOnce.Internal.Editor.Data
             InternalId = jsonObject[internalIdName].String;
             AppleId = jsonObject[appleIdName].String;
             GoogleId = jsonObject[googleIdName].String;
-            AmazonId = jsonObject[amazonIdName].String;
         }
     }
 }

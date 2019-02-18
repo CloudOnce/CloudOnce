@@ -13,15 +13,6 @@ namespace CloudOnce.Internal.Editor.Data
     using UnityEngine;
 
     /// <summary>
-    /// For differentiating between Google Play and Amazon on Android
-    /// </summary>
-    public enum AndroidBuildPlatform
-    {
-        Amazon,
-        GooglePlay
-    }
-
-    /// <summary>
     /// Used in <see cref="CloudConfig"/> for serialization
     /// </summary>
     public enum DataTypeID
@@ -30,7 +21,6 @@ namespace CloudOnce.Internal.Editor.Data
         Leaderboard,
         AppleSupport,
         GoogleSupport,
-        AmazonSupport,
         AndroidPlatform,
         GoogleAppID,
         GoogleSetupRun,
@@ -48,20 +38,17 @@ namespace CloudOnce.Internal.Editor.Data
     /// Data-class for storing CloudOnce configuration.
     /// </summary>
     [Serializable]
-    public class CloudConfig : ScriptableObject, IJsonSerializeable
+    public class CloudConfig : ScriptableObject, IJsonSerializable
     {
         private const string achievementIDsName = "AchievementIDs";
         private const string leaderboardIDsName = "LeaderboardIDs";
         private const string cloudVariablesName = "CloudVariables";
         private const string appleSupportedName = "AppleSupported";
         private const string googleSupportedName = "GoogleSupported";
-        private const string amazonSupportedName = "AmazonSupported";
-        private const string androidPlatformName = "AndroidPlatform";
         private const string googleAppIDName = "GoogleAppID";
         private const string googleSetupRunName = "GoogleSetupRun";
         private const string debugModeEnabledName = "DebugModeEnabled";
         private const string versionName = "Version";
-        private const string apiKeyName = "APIKey";
         private const string settingsLocationName = "SettingsLocation";
 
         [SerializeField] private List<PlatformIdData> achievementIDs;
@@ -69,13 +56,10 @@ namespace CloudOnce.Internal.Editor.Data
         [SerializeField] private List<CloudVariableData> cloudVariables;
         [SerializeField] private bool appleSupported;
         [SerializeField] private bool googleSupported;
-        [SerializeField] private bool amazonSupported;
-        [SerializeField] private AndroidBuildPlatform androidPlatform;
         [SerializeField] private string googleAppID;
         [SerializeField] private bool googleSetupRun;
         [SerializeField] private bool debugModeEnabled;
         [SerializeField] private string version;
-        [SerializeField] private string apiKey;
         [SerializeField] private SettingsLocation settingsLocation;
 
         #region Constructor & properties
@@ -110,18 +94,6 @@ namespace CloudOnce.Internal.Editor.Data
             set { googleSupported = value; }
         }
 
-        public bool AmazonSupported
-        {
-            get { return amazonSupported; }
-            set { amazonSupported = value; }
-        }
-
-        public AndroidBuildPlatform AndroidPlatform
-        {
-            get { return androidPlatform; }
-            set { androidPlatform = value; }
-        }
-
         public string GoogleAppID
         {
             get { return googleAppID; }
@@ -144,12 +116,6 @@ namespace CloudOnce.Internal.Editor.Data
         {
             get { return version; }
             set { version = value; }
-        }
-
-        public string ApiKey
-        {
-            get { return apiKey; }
-            set { apiKey = value; }
         }
 
         public SettingsLocation SettingsLocation
@@ -176,12 +142,9 @@ namespace CloudOnce.Internal.Editor.Data
         {
             return AppleSupported == otherConfig.AppleSupported
                 && GoogleSupported == otherConfig.GoogleSupported
-                && AmazonSupported == otherConfig.AmazonSupported
-                && AndroidPlatform == otherConfig.AndroidPlatform
                 && GoogleAppID == otherConfig.GoogleAppID
                 && GoogleSetupRun == otherConfig.GoogleSetupRun
                 && DebugModeEnabled == otherConfig.DebugModeEnabled
-                && ApiKey == otherConfig.ApiKey
                 && SettingsLocation == otherConfig.SettingsLocation;
         }
 
@@ -222,13 +185,10 @@ namespace CloudOnce.Internal.Editor.Data
             jsonObject.AddField(cloudVariablesName, JsonHelper.ToJsonObject(CloudVariables));
             jsonObject.AddField(appleSupportedName, AppleSupported);
             jsonObject.AddField(googleSupportedName, GoogleSupported);
-            jsonObject.AddField(amazonSupportedName, AmazonSupported);
-            jsonObject.AddField(androidPlatformName, Enum.Format(typeof(AndroidBuildPlatform), AndroidPlatform, "D"));
             jsonObject.AddField(googleAppIDName, GoogleAppID);
             jsonObject.AddField(googleSetupRunName, GoogleSetupRun);
             jsonObject.AddField(debugModeEnabledName, DebugModeEnabled);
             jsonObject.AddField(versionName, Version = PluginVersion.VersionString);
-            jsonObject.AddField(apiKeyName, ApiKey);
             jsonObject.AddField(settingsLocationName, Enum.Format(typeof(SettingsLocation), SettingsLocation, "D"));
 
             return jsonObject;
@@ -268,7 +228,7 @@ namespace CloudOnce.Internal.Editor.Data
         private void FromJSONObject(JSONObject jsonObject)
         {
             if (!jsonObject.HasFields(achievementIDsName, leaderboardIDsName, cloudVariablesName, appleSupportedName, googleSupportedName,
-                amazonSupportedName, androidPlatformName, googleAppIDName, googleSetupRunName, debugModeEnabledName, versionName))
+                googleAppIDName, googleSetupRunName, debugModeEnabledName, versionName))
             {
                 throw new SerializationException("JSONObject missing fields, cannot deserialize to " + typeof(CloudConfig).Name);
             }
@@ -278,16 +238,10 @@ namespace CloudOnce.Internal.Editor.Data
             CloudVariables = EditorJsonHelper.Convert<List<CloudVariableData>>(jsonObject[cloudVariablesName]);
             AppleSupported = jsonObject[appleSupportedName].B;
             GoogleSupported = jsonObject[googleSupportedName].B;
-            AmazonSupported = jsonObject[amazonSupportedName].B;
-            AndroidPlatform = (AndroidBuildPlatform)Enum.Parse(typeof(AndroidBuildPlatform), jsonObject[androidPlatformName].String);
             GoogleAppID = jsonObject[googleAppIDName].String;
             GoogleSetupRun = jsonObject[googleSetupRunName].B;
             DebugModeEnabled = jsonObject[debugModeEnabledName].B;
             Version = jsonObject[versionName].String;
-            if (jsonObject.HasFields(apiKeyName))
-            {
-                ApiKey = jsonObject[apiKeyName].String;
-            }
 
             if (jsonObject.HasFields(settingsLocationName))
             {

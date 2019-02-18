@@ -35,8 +35,6 @@ namespace CloudOnce.Internal.Editor.Utils
                     return string.IsNullOrEmpty(text) ? string.Empty : Regex.Replace(text, @"[^a-zA-Z0-9_.]", string.Empty);
                 case CloudPlatform.GooglePlay:
                     return string.IsNullOrEmpty(text) ? string.Empty : Regex.Replace(text, @"[^a-zA-Z0-9-_]", string.Empty);
-                case CloudPlatform.Amazon:
-                    return string.IsNullOrEmpty(text) ? string.Empty : Regex.Replace(text, @"[^a-zA-Z0-9_]", string.Empty);
                 default:
                     throw new ArgumentOutOfRangeException("platform", platform, null);
             }
@@ -210,11 +208,6 @@ namespace CloudOnce.Internal.Editor.Utils
                 {
                     idList.Add(platformIdData.GoogleId);
                 }
-
-                if (cloudConfig.AmazonSupported)
-                {
-                    idList.Add(platformIdData.AmazonId);
-                }
             }
 
             foreach (var platformIdData in cloudConfig.LeaderboardIDs)
@@ -227,11 +220,6 @@ namespace CloudOnce.Internal.Editor.Utils
                 if (cloudConfig.GoogleSupported)
                 {
                     idList.Add(platformIdData.GoogleId);
-                }
-
-                if (cloudConfig.AmazonSupported)
-                {
-                    idList.Add(platformIdData.AmazonId);
                 }
             }
 
@@ -251,10 +239,9 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <param name="platformIdList">A list of either achievements or leaderboards.</param>
         /// <param name="checkAppleIDs">Check for duplicates in the Apple IDs.</param>
         /// <param name="checkGoogleIDs">Check for duplicates in the Google IDs.</param>
-        /// <param name="checkAmazonIDs">Check for duplicates in the Amazon IDs.</param>
         /// <param name="listName">Should be either "achievement" or "leaderboard". Is included in the warning message.</param>
         /// <returns>Return <c>true</c> if no duplicates are found, <c>false</c> if at least one duplicate exists.</returns>
-        public static bool ConfigHasNoDuplicateIDs(List<PlatformIdData> platformIdList, bool checkAppleIDs, bool checkGoogleIDs, bool checkAmazonIDs, string listName)
+        public static bool ConfigHasNoDuplicateIDs(List<PlatformIdData> platformIdList, bool checkAppleIDs, bool checkGoogleIDs, string listName)
         {
             var idList = platformIdList.Select(platformIdData => platformIdData.InternalId).ToList();
 
@@ -286,17 +273,6 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
             }
 
-            if (checkAmazonIDs)
-            {
-                idList = platformIdList.Select(platformIdData => platformIdData.AmazonId).ToList();
-
-                if (ListHasDuplicateStrings(idList))
-                {
-                    EditorGUILayout.HelpBox("Duplicate Amazon " + listName + " Cloud ID detected.", MessageType.Warning);
-                    return false;
-                }
-            }
-
             return true;
         }
 
@@ -313,15 +289,21 @@ namespace CloudOnce.Internal.Editor.Utils
             return true;
         }
 
-        public static bool ConfigHasNoAchievementsNamedAll(List<PlatformIdData> achievementIds)
+        public static bool ConfigHasNoReservedIDs(List<PlatformIdData> platformIds, params string[] ids)
         {
-            var result = !achievementIds.Any(id => string.Equals(
-                id.InternalId,
-                "All",
-                StringComparison.InvariantCultureIgnoreCase));
-            if (!result)
+            if (ids == null || ids.Length == 0)
             {
-                EditorGUILayout.HelpBox("\"All\" internal achievement ID is reserved.", MessageType.Warning);
+                return true;
+            }
+
+            var result = true;
+            foreach (var id in ids)
+            {
+                if (platformIds.Any(p => string.Equals(p.InternalId, id, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    result = false;
+                    EditorGUILayout.HelpBox("\"" + id + "\" internal achievement ID is reserved.", MessageType.Warning);
+                }
             }
 
             return result;

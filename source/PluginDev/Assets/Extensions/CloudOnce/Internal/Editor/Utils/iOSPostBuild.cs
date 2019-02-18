@@ -24,7 +24,7 @@ namespace CloudOnce.Internal.Editor.Utils
         #region Public methods
 
         [PostProcessBuild]
-        public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
+        public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject)
         {
             if (target != BuildTarget.iOS && target != BuildTarget.tvOS)
             {

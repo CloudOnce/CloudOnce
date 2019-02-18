@@ -65,7 +65,7 @@ namespace CloudOnce
         }
 
         /// <summary>
-        /// Raised after an attempt has been made to save cloud data. Parameter idicates success.
+        /// Raised after an attempt has been made to save cloud data. Parameter indicates success.
         /// </summary>
         public static event UnityAction<bool> OnCloudSaveComplete
         {
@@ -83,7 +83,7 @@ namespace CloudOnce
         }
 
         /// <summary>
-        /// Raised if local data is changed as a result of loading cloud data. Returns a <see cref="string"/> array of the changed interal IDs.
+        /// Raised if local data is changed as a result of loading cloud data. Returns a <see cref="string"/> array of the changed internal IDs.
         /// </summary>
         public static event UnityAction<string[]> OnNewCloudValues
         {
@@ -182,15 +182,7 @@ namespace CloudOnce
 
                 return TestProvider.Instance;
 #elif UNITY_ANDROID
-#if CLOUDONCE_AMAZON // If Amazon is selected as current Android platform in CloudOnce Editor
-                if (!s_isProviderInitialized)
-                {
-                    AmazonCloudProvider.Instance.InternalInit(s_cloudOnceEvents);
-                    s_isProviderInitialized = true;
-                }
-
-                return AmazonCloudProvider.Instance;
-#elif CLOUDONCE_GOOGLE // If Google is selected as current Android platform in CloudOnce Editor
+#if CLOUDONCE_GOOGLE // If Google is selected as current Android platform in CloudOnce Editor
                 if (!s_isProviderInitialized)
                 {
                     GooglePlayGamesCloudProvider.Instance.InternalInit(s_cloudOnceEvents);
@@ -235,7 +227,6 @@ namespace CloudOnce
         /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
         /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
-        /// Ignored on Amazon GameCircle as there is no way of avoiding auto sign in.
         /// </param>
         /// <param name="autoCloudLoad">
         /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
@@ -271,7 +262,7 @@ namespace CloudOnce
         }
 
         /// <summary>
-        /// Load the user profiles accociated with the given array of user IDs.
+        /// Load the user profiles associated with the given array of user IDs.
         /// </summary>
         /// <param name="userIDs">The users to retrieve profiles for.</param>
         /// <param name="callback">Callback to handle the user profiles.</param>

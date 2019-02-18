@@ -46,7 +46,7 @@ namespace CloudOnce.QuickStart
             else
             {
                 Debug.LogError("Google Sign In/Out Button script placed on GameObject that is not a button." +
-                               " Script is only compatible with UI buttons created from GameOject menu (GameObjects -> UI -> Button).");
+                               " Script is only compatible with UI buttons created from GameObject menu (GameObjects -> UI -> Button).");
                 return;
             }
 

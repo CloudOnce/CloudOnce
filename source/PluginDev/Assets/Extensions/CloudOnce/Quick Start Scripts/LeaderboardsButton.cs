@@ -53,7 +53,7 @@ namespace CloudOnce.QuickStart
             if (button == null)
             {
                 Debug.LogError("Show Leaderboards Button script placed on GameObject that is not a button." +
-                               " Script is only compatible with UI buttons created from GameOject menu (GameObjects -> UI -> Button).");
+                               " Script is only compatible with UI buttons created from GameObject menu (GameObjects -> UI -> Button).");
             }
         }
 

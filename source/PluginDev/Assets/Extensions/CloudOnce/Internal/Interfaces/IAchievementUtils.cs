@@ -55,7 +55,7 @@ namespace CloudOnce.Internal.Utils
         void ShowOverlay();
 
         /// <summary>
-        /// Loads the achievement descriptions accociated with this application.
+        /// Loads the achievement descriptions associated with this application.
         /// </summary>
         /// <param name="callback">Callback to handle the achievement descriptions.</param>
         void LoadAchievementDescriptions(Action<IAchievementDescription[]> callback);

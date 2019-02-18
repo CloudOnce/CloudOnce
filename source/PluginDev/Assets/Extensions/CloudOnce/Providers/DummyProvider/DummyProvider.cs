@@ -35,7 +35,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Profile picture for currently signed in player. Will aways return <see cref="Texture2D.whiteTexture"/> when using <see cref="DummyProvider"/>.
+        /// Profile picture for currently signed in player. Will always return <see cref="Texture2D.whiteTexture"/> when using <see cref="DummyProvider"/>.
         /// </summary>
         public override Texture2D PlayerImage
         {
@@ -121,7 +121,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Load the user profiles accociated with the given array of user IDs.
+        /// Load the user profiles associated with the given array of user IDs.
         /// </summary>
         /// <param name="userIDs">The users to retrieve profiles for.</param>
         /// <param name="callback">Callback to handle the user profiles.</param>

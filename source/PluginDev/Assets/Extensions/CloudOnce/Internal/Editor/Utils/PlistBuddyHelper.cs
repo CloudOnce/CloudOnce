@@ -71,7 +71,7 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             var value = ExecuteCommand("print " + ToEntryName(fieldPath));
 
-            // Plistbuddy adds a trailing newline onto the output - strip it here.
+            // PlistBuddy adds a trailing newline onto the output - strip it here.
             if (value != null)
             {
                 return value.Replace("\n", string.Empty);

@@ -13,7 +13,7 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
+#if UNITY_ANDROID
 
 namespace GooglePlayGames.BasicApi.Multiplayer
 {
@@ -151,7 +151,7 @@ namespace GooglePlayGames.BasicApi.Multiplayer
         /// <summary>
         /// Finishes a match.
         /// </summary>
-        /// <param name="matchId">Match identifier.</param>
+        /// <param name="match">Match identifier.</param>
         /// <param name="data">Data. Final match data.</param>
         /// <param name="outcome">Outcome. The outcome of the match (who won, who lost, ...)</param>
         /// <param name="callback">Callback. Called with true for success, false for failure</param>

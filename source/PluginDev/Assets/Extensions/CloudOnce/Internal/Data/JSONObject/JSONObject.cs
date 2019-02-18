@@ -77,15 +77,15 @@ namespace CloudOnce.Internal
             }
         }
 
-        public JSONObject(AddJsonConents content)
+        public JSONObject(AddJsonContents content)
         {
             content.Invoke(this);
         }
 
-        public JSONObject(IEnumerable<JSONObject> objs)
+        public JSONObject(IEnumerable<JSONObject> objects)
         {
             ObjectType = Type.Array;
-            List = new List<JSONObject>(objs);
+            List = new List<JSONObject>(objects);
         }
 
         public JSONObject()
@@ -98,7 +98,7 @@ namespace CloudOnce.Internal
             Parse(str, maxDepth, storeExcessLevels, strict);
         }
 
-        public delegate void AddJsonConents(JSONObject self);
+        public delegate void AddJsonContents(JSONObject self);
 
         public enum Type
         {
@@ -242,7 +242,7 @@ namespace CloudOnce.Internal
             return obj;
         }
 
-        public static JSONObject Create(AddJsonConents content)
+        public static JSONObject Create(AddJsonContents content)
         {
             JSONObject obj = Create();
             content.Invoke(obj);

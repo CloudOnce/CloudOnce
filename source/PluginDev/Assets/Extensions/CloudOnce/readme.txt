@@ -4,12 +4,36 @@ http://jizc.github.io/CloudOnce
 Description
 -----------
 
-CloudOnce provides a unified game services API for Google Play Game Services,
-iOS Game Center and Amazon GameCircle. Ease of use is the primary focus for
-the plug-in, but it also attempts to satisfy the needs of power users.
+CloudOnce provides a unified game services API for Google Play Game Services
+and iOS Game Center. Ease of use is the primary focus for the plug-in,
+but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.6.5
+- Updated GPGS plugin from v0.9.60 to v0.9.61
+- Updated Play Services Resolver from v1.2.100 to v1.2.102
+
+Version 2.6.4
+- Updated GPGS plugin from v0.9.58 to v0.9.60
+- Updated Play Services Resolver from v1.2.98 to v1.2.100
+
+Version 2.6.3
+- Updated GPGS plugin from v0.9.53 to v0.9.58
+- Updated Play Services Resolver from v1.2.95 to v1.2.98
+
+Version 2.6.2
+- Fixed AndroidManifest issues
+- Updated GPGS plugin from v0.9.50 to v0.9.53
+- Updated Play Services Resolver from v1.2.90 to v1.2.95
+
+Version 2.6.1
+- Added method to get achievements and leaderboards by internal ID
+
+Version 2.6.0
+- Removed Amazon GameCircle support, due to Amazon discontinuing the service
+- Updated Play Services Resolver from v1.2.79 to v1.2.90
+
 Version 2.5.2
 - Fixed tvOS support
 - Updated Play Services Resolver from v1.2.66 to v1.2.79

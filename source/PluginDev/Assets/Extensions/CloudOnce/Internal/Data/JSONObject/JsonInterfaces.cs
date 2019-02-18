@@ -5,11 +5,11 @@
 
 namespace CloudOnce.Internal
 {
-    public interface IJsonConvertible : IJsonSerializeable, IJsonDeserializable
+    public interface IJsonConvertible : IJsonSerializable, IJsonDeserializable
     {
     }
 
-    public interface IJsonSerializeable
+    public interface IJsonSerializable
     {
         JSONObject ToJSONObject();
     }

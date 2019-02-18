@@ -19,8 +19,7 @@ namespace CloudOnce.Internal.Editor.Utils
         #region Fields & properties
 
         private const string debugBuildSymbolConstraint = "CLOUDONCE_DEBUG";
-        private const string amazonBuildSymbolConstaint = "CLOUDONCE_AMAZON";
-        private const string googleBuildSymbolConstaint = "CLOUDONCE_GOOGLE";
+        private const string googleBuildSymbolConstraint = "CLOUDONCE_GOOGLE";
 
         private static readonly AndroidManifestModifier s_manifestModifier = new AndroidManifestModifier();
 
@@ -59,28 +58,15 @@ namespace CloudOnce.Internal.Editor.Utils
         }
 
         /// <summary>
-        /// Enables Amazon as the Android build platform.
-        /// </summary>
-        public static void EnableAmazonBuildPlatform(string apiKey)
-        {
-            s_manifestModifier.EnableAmazonBuildPlatform(apiKey);
-
-            if (!AndroidBuildSymbolIsDefined(amazonBuildSymbolConstaint))
-            {
-                SetAndroidBuildSymbolImpl(new[] { amazonBuildSymbolConstaint }, new[] { googleBuildSymbolConstaint });
-            }
-        }
-
-        /// <summary>
         /// Enables Google Play as the Android build platform.
         /// </summary>
         public static void EnableGoogleBuildPlatform()
         {
             s_manifestModifier.EnableGoogleBuildPlatform();
 
-            if (!AndroidBuildSymbolIsDefined(googleBuildSymbolConstaint))
+            if (!AndroidBuildSymbolIsDefined(googleBuildSymbolConstraint))
             {
-                SetAndroidBuildSymbolImpl(new[] { googleBuildSymbolConstaint }, new[] { amazonBuildSymbolConstaint });
+                SetAndroidBuildSymbolImpl(new[] { googleBuildSymbolConstraint }, null);
             }
         }
 
@@ -89,9 +75,9 @@ namespace CloudOnce.Internal.Editor.Utils
         /// </summary>
         public static void DisableAndroidBuildSymbolConstraints()
         {
-            if (AndroidBuildSymbolIsDefined(amazonBuildSymbolConstaint) || AndroidBuildSymbolIsDefined(googleBuildSymbolConstaint))
+            if (AndroidBuildSymbolIsDefined(googleBuildSymbolConstraint))
             {
-                SetAndroidBuildSymbolImpl(null, new[] { amazonBuildSymbolConstaint, googleBuildSymbolConstaint });
+                SetAndroidBuildSymbolImpl(null, new[] { googleBuildSymbolConstraint });
             }
         }
 

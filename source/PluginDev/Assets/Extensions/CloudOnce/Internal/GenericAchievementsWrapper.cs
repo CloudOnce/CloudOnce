@@ -136,7 +136,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Loads the achievement descriptions accociated with this application.
+        /// Loads the achievement descriptions associated with this application.
         /// </summary>
         /// <param name="callback">Callback to handle the achievement descriptions.</param>
         public void LoadAchievementDescriptions(Action<IAchievementDescription[]> callback)
