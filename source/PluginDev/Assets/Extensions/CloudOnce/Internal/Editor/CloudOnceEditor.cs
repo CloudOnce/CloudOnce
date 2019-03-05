@@ -576,7 +576,10 @@ namespace CloudOnce.Internal.Editor
                 inspectorSkin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Scene);
             }
 
-            headerBackgroundStyle = new GUIStyle(inspectorSkin.FindStyle("WindowBackground"));
+            headerBackgroundStyle = new GUIStyle(inspectorSkin.FindStyle("Toolbar"))
+            {
+                fixedHeight = 0f
+            };
             footerBackgroundStyle = new GUIStyle(inspectorSkin.FindStyle("CN Box"))
             {
                 stretchHeight = false

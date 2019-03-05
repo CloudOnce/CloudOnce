@@ -10,6 +10,12 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.6.6
+- Unity 2018.3 managed code stripping fix
+- Replaced WWW with UnityWebRequest in GPGS provider
+- Updated GPGS plugin from v0.9.61 to v0.9.62
+- Fixed editor style error in Unity 2018.3
+
 Version 2.6.5
 - Updated GPGS plugin from v0.9.60 to v0.9.61
 - Updated Play Services Resolver from v1.2.100 to v1.2.102
