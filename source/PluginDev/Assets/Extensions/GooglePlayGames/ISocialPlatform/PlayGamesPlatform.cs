@@ -600,28 +600,6 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Returns the achievement corresponding to the passed achievement identifier.
-        /// </summary>
-        /// <returns>
-        /// The achievement corresponding to the identifer. <code>null</code> if no such
-        /// achievement is found or if the user is not authenticated.
-        /// </returns>
-        /// <param name="achievementId">
-        /// The identifier of the achievement.
-        /// </param>
-        public Achievement GetAchievement(string achievementId)
-        {
-            if (!IsAuthenticated())
-            {
-                GooglePlayGames.OurUtils.Logger.e(
-                    "GetAchievement can only be called after authentication.");
-                return null;
-            }
-
-            return mClient.GetAchievement(achievementId);
-        }
-
-        /// <summary>
         /// Returns the user's display name.
         /// </summary>
         /// <returns>
@@ -701,8 +679,7 @@ namespace GooglePlayGames
             }
 
             // map ID, if it's in the dictionary
-            GooglePlayGames.OurUtils.Logger.d(
-                "ReportProgress, " + achievementID + ", " + progress);
+            GooglePlayGames.OurUtils.Logger.d("ReportProgress, " + achievementID + ", " + progress);
             achievementID = MapId(achievementID);
 
             // if progress is 0.0, we just want to reveal it
@@ -714,73 +691,49 @@ namespace GooglePlayGames
                 return;
             }
 
-            // figure out if it's a standard or incremental achievement
-            bool isIncremental = false;
-            int curSteps = 0, totalSteps = 0;
-            Achievement ach = mClient.GetAchievement(achievementID);
-            if (ach == null)
+            mClient.LoadAchievements(ach =>
             {
-                GooglePlayGames.OurUtils.Logger.w(
-                    "Unable to locate achievement " + achievementID);
-                GooglePlayGames.OurUtils.Logger.w(
-                    "As a quick fix, assuming it's standard.");
-                isIncremental = false;
-            }
-            else
-            {
-                isIncremental = ach.IsIncremental;
-                curSteps = ach.CurrentSteps;
-                totalSteps = ach.TotalSteps;
-                GooglePlayGames.OurUtils.Logger.d(
-                    "Achievement is " + (isIncremental ? "INCREMENTAL" : "STANDARD"));
-                if (isIncremental)
+                for (int i = 0; i < ach.Length; i++)
                 {
-                    GooglePlayGames.OurUtils.Logger.d(
-                        "Current steps: " + curSteps + "/" + totalSteps);
-                }
-            }
+                    if (ach[i].Id == achievementID)
+                    {
+                        if (ach[i].IsIncremental)
+                        {
+                            GooglePlayGames.OurUtils.Logger.d("Progress " + progress +
+                                " interpreted as incremental target (approximate).");
 
-            // do the right thing depending on the achievement type
-            if (isIncremental)
-            {
-                // increment it to the target percentage (approximate)
-                GooglePlayGames.OurUtils.Logger.d("Progress " + progress +
-                    " interpreted as incremental target (approximate).");
-
-                int targetSteps = (int)Math.Round((progress / 100f) * totalSteps);
-                int numSteps = targetSteps - curSteps;
-                GooglePlayGames.OurUtils.Logger.d("Target steps: " +
-                    targetSteps + ", cur steps:" + curSteps);
-                GooglePlayGames.OurUtils.Logger.d("Steps to increment: " +
-                    numSteps);
-
-                // handle incremental achievements with 0 steps
-                if (numSteps >= 0)
-                {
-                    mClient.IncrementAchievement(achievementID, numSteps, callback);
+                            int targetSteps = (int)Math.Round((progress / 100f) * ach[i].TotalSteps);
+                            mClient.SetStepsAtLeast(achievementID, targetSteps, callback);
+                        }
+                        else
+                        {
+                            if (progress >= 100)
+                            {
+                                // unlock it!
+                                GooglePlayGames.OurUtils.Logger.d("Progress " + progress + " interpreted as UNLOCK.");
+                                mClient.UnlockAchievement(achievementID, callback);
+                            }
+                            else
+                            {
+                                // not enough to unlock
+                                GooglePlayGames.OurUtils.Logger.d("Progress " + progress + " not enough to unlock non-incremental achievement.");
+                                if (callback != null)
+                                {
+                                    callback.Invoke(false);
+                                }
+                            }
+                        }
+                        return;
+                    }
                 }
-                else if (callback != null)
-                {
-                    callback.Invoke(false);
-                }
-            }
-            else if (progress >= 100)
-            {
-                // unlock it!
-                GooglePlayGames.OurUtils.Logger.d(
-                    "Progress " + progress + " interpreted as UNLOCK.");
-                mClient.UnlockAchievement(achievementID, callback);
-            }
-            else
-            {
-                // not enough to unlock
-                GooglePlayGames.OurUtils.Logger.d("Progress " + progress +
-                    " not enough to unlock non-incremental achievement.");
+
+                // Achievement not found
                 if (callback != null)
                 {
+                    GooglePlayGames.OurUtils.Logger.e("Unable to locate achievement " + achievementID);
                     callback.Invoke(false);
                 }
-            }
+            });
         }
 
         /// <summary>
