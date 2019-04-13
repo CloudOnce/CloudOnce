@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !UNITY_2018_3_OR_NEWER
 namespace CloudOnce.Internal.Editor.Utils
 {
     using System;

@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.games</groupId>
   <artifactId>gpgs-plugin-support</artifactId>
-  <version>0.9.61</version>
+  <version>0.9.63</version>
   <packaging>srcaar</packaging>
   <dependencies>
     <dependency>
       <groupId>com.google.android.gms</groupId>
       <artifactId>play-services-games</artifactId>
-      <version>16.0.0</version>
+      <version>17.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

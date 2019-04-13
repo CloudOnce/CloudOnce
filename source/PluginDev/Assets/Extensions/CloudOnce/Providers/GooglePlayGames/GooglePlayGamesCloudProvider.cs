@@ -12,6 +12,9 @@ namespace CloudOnce.Internal.Providers
     using GooglePlayGames.BasicApi;
     using UnityEngine;
     using UnityEngine.Events;
+#if UNITY_2017_1_OR_NEWER
+    using UnityEngine.Networking;
+#endif
     using UnityEngine.SocialPlatforms;
     using Utils;
     using Logger = GooglePlayGames.OurUtils.Logger;
@@ -411,14 +414,22 @@ namespace CloudOnce.Internal.Providers
 
         private IEnumerator DownloadPlayerImage(string url)
         {
-            // Start a download of the given URL
+#if UNITY_2017_1_OR_NEWER
+            using (var request = UnityWebRequestTexture.GetTexture(url))
+            {
+                yield return request.SendWebRequest();
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    yield break;
+                }
+
+                playerImage = DownloadHandlerTexture.GetContent(request);
+            }
+#else
             var www = new WWW(url);
-
-            // Wait for download to complete
             yield return www;
-
-            // assign texture
             playerImage = www.texture;
+#endif
             cloudOnceEvents.RaiseOnPlayerImageDownloaded(playerImage);
         }
     }

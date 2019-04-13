@@ -20,9 +20,9 @@ namespace CloudOnce.Internal.Editor.Utils
 
         private const string debugBuildSymbolConstraint = "CLOUDONCE_DEBUG";
         private const string googleBuildSymbolConstraint = "CLOUDONCE_GOOGLE";
-
+#if !UNITY_2018_3_OR_NEWER
         private static readonly AndroidManifestModifier s_manifestModifier = new AndroidManifestModifier();
-
+#endif
         #endregion /Fields & properties
 
         #region Public methods
@@ -62,8 +62,9 @@ namespace CloudOnce.Internal.Editor.Utils
         /// </summary>
         public static void EnableGoogleBuildPlatform()
         {
+#if !UNITY_2018_3_OR_NEWER
             s_manifestModifier.EnableGoogleBuildPlatform();
-
+#endif
             if (!AndroidBuildSymbolIsDefined(googleBuildSymbolConstraint))
             {
                 SetAndroidBuildSymbolImpl(new[] { googleBuildSymbolConstraint }, null);
