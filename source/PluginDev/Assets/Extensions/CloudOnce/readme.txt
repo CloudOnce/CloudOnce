@@ -10,6 +10,10 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.6.8
+- Updated GPGS plugin from v0.9.63 to v0.9.64
+- Updated Play Services Resolver from v1.2.104 to v1.2.111
+
 Version 2.6.7
 - Fixed AndroidManifest issue in Unity 2018.3
 - Updated GPGS plugin from v0.9.62 to v0.9.63
