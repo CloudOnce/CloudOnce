@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.games</groupId>
   <artifactId>gpgs-plugin-support</artifactId>
-  <version>0.9.63</version>
+  <version>0.9.64</version>
   <packaging>srcaar</packaging>
   <dependencies>
     <dependency>
