@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#if UNITY_EDITOR
 namespace CloudOnce.Internal.Editor
 {
     using UnityEditor;
@@ -32,3 +33,4 @@ namespace CloudOnce.Internal.Editor
         }
     }
 }
+#endif
