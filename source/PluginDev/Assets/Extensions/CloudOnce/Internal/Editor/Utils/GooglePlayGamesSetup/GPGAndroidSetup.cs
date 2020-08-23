@@ -22,8 +22,8 @@ namespace CloudOnce.Internal.Editor.Utils
 {
 #if UNITY_ANDROID
     using GooglePlayGames;
-#endif
     using GooglePlayServices;
+#endif
     using UnityEditor;
 
     [InitializeOnLoad]
@@ -72,7 +72,9 @@ namespace CloudOnce.Internal.Editor.Utils
             Google.VersionHandler.UpdateVersionedAssets(true);
             Google.VersionHandler.Enabled = true;
             AssetDatabase.Refresh();
+#if UNITY_ANDROID
             PlayServicesResolver.MenuResolve();
+#endif
 
             // refresh assets, and we're done
             AssetDatabase.Refresh();
