@@ -20,6 +20,12 @@ namespace CloudOnce.Internal.Editor
     {
         static CloudOnceUpgrader()
         {
+            if (Environment.CommandLine.ToLower().Contains("-upgrader_disable"))
+            {
+                Debug.Log("CloudOnce Upgrader disabled");
+                return;
+            }
+
             var config = SerializationUtils.LoadCloudConfig();
             if (string.IsNullOrEmpty(config.Version))
             {
@@ -230,7 +236,7 @@ namespace CloudOnce.Internal.Editor
                 "Assets/Extensions/GooglePlayGames/Platforms/Native/PInvoke/TurnBasedMatchConfig.cs",
                 "Assets/Extensions/GooglePlayGames/Platforms/Native/PInvoke/TurnBasedMatchConfigBuilder.cs",
                 "Assets/Extensions/GooglePlayGames/Platforms/Native/PInvoke/VideoManager.cs",
-                "Assets/Extensions/GooglePlayGames/Platforms/Native/Android/AndroidClient.cs",
+                "Assets/Extensions/GooglePlayGames/Platforms/Native/Platforms/Android/AndroidClient.cs",
                 "Assets/Extensions/GooglePlayGames/Platforms/Native/Platforms/IClientImpl.cs",
                 "Assets/Extensions/GooglePlayGames/Platforms/Native/UnsupportedSavedGamesClient.cs",
             };
