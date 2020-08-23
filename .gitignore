@@ -12,9 +12,9 @@ Library/
 source/PluginDev/ProjectSettings/
 Temp/
 
-# Jar Resolver
-PlayServicesResolver/
-PlayServicesResolver.meta
+# External Dependency Manager for Unity
+ExternalDependencyManager/
+ExternalDependencyManager.meta
 
 # Unitypackage build process
 build/
