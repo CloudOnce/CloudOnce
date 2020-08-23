@@ -6,7 +6,11 @@
 namespace CloudOnce.QuickStart
 {
     using UnityEngine;
+#if UNITY_2019_1_OR_NEWER
+    using UnityEngine.UIElements;
+#else
     using UnityEngine.UI;
+#endif
 
     /// <summary>
     /// Attach this to your Achievements GUI button.
@@ -59,12 +63,20 @@ namespace CloudOnce.QuickStart
 
         private void Start()
         {
+#if UNITY_2019_1_OR_NEWER
+            button.clicked += OnButtonClicked;
+#else
             button.onClick.AddListener(OnButtonClicked);
+#endif
         }
 
         private void OnDestroy()
         {
+#if UNITY_2019_1_OR_NEWER
+            button.clicked -= OnButtonClicked;
+#else
             button.onClick.RemoveListener(OnButtonClicked);
+#endif
             Cloud.OnSignedInChanged -= OnSignedInChanged;
         }
     }
