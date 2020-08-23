@@ -12,17 +12,16 @@ If you need more technical or more complete documentation of the plug-in, you ca
 ## Building
 If you want to modify CloudOnce and build your own unitypackage, there are a few required steps.
 
-For the PluginDev Unity project to compile you need to download and import [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver).
+For the PluginDev Unity project to compile you need to download and import [External Dependency Manager for Unity (EDM4U)](https://github.com/googlesamples/unity-jar-resolver).
 
-Because CloudOnce includes Play Services Resolver for Unity, building a new unitypackage needs to be done from command-line or with a build script ([more info](https://github.com/googlesamples/unity-jar-resolver#getting-started)). Below is an example of how to do it on Windows. Change the paths to fit your environment.
+Because CloudOnce includes EDM4U, building a new unitypackage needs to be done from command-line or with a build script ([more info](https://github.com/googlesamples/unity-jar-resolver#getting-started)). Below is an example of how to do it on Windows. Change the paths to fit your environment.
 
 **Windows example:**
-1. Download the latest [Play Services Resolver for Unity](https://github.com/googlesamples/unity-jar-resolver) unitypackage
+1. Download the latest [EDM4U](https://github.com/googlesamples/unity-jar-resolver) unitypackage
 2. Open cmd
 3. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -projectPath "C:\GitHub\CloudOnce\source\PluginDev" -exportPackage Assets/Extensions Assets/Plugins "C:\GitHub\CloudOnce\build\source.unitypackage" -quit`
-4. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -gvh_disable -createProject ./CloudOnce -importPackage "C:\GitHub\CloudOnce\build\play-services-resolver-1.2.54.0.unitypackage" -quit`
-5. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -gvh_disable -projectPath "C:\GitHub\CloudOnce\build\CloudOnce" -importPackage "C:\GitHub\CloudOnce\build\source.unitypackage" -exportPackage Assets "C:\GitHub\CloudOnce\current-build\CloudOnce-v2.4.4.unitypackage" -quit`
-6. Party hard
+4. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -gvh_disable -createProject ./CloudOnce -importPackage "C:\GitHub\CloudOnce\build\external-dependency-manager-1.2.157.unitypackage" -quit`
+5. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -gvh_disable -projectPath "C:\GitHub\CloudOnce\build\CloudOnce" -importPackage "C:\GitHub\CloudOnce\build\source.unitypackage" -exportPackage Assets "C:\GitHub\CloudOnce\current-build\CloudOnce-v2.6.8.unitypackage" -quit`
 
 ## History
 This plug-in was originally developed for internal use by Trollpants Game Studio. [Sindri Jóelsson](http://github.com/sindrijo) wrote most of the original code, and [Jan Ivar Z. Carlsen](http://github.com/jizc) assisted by writing the implementations for Google Play and iOS.
