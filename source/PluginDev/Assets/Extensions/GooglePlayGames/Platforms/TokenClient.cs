@@ -17,6 +17,7 @@
 #if UNITY_ANDROID
 namespace GooglePlayGames
 {
+    using GooglePlayGames.BasicApi;
     using System;
 
     internal interface TokenClient
@@ -32,6 +33,7 @@ namespace GooglePlayGames
         /// <returns>The user email or null if not authenticated or the permission is
         /// not available.</returns>
         string GetEmail();
+
         string GetAuthCode();
         string GetIdToken();
 
@@ -47,7 +49,7 @@ namespace GooglePlayGames
         /// retrieving another auth code. </param>
         /// <param name="callback">Callback.</param>
         void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded,
-                                      Action<string> callback);
+            Action<string> callback);
 
         void Signout();
 
@@ -66,6 +68,10 @@ namespace GooglePlayGames
         void SetHidePopups(bool flag);
 
         void FetchTokens(bool silent, Action<int> callback);
+
+        void RequestPermissions(string[] scopes, Action<SignInStatus> callback);
+
+        bool HasPermissions(string[] scopes);
     }
 }
 #endif

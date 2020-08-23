@@ -25,7 +25,6 @@ namespace GooglePlayGames
     using System.Collections.Generic;
     using GooglePlayGames.BasicApi;
     using GooglePlayGames.BasicApi.Events;
-    using GooglePlayGames.BasicApi.Multiplayer;
     using GooglePlayGames.BasicApi.Nearby;
     using GooglePlayGames.BasicApi.SavedGame;
     using GooglePlayGames.BasicApi.Video;
@@ -88,7 +87,7 @@ namespace GooglePlayGames
         /// <param name="configuration">Configuration object to use.</param>
         private PlayGamesPlatform(PlayGamesClientConfiguration configuration)
         {
-            GooglePlayGames.OurUtils.Logger.w("Creating new PlayGamesPlatform");
+            GooglePlayGames.OurUtils.Logger.d("Creating new PlayGamesPlatform");
             this.mLocalUser = new PlayGamesLocalUser(this);
             this.mConfiguration = configuration;
         }
@@ -102,15 +101,9 @@ namespace GooglePlayGames
         /// </returns>
         public static bool DebugLogEnabled
         {
-            get
-            {
-                return GooglePlayGames.OurUtils.Logger.DebugLogEnabled;
-            }
+            get { return GooglePlayGames.OurUtils.Logger.DebugLogEnabled; }
 
-            set
-            {
-                GooglePlayGames.OurUtils.Logger.DebugLogEnabled = value;
-            }
+            set { GooglePlayGames.OurUtils.Logger.DebugLogEnabled = value; }
         }
 
         /// <summary>
@@ -154,52 +147,25 @@ namespace GooglePlayGames
             }
         }
 
-        /// <summary> Gets the real time multiplayer API object</summary>
-        public IRealTimeMultiplayerClient RealTime
-        {
-            get
-            {
-                return mClient.GetRtmpClient();
-            }
-        }
-
-        /// <summary> Gets the turn based multiplayer API object</summary>
-        public ITurnBasedMultiplayerClient TurnBased
-        {
-            get
-            {
-                return mClient.GetTbmpClient();
-            }
-        }
-
         /// <summary>Gets the saved game client object.</summary>
         /// <value>The saved game client.</value>
         public ISavedGameClient SavedGame
         {
-            get
-            {
-                return mClient.GetSavedGameClient();
-            }
+            get { return mClient.GetSavedGameClient(); }
         }
 
         /// <summary>Gets the events client object.</summary>
         /// <value>The events client.</value>
         public IEventsClient Events
         {
-            get
-            {
-                return mClient.GetEventsClient();
-            }
+            get { return mClient.GetEventsClient(); }
         }
 
         /// <summary>Gets the video client object.</summary>
         /// <value>The video client.</value>
         public IVideoClient Video
         {
-            get
-            {
-                return mClient.GetVideoClient();
-            }
+            get { return mClient.GetVideoClient(); }
         }
 
         /// <summary>
@@ -210,10 +176,7 @@ namespace GooglePlayGames
         /// </returns>
         public ILocalUser localUser
         {
-            get
-            {
-                return mLocalUser;
-            }
+            get { return mLocalUser; }
         }
 
         /// <summary>
@@ -225,14 +188,14 @@ namespace GooglePlayGames
         /// <param name="configuration">Configuration to use when initializing.</param>
         public static void InitializeInstance(PlayGamesClientConfiguration configuration)
         {
-            if (sInstance != null)
+            if (sInstance == null || sInstance.mConfiguration != configuration)
             {
-                GooglePlayGames.OurUtils.Logger.w(
-                    "PlayGamesPlatform already initialized. Ignoring this call.");
+                sInstance = new PlayGamesPlatform(configuration);
                 return;
             }
 
-            sInstance = new PlayGamesPlatform(configuration);
+            GooglePlayGames.OurUtils.Logger.w(
+                "PlayGamesPlatform already initialized. Ignoring this call.");
         }
 
         /// <summary>
@@ -294,23 +257,14 @@ namespace GooglePlayGames
             return PlayGamesPlatform.Instance;
         }
 
-        /// <summary>Gets pointer to the Google API client.</summary>
-        /// <remarks>This is provided as a helper to making additional JNI calls.
-        /// This connection is initialized and controlled by the underlying SDK.
-        /// </remarks>
-        /// <returns>The pointer of the client.  Zero on non-android platforms.</returns>
-        public IntPtr GetApiClient()
-        {
-            return mClient.GetApiClient();
-        }
-
         /// <summary>
         /// Sets the gravity for popups (Android only).
         /// </summary>
         /// <remarks>This can only be called after authentication.  It affects
         /// popups for achievements and other game services elements.</remarks>
         /// <param name="gravity">Gravity for the popup.</param>
-        public void SetGravityForPopups(Gravity gravity) {
+        public void SetGravityForPopups(Gravity gravity)
+        {
             mClient.SetGravityForPopups(gravity);
         }
 
@@ -408,6 +362,37 @@ namespace GooglePlayGames
         /// </param>
         public void Authenticate(Action<bool, string> callback, bool silent)
         {
+            Authenticate(silent ? SignInInteractivity.NoPrompt : SignInInteractivity.CanPromptAlways, status =>
+            {
+                if (status == SignInStatus.Success)
+                {
+                    callback(true, "Authentication succeeded");
+                }
+                else if (status == SignInStatus.Canceled)
+                {
+                    callback(false, "Authentication canceled");
+                    GooglePlayGames.OurUtils.Logger.d("Authentication canceled");
+                }
+                else if (status == SignInStatus.DeveloperError)
+                {
+                    callback(false, "Authentication failed - developer error");
+                    GooglePlayGames.OurUtils.Logger.d("Authentication failed - developer error");
+                }
+                else
+                {
+                    callback(false, "Authentication failed");
+                    GooglePlayGames.OurUtils.Logger.d("Authentication failed");
+                }
+            });
+        }
+
+        /// <summary>
+        /// Authenticate the local user with the Google Play Games service.
+        /// </summary>
+        /// <param name="callback">The callback to call when authentication finishes.</param>
+        /// <param name="signInInteractivity"><see cref="SignInInteractivity"/></param>
+        public void Authenticate(SignInInteractivity signInInteractivity, Action<SignInStatus> callback)
+        {
             // make a platform-specific Play Games client
             if (mClient == null)
             {
@@ -417,8 +402,94 @@ namespace GooglePlayGames
                 mClient.OnAuthenticatedProxy += OnAuthenticated;
             }
 
-            // authenticate!
-            mClient.Authenticate(callback, silent);
+            if (callback == null)
+            {
+                callback = status => { };
+            }
+
+            switch (signInInteractivity)
+            {
+                case SignInInteractivity.NoPrompt:
+                    mClient.Authenticate( /* silent= */ true, code =>
+                    {
+                        // SignInStatus.UiSignInRequired is returned when silent sign in fails or when there is no
+                        // internet connection.
+                        if (code == SignInStatus.UiSignInRequired &&
+                            Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            callback(SignInStatus.NetworkError);
+                        }
+                        else
+                        {
+                            callback(code);
+                        }
+                    });
+                    break;
+
+                case SignInInteractivity.CanPromptAlways:
+                    mClient.Authenticate( /* silent= */ false, code =>
+                    {
+                        // SignInStatus.Canceled is returned when interactive sign in fails or when there is no internet connection.
+                        if (code == SignInStatus.Canceled &&
+                            Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            callback(SignInStatus.NetworkError);
+                        }
+                        else
+                        {
+                            callback(code);
+                        }
+                    });
+                    break;
+
+                case SignInInteractivity.CanPromptOnce:
+
+                    // 1. Silent sign in first
+                    mClient.Authenticate( /* silent= */ true, silentSignInResultCode =>
+                    {
+                        if (silentSignInResultCode == SignInStatus.Success)
+                        {
+                            OurUtils.Logger.d("Successful, triggering callback");
+                            callback(silentSignInResultCode);
+                            return;
+                        }
+
+                        // 2. Check the shared pref and bail out if it's true.
+                        if (!SignInHelper.ShouldPromptUiSignIn())
+                        {
+                            OurUtils.Logger.d(
+                                "User cancelled sign in attempt in the previous attempt. Triggering callback with silentSignInResultCode");
+                            callback(silentSignInResultCode);
+                            return;
+                        }
+
+                        // 3. Check internet connection
+                        if (Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            OurUtils.Logger.d("No internet connection");
+                            callback(SignInStatus.NetworkError);
+                            return;
+                        }
+
+                        // 4. Interactive sign in
+                        mClient.Authenticate( /* silent= */ false, interactiveSignInResultCode =>
+                        {
+                            // 5. Save that the user has cancelled the interactive sign in.
+                            if (interactiveSignInResultCode == SignInStatus.Canceled)
+                            {
+                                OurUtils.Logger.d("Cancelled, saving this to a shared pref");
+                                SignInHelper.SetPromptUiSignIn(false);
+                            }
+
+                            callback(interactiveSignInResultCode);
+                        });
+                    });
+                    break;
+
+                default:
+                    PlayGamesHelperObject.RunOnGameThread(() => callback(SignInStatus.Failed));
+                    break;
+            }
         }
 
         /// <summary>
@@ -514,6 +585,7 @@ namespace GooglePlayGames
             {
                 return mClient.GetIdToken();
             }
+
             OurUtils.Logger.e("No client available, returning null.");
             return null;
         }
@@ -533,6 +605,7 @@ namespace GooglePlayGames
             {
                 return mClient.GetServerAuthCode();
             }
+
             return null;
         }
 
@@ -549,21 +622,26 @@ namespace GooglePlayGames
         /// <param name="callback">Callback returning the auth code or null
         /// if there was an error.  NOTE: This callback can return immediately.</param>
         public void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded,
-                                             Action<string> callback)
+            Action<string> callback)
         {
-            if(mClient != null && mClient.IsAuthenticated()) {
+            if (mClient != null && mClient.IsAuthenticated())
+            {
                 mClient.GetAnotherServerAuthCode(reAuthenticateIfNeeded, callback);
             }
             else if (mClient != null && reAuthenticateIfNeeded)
             {
-                mClient.Authenticate((success, msg) => {
-                        if (success) {
-                            callback(mClient.GetServerAuthCode());
-                        } else {
-                            OurUtils.Logger.e("Re-authentication failed: " + msg);
-                            callback(null);
-                        }
-                }, false);
+                mClient.Authenticate(false, (status) =>
+                {
+                    if (status == SignInStatus.Success)
+                    {
+                        callback(mClient.GetServerAuthCode());
+                    }
+                    else
+                    {
+                        OurUtils.Logger.e("Re-authentication failed: " + status);
+                        callback(null);
+                    }
+                });
             }
             else
             {
@@ -691,12 +769,6 @@ namespace GooglePlayGames
 
             mClient.LoadAchievements(ach =>
             {
-                if (ach == null) 
-                {
-                    GooglePlayGames.OurUtils.Logger.e("Unable to load achievements");
-                    callback.Invoke(false);
-                    return;
-                }
                 for (int i = 0; i < ach.Length; i++)
                 {
                     if (ach[i].Id == achievementID)
@@ -704,9 +776,9 @@ namespace GooglePlayGames
                         if (ach[i].IsIncremental)
                         {
                             GooglePlayGames.OurUtils.Logger.d("Progress " + progress +
-                                " interpreted as incremental target (approximate).");
+                                                              " interpreted as incremental target (approximate).");
 
-                            int targetSteps = (int)Math.Round((progress / 100f) * ach[i].TotalSteps);
+                            int targetSteps = (int) Math.Round((progress / 100f) * ach[i].TotalSteps);
                             mClient.SetStepsAtLeast(achievementID, targetSteps, callback);
                         }
                         else
@@ -720,10 +792,12 @@ namespace GooglePlayGames
                             else
                             {
                                 // not enough to unlock
-                                GooglePlayGames.OurUtils.Logger.d("Progress " + progress + " not enough to unlock non-incremental achievement.");
+                                GooglePlayGames.OurUtils.Logger.d(
+                                    "Progress " + progress + " not enough to unlock non-incremental achievement.");
                                 callback.Invoke(false);
                             }
                         }
+
                         return;
                     }
                 }
@@ -904,6 +978,7 @@ namespace GooglePlayGames
                 {
                     callback.Invoke(null);
                 }
+
                 return;
             }
 
@@ -1013,8 +1088,8 @@ namespace GooglePlayGames
             }
 
             GooglePlayGames.OurUtils.Logger.d("ReportScore: score=" + score +
-                ", board=" + board +
-                " metadata=" + metadata);
+                                              ", board=" + board +
+                                              " metadata=" + metadata);
             string leaderboardId = MapId(board);
             mClient.SubmitScore(leaderboardId, score, metadata, callback);
         }
@@ -1042,7 +1117,9 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Loads the scores using the provided parameters.
+        /// Loads the scores using the provided parameters. This call may fail when trying to load friends with
+        /// ResponseCode.ResolutionRequired if the user has not share the friends list with the game. In this case, use
+        /// AskForLoadFriendsResolution to request access.
         /// </summary>
         /// <param name="leaderboardId">Leaderboard identifier.</param>
         /// <param name="start">Start either top scores, or player centered.</param>
@@ -1077,7 +1154,9 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Loads more scores.
+        /// Loads more scores. This call may fail when trying to load friends with
+        /// ResponseCode.ResolutionRequired if the user has not share the friends list with the game. In this case, use
+        /// AskForLoadFriendsResolution to request access.
         /// </summary>
         /// <remarks>This is used to load the next "page" of scores. </remarks>
         /// <param name="token">Token used to recording the loading.</param>
@@ -1093,8 +1172,8 @@ namespace GooglePlayGames
                 GooglePlayGames.OurUtils.Logger.e("LoadMoreScores can only be called after authentication.");
                 callback(
                     new LeaderboardScoreData(
-                    token.LeaderboardId,
-                    ResponseStatus.NotAuthorized));
+                        token.LeaderboardId,
+                        ResponseStatus.NotAuthorized));
                 return;
             }
 
@@ -1201,11 +1280,12 @@ namespace GooglePlayGames
                 {
                     callback(UIStatus.NotAuthorized);
                 }
+
                 return;
             }
 
             GooglePlayGames.OurUtils.Logger.d("ShowLeaderboardUI, lbId=" +
-                leaderboardId + " callback is " + callback);
+                                              leaderboardId + " callback is " + callback);
             mClient.ShowLeaderboardUI(leaderboardId, span, callback);
         }
 
@@ -1293,9 +1373,9 @@ namespace GooglePlayGames
                     break;
             }
 
-            ((PlayGamesLeaderboard)board).loading = true;
+            ((PlayGamesLeaderboard) board).loading = true;
             GooglePlayGames.OurUtils.Logger.d("LoadScores, board=" + board +
-                " callback is " + callback);
+                                              " callback is " + callback);
             mClient.LoadScores(
                 board.id,
                 LeaderboardStart.PlayerCentered,
@@ -1303,7 +1383,54 @@ namespace GooglePlayGames
                 board.userScope == UserScope.FriendsOnly ? LeaderboardCollection.Social : LeaderboardCollection.Public,
                 timeSpan,
                 (scoreData) => HandleLoadingScores(
-                    (PlayGamesLeaderboard)board, scoreData, callback));
+                    (PlayGamesLeaderboard) board, scoreData, callback));
+        }
+
+        /// <summary>Asks user to give permissions for the given scopes.</summary>
+        /// <param name="scopes">Scope to ask permission for</param>
+        /// <param name="callback">Callback used to indicate the outcome of the operation.</param>
+        public void RequestPermission(string scope, Action<SignInStatus> callback)
+        {
+            RequestPermissions(new string[] {scope}, callback);
+        }
+
+        /// <summary>Asks user to give permissions for the given scopes.</summary>
+        /// <param name="scopes">List of scopes to ask permission for</param>
+        /// <param name="callback">Callback used to indicate the outcome of the operation.</param>
+        public void RequestPermissions(string[] scopes, Action<SignInStatus> callback)
+        {
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "HasPermissions can only be called after authentication.");
+                callback(SignInStatus.NotAuthenticated);
+                return;
+            }
+
+            mClient.RequestPermissions(scopes, callback);
+        }
+
+        /// <summary>Returns whether or not user has given permissions for given scopes.</summary>
+        /// <param name="scope">scope</param>
+        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
+        public bool HasPermission(string scope)
+        {
+            return HasPermissions(new string[] {scope});
+        }
+
+        /// <summary>Returns whether or not user has given permissions for given scopes.</summary>
+        /// <param name="scopes">array of scopes</param>
+        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
+        public bool HasPermissions(string[] scopes)
+        {
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "HasPermissions can only be called after authentication.");
+                return false;
+            }
+
+            return mClient.HasPermissions(scopes);
         }
 
         /// <summary>
@@ -1317,13 +1444,141 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Register an invitation delegate to be
-        /// notified when a multiplayer invitation arrives
+        /// Shows the Player Profile UI for the given user identifier.
         /// </summary>
-        /// <param name="deleg">The delegate to register</param>
-        public void RegisterInvitationDelegate(InvitationReceivedDelegate deleg)
+        /// <param name="userId">User Identifier.</param>
+        /// <param name="otherPlayerInGameName">
+        /// The game's own display name of the player referred to by userId.
+        /// </param>
+        /// <param name="currentPlayerInGameName">
+        /// The game's own display name of the current player.
+        /// </param>
+        /// <param name="callback">Callback invoked upon completion.</param>
+        public void ShowCompareProfileWithAlternativeNameHintsUI(string userId,
+            string otherPlayerInGameName,
+            string currentPlayerInGameName,
+            Action<UIStatus> callback)
         {
-            mClient.RegisterInvitationDelegate(deleg);
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "ShowCompareProfileWithAlternativeNameHintsUI can only be called after authentication.");
+                InvokeCallbackOnGameThread(callback, UIStatus.NotAuthorized);
+
+                return;
+            }
+
+            GooglePlayGames.OurUtils.Logger.d(
+                "ShowCompareProfileWithAlternativeNameHintsUI, userId=" + userId + " callback is " +
+                callback);
+            mClient.ShowCompareProfileWithAlternativeNameHintsUI(userId, otherPlayerInGameName,
+                currentPlayerInGameName, callback);
+        }
+
+        /// <summary>
+        /// Returns if the user has allowed permission for the game to access the friends list.
+        /// </summary>
+        /// <param name="forceReload">If true, this call will clear any locally cached data and
+        /// attempt to fetch the latest data from the server. Normally, this should be set to {@code
+        /// false} to gain advantages of data caching.</param>
+        /// <param name="callback">Callback invoked upon completion.</param>
+        public void GetFriendsListVisibility(bool forceReload,
+            Action<FriendsListVisibilityStatus> callback)
+        {
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "GetFriendsListVisibility can only be called after authentication.");
+                InvokeCallbackOnGameThread(callback, FriendsListVisibilityStatus.NotAuthorized);
+                return;
+            }
+
+            GooglePlayGames.OurUtils.Logger.d("GetFriendsListVisibility, callback is " + callback);
+            mClient.GetFriendsListVisibility(forceReload, callback);
+        }
+
+        /// <summary>
+        /// Shows the appropriate platform-specific friends sharing UI.
+        /// <param name="callback">The callback to invoke when complete. If null,
+        /// no callback is called. </param>
+        /// </summary>
+        public void AskForLoadFriendsResolution(Action<UIStatus> callback)
+        {
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "AskForLoadFriendsResolution can only be called after authentication.");
+                InvokeCallbackOnGameThread(callback, UIStatus.NotAuthorized);
+                return;
+            }
+
+            GooglePlayGames.OurUtils.Logger.d("AskForLoadFriendsResolution callback is " + callback);
+            mClient.AskForLoadFriendsResolution(callback);
+        }
+
+        /// <summary>
+        /// Gets status of the last call to load friends.
+        /// </summary>
+        public LoadFriendsStatus GetLastLoadFriendsStatus()
+        {
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "GetLastLoadFriendsStatus can only be called after authentication.");
+                return LoadFriendsStatus.NotAuthorized;
+            }
+
+            return mClient.GetLastLoadFriendsStatus();
+        }
+
+        /// <summary>
+        /// Loads the first page of the user's friends
+        /// </summary>
+        /// <param name="pageSize">
+        /// The number of entries to request for this initial page. Note that if cached
+        /// data already exists, the returned buffer may contain more than this size, but it is
+        /// guaranteed to contain at least this many if the collection contains enough records.
+        /// </param>
+        /// <param name="forceReload">
+        /// If true, this call will clear any locally cached data and attempt to
+        /// fetch the latest data from the server. This would commonly be used for something like a
+        /// user-initiated refresh. Normally, this should be set to {@code false} to gain advantages
+        /// of data caching.</param> <param name="callback">Callback invoked upon
+        /// completion.</param>
+        public void LoadFriends(int pageSize, bool forceReload,
+            Action<LoadFriendsStatus> callback)
+        {
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "LoadFriends can only be called after authentication.");
+                InvokeCallbackOnGameThread(callback, LoadFriendsStatus.NotAuthorized);
+                return;
+            }
+
+            mClient.LoadFriends(pageSize, forceReload, callback);
+        }
+
+        /// <summary>
+        /// Loads the friends list page
+        /// </summary>
+        /// <param name="pageSize">
+        /// The number of entries to request for this initial page. Note that if cached
+        /// data already exists, the returned buffer may contain more than this size, but it is
+        /// guaranteed to contain at least this many if the collection contains enough records.
+        /// </param>
+        /// <param name="callback"></param>
+        public void LoadMoreFriends(int pageSize, Action<LoadFriendsStatus> callback)
+        {
+            if (!IsAuthenticated())
+            {
+                GooglePlayGames.OurUtils.Logger.e(
+                    "LoadMoreFriends can only be called after authentication.");
+                InvokeCallbackOnGameThread(callback, LoadFriendsStatus.NotAuthorized);
+                return;
+            }
+
+            mClient.LoadMoreFriends(pageSize, callback);
         }
 
         /// <summary>
@@ -1347,7 +1602,7 @@ namespace GooglePlayGames
                     scoreData.NextPageToken,
                     rowCount,
                     (nextScoreData) =>
-                    HandleLoadingScores(board, nextScoreData, callback));
+                        HandleLoadingScores(board, nextScoreData, callback));
             }
             else
             {
@@ -1396,13 +1651,21 @@ namespace GooglePlayGames
             return id;
         }
 
+        private static void InvokeCallbackOnGameThread<T>(Action<T> callback, T data)
+        {
+            if (callback == null)
+            {
+                return;
+            }
+
+            PlayGamesHelperObject.RunOnGameThread(() => { callback(data); });
+        }
+
         private static Action<T> ToOnGameThread<T>(Action<T> toConvert)
         {
             if (toConvert == null)
             {
-                return delegate
-                {
-                };
+                return delegate { };
             }
 
             return (val) => PlayGamesHelperObject.RunOnGameThread(() => toConvert(val));

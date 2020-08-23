@@ -13,13 +13,14 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #if UNITY_ANDROID
 
 namespace GooglePlayGames.BasicApi
 {
-    using GooglePlayGames.BasicApi.Multiplayer;
     using GooglePlayGames.OurUtils;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Provides configuration for <see cref="PlayGamesPlatform"/>. If you wish to use either Saved
@@ -34,7 +35,8 @@ namespace GooglePlayGames.BasicApi
         /// </summary>
         public static readonly PlayGamesClientConfiguration DefaultConfiguration =
             new Builder()
-           .Build();
+                .Build();
+
         /// <summary>
         /// Flag indicating to enable saved games API.
         /// </summary>
@@ -76,24 +78,12 @@ namespace GooglePlayGames.BasicApi
         private readonly string mAccountName;
 
         /// <summary>
-        /// The invitation delegate.
-        /// </summary>
-        private readonly InvitationReceivedDelegate mInvitationDelegate;
-
-        /// <summary>
-        /// The match delegate.
-        /// </summary>
-        private readonly MatchDelegate mMatchDelegate;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GooglePlayGames.BasicApi.PlayGamesClientConfiguration"/> struct.
         /// </summary>
         /// <param name="builder">Builder for this configuration.</param>
         private PlayGamesClientConfiguration(Builder builder)
         {
             this.mEnableSavedGames = builder.HasEnableSaveGames();
-            this.mInvitationDelegate = builder.GetInvitationDelegate();
-            this.mMatchDelegate = builder.GetMatchDelegate();
             this.mScopes = builder.getScopes();
             this.mHidePopups = builder.IsHidingPopups();
             this.mRequestAuthCode = builder.IsRequestingAuthCode();
@@ -110,58 +100,37 @@ namespace GooglePlayGames.BasicApi
         /// <value><c>true</c> if enable saved games; otherwise, <c>false</c>.</value>
         public bool EnableSavedGames
         {
-            get
-            {
-                return mEnableSavedGames;
-            }
+            get { return mEnableSavedGames; }
         }
 
         public bool IsHidingPopups
         {
-            get
-            {
-                return mHidePopups;
-            }
+            get { return mHidePopups; }
         }
 
         public bool IsRequestingAuthCode
         {
-            get
-            {
-                return mRequestAuthCode;
-            }
+            get { return mRequestAuthCode; }
         }
 
         public bool IsForcingRefresh
         {
-            get
-            {
-                return mForceRefresh;
-            }
+            get { return mForceRefresh; }
         }
 
         public bool IsRequestingEmail
         {
-            get
-            {
-                return mRequestEmail;
-            }
+            get { return mRequestEmail; }
         }
 
         public bool IsRequestingIdToken
         {
-            get
-            {
-                return mRequestIdToken;
-            }
+            get { return mRequestIdToken; }
         }
 
         public string AccountName
         {
-            get
-            {
-                return mAccountName;
-            }
+            get { return mAccountName; }
         }
 
         /// <summary>
@@ -170,34 +139,28 @@ namespace GooglePlayGames.BasicApi
         /// <value>String array of scopes.</value>
         public string[] Scopes
         {
-            get
-            {
-                return mScopes;
-            }
+            get { return mScopes; }
         }
 
-        /// <summary>
-        /// Gets the invitation delegate.
-        /// </summary>
-        /// <value>The invitation delegate.</value>
-        public InvitationReceivedDelegate InvitationDelegate
+        public static bool operator ==(PlayGamesClientConfiguration c1, PlayGamesClientConfiguration c2)
         {
-            get
+            if (c1.EnableSavedGames != c2.EnableSavedGames ||
+                c1.IsForcingRefresh != c2.IsForcingRefresh ||
+                c1.IsHidingPopups != c2.IsHidingPopups ||
+                c1.IsRequestingEmail != c2.IsRequestingEmail ||
+                c1.IsRequestingAuthCode != c2.IsRequestingAuthCode ||
+                !c1.Scopes.SequenceEqual(c2.Scopes) ||
+                c1.AccountName != c2.AccountName)
             {
-                return mInvitationDelegate;
+                return false;
             }
+
+            return true;
         }
 
-        /// <summary>
-        /// Gets the match delegate.
-        /// </summary>
-        /// <value>The match delegate.</value>
-        public MatchDelegate MatchDelegate
+        public static bool operator !=(PlayGamesClientConfiguration c1, PlayGamesClientConfiguration c2)
         {
-            get
-            {
-                return mMatchDelegate;
-            }
+            return !(c1 == c2);
         }
 
         /// <summary>
@@ -249,20 +212,6 @@ namespace GooglePlayGames.BasicApi
             private string mAccountName = null;
 
             /// <summary>
-            /// The invitation delegate.  Default is a no-op;
-            /// </summary>
-            private InvitationReceivedDelegate mInvitationDelegate = delegate
-            {
-            };
-
-            /// <summary>
-            /// The match delegate.  Default is a no-op.
-            /// </summary>
-            private MatchDelegate mMatchDelegate = delegate
-            {
-            };
-
-            /// <summary>
             /// Enables the saved games.
             /// </summary>
             /// <returns>The builder.</returns>
@@ -284,9 +233,9 @@ namespace GooglePlayGames.BasicApi
 
             public Builder RequestServerAuthCode(bool forceRefresh)
             {
-              mRequestAuthCode = true;
-              mForceRefresh = forceRefresh;
-              return this;
+                mRequestAuthCode = true;
+                mForceRefresh = forceRefresh;
+                return this;
             }
 
             public Builder RequestEmail()
@@ -322,30 +271,6 @@ namespace GooglePlayGames.BasicApi
             {
                 if (mScopes == null) mScopes = new List<string>();
                 mScopes.Add(scope);
-                return this;
-            }
-
-            /// <summary>
-            /// Adds the invitation delegate.  This is called when an invitation
-            /// is received.
-            /// </summary>
-            /// <returns>The builder</returns>
-            /// <param name="invitationDelegate">Invitation delegate.</param>
-            public Builder WithInvitationDelegate(InvitationReceivedDelegate invitationDelegate)
-            {
-                this.mInvitationDelegate = Misc.CheckNotNull(invitationDelegate);
-                return this;
-            }
-
-            /// <summary>
-            /// Adds the match delegate.  This is called when a match notification
-            /// is received.
-            /// </summary>
-            /// <returns>The builder.</returns>
-            /// <param name="matchDelegate">Match delegate.</param>
-            public Builder WithMatchDelegate(MatchDelegate matchDelegate)
-            {
-                this.mMatchDelegate = Misc.CheckNotNull(matchDelegate);
                 return this;
             }
 
@@ -401,28 +326,31 @@ namespace GooglePlayGames.BasicApi
             /// Gets the Oauth scopes to be requested from the user.
             /// </summary>
             /// <returns>String array of scopes.</returns>
-            internal string[] getScopes() {
-                return mScopes == null? new string[0] : mScopes.ToArray();
-            }
-
-            /// <summary>
-            /// Gets the match delegate.
-            /// </summary>
-            /// <returns>The match delegate.</returns>
-            internal MatchDelegate GetMatchDelegate()
+            internal string[] getScopes()
             {
-                return mMatchDelegate;
+                return mScopes == null ? new string[0] : mScopes.ToArray();
             }
+        }
 
-            /// <summary>
-            /// Gets the invitation delegate.
-            /// </summary>
-            /// <returns>The invitation delegate.</returns>
-            internal InvitationReceivedDelegate GetInvitationDelegate()
+        public override int GetHashCode()
+        {
+            unchecked
             {
-                return mInvitationDelegate;
+                int hash = 17;
+                hash = hash * 31 + EnableSavedGames.GetHashCode();
+                hash = hash * 31 + IsForcingRefresh.GetHashCode();
+                hash = hash * 31 + IsHidingPopups.GetHashCode();
+                hash = hash * 31 + IsRequestingEmail.GetHashCode();
+                hash = hash * 31 + IsRequestingAuthCode.GetHashCode();
+                hash = hash * 31 + Scopes.GetHashCode();
+                hash = hash * 31 + AccountName.GetHashCode();
+                return hash;
             }
+        }
 
+        public override bool Equals(object obj)
+        {
+            return this == (PlayGamesClientConfiguration) obj;
         }
     }
 }
