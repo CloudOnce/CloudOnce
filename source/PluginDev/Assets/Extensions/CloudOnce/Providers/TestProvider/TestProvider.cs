@@ -232,6 +232,9 @@ namespace CloudOnce.Internal.Providers
             {
                 var randomId = Random.Range(1, 99999);
                 id = string.Format("{0:D5}", randomId);
+#if UNITY_2020_1_OR_NEWER
+                gameId = id;
+#endif
                 userName = "User" + id;
                 isFriend = Random.Range(0, 2) == 1;
                 state = (UserState)Random.Range(0, 5);
@@ -251,6 +254,15 @@ namespace CloudOnce.Internal.Providers
             /// </para>
             /// </summary>
             public string id { get; private set; }
+
+#if UNITY_2020_1_OR_NEWER
+            /// <summary>
+            /// <para>
+            /// This user's unique identifier.
+            /// </para>
+            /// </summary>
+            public string gameId { get; private set; }
+#endif
 
             /// <summary>
             /// <para>
