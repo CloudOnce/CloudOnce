@@ -13,10 +13,17 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+
 #if UNITY_ANDROID
 
 namespace GooglePlayGames.BasicApi
 {
+    public enum ScorePageDirection
+    {
+        Forward = 1,
+        Backward = 2,
+    }
+
     /// <summary>
     /// Score page token. This holds the internal token used
     /// to page through the score pages.  The id, collection, and
@@ -25,51 +32,46 @@ namespace GooglePlayGames.BasicApi
     /// </summary>
     public class ScorePageToken
     {
-
         private string mId;
         private object mInternalObject;
         private LeaderboardCollection mCollection;
         private LeaderboardTimeSpan mTimespan;
+        private ScorePageDirection mDirection;
 
         internal ScorePageToken(object internalObject, string id,
-            LeaderboardCollection collection, LeaderboardTimeSpan timespan)
+            LeaderboardCollection collection, LeaderboardTimeSpan timespan,
+            ScorePageDirection direction)
         {
             mInternalObject = internalObject;
             mId = id;
             mCollection = collection;
             mTimespan = timespan;
+            mDirection = direction;
         }
 
         public LeaderboardCollection Collection
         {
-            get
-            {
-                return mCollection;
-            }
+            get { return mCollection; }
         }
 
         public LeaderboardTimeSpan TimeSpan
         {
-            get
-            {
-                return mTimespan;
-            }
+            get { return mTimespan; }
+        }
+
+        public ScorePageDirection Direction
+        {
+            get { return mDirection; }
         }
 
         public string LeaderboardId
         {
-            get
-            {
-                return mId;
-            }
+            get { return mId; }
         }
 
         internal object InternalObject
         {
-            get
-            {
-                return mInternalObject;
-            }
+            get { return mInternalObject; }
         }
     }
 }

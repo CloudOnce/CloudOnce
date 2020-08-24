@@ -10,6 +10,10 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.7.0
+- Updated GPGS from v0.9.64 to v0.10.10
+- Updated EDM4U from v1.2.111 to v1.2.157
+
 Version 2.6.8
 - Updated GPGS plugin from v0.9.63 to v0.9.64
 - Updated Play Services Resolver from v1.2.104 to v1.2.111

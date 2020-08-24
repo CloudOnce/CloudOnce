@@ -74,9 +74,14 @@ namespace CloudOnce.QuickStart
 
         private void OnDestroy()
         {
+            if (CachedButton != null)
+            {
+                CachedButton.onClick.RemoveListener(OnButtonClicked);
+            }
+
             Cloud.OnSignedInChanged -= UpdateButtonText;
         }
 
-        #endregion /Private methods
+#endregion /Private methods
     }
 }

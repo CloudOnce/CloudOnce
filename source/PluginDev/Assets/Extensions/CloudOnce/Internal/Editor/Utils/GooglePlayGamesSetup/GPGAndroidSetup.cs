@@ -22,6 +22,7 @@ namespace CloudOnce.Internal.Editor.Utils
 {
 #if UNITY_ANDROID
     using GooglePlayGames;
+    using GooglePlayServices;
 #endif
     using UnityEditor;
 
@@ -71,10 +72,9 @@ namespace CloudOnce.Internal.Editor.Utils
             Google.VersionHandler.UpdateVersionedAssets(true);
             Google.VersionHandler.Enabled = true;
             AssetDatabase.Refresh();
-            Google.VersionHandler.InvokeStaticMethod(
-                Google.VersionHandler.FindClass("Google.JarResolver", "GooglePlayServices.PlayServicesResolver"),
-                "MenuResolve",
-                null);
+#if UNITY_ANDROID
+            PlayServicesResolver.MenuResolve();
+#endif
 
             // refresh assets, and we're done
             AssetDatabase.Refresh();
