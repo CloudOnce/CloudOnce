@@ -778,8 +778,7 @@ namespace GooglePlayGames
                             GooglePlayGames.OurUtils.Logger.d("Progress " + progress +
                                                               " interpreted as incremental target (approximate).");
 
-                            int targetSteps = (int) Math.Round((progress / 100f) * ach[i].TotalSteps);
-                            mClient.SetStepsAtLeast(achievementID, targetSteps, callback);
+                            mClient.SetStepsAtLeast(achievementID, progressToSteps(progress, ach[i].TotalSteps), callback);
                         }
                         else
                         {
@@ -806,6 +805,10 @@ namespace GooglePlayGames
                 GooglePlayGames.OurUtils.Logger.e("Unable to locate achievement " + achievementID);
                 callback.Invoke(false);
             });
+        }
+
+        internal static int progressToSteps(double progress, int totalSteps) {
+            return (progress >= 100.0) ? totalSteps : (int) (progress * totalSteps / 100.0);
         }
 
         /// <summary>
@@ -1247,7 +1250,7 @@ namespace GooglePlayGames
                 leaderboardId = MapId(leaderboardId);
             }
 
-            mClient.ShowLeaderboardUI(leaderboardId, LeaderboardTimeSpan.AllTime, null);
+            ShowLeaderboardUI(leaderboardId, LeaderboardTimeSpan.AllTime, null);
         }
 
         /// <summary>
