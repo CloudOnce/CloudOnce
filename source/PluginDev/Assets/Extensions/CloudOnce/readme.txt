@@ -10,6 +10,10 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.7.2
+- Updated GPGS from v0.10.10 to v0.10.12
+- Updated EDM4U from v1.2.157 to v1.2.162
+
 Version 2.7.1
 - Updated IUserProfile implementation for Unity 2020.1
 
