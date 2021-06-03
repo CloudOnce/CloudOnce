@@ -418,7 +418,7 @@ namespace CloudOnce.Internal.Providers
             using (var request = UnityWebRequestTexture.GetTexture(url))
             {
                 yield return request.SendWebRequest();
-                if (request.isNetworkError || request.isHttpError)
+                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
                 {
                     yield break;
                 }
