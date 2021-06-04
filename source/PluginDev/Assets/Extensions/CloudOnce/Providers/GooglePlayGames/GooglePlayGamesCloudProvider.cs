@@ -414,11 +414,15 @@ namespace CloudOnce.Internal.Providers
 
         private IEnumerator DownloadPlayerImage(string url)
         {
-#if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             using (var request = UnityWebRequestTexture.GetTexture(url))
             {
                 yield return request.SendWebRequest();
+#if UNITY_2020_1_OR_NEWER
+                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+#else
                 if (request.isNetworkError || request.isHttpError)
+#endif
                 {
                     yield break;
                 }
