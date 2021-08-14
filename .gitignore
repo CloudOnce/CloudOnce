@@ -9,8 +9,12 @@ source/PluginDev/obj/
 AssetStoreTools.meta
 AssetStoreTools/
 Library/
+source/PluginDev/.vsconfig
 source/PluginDev/ProjectSettings/
 Temp/
+Logs/
+Packages/
+UserSettings/
 
 # External Dependency Manager for Unity
 ExternalDependencyManager/
