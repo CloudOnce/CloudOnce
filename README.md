@@ -19,9 +19,9 @@ Because CloudOnce includes EDM4U, building a new unitypackage needs to be done f
 **Windows example:**
 1. Download the latest [EDM4U](https://github.com/googlesamples/unity-jar-resolver) unitypackage
 2. Open cmd
-3. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -upgrader_disable -projectPath "C:\GitHub\CloudOnce\source\PluginDev" -exportPackage Assets/Extensions Assets/Plugins "C:\GitHub\CloudOnce\build\source.unitypackage" -quit`
-4. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -upgrader_disable -gvh_disable -createProject ./CloudOnce -importPackage "C:\GitHub\CloudOnce\build\external-dependency-manager-1.2.157.unitypackage" -quit`
-5. Enter `"C:\Program Files\Unity531\Editor\Unity.exe" -batchmode -upgrader_disable -gvh_disable -projectPath "C:\GitHub\CloudOnce\build\CloudOnce" -importPackage "C:\GitHub\CloudOnce\build\source.unitypackage" -exportPackage Assets "C:\GitHub\CloudOnce\current-build\CloudOnce-v2.6.8.unitypackage" -quit`
+3. Enter `"C:\Program Files\2017.4.1f1\Editor\Unity.exe" -batchmode -upgrader_disable -projectPath "C:\GitHub\CloudOnce\source\PluginDev" -exportPackage Assets/Extensions Assets/Plugins "C:\GitHub\CloudOnce\build\source.unitypackage" -quit`
+4. Enter `"C:\Program Files\2017.4.1f1\Editor\Unity.exe" -batchmode -upgrader_disable -gvh_disable -createProject ./CloudOnce -importPackage "C:\GitHub\CloudOnce\build\external-dependency-manager-1.2.167.unitypackage" -quit`
+5. Enter `"C:\Program Files\2017.4.1f1\Editor\Unity.exe" -batchmode -upgrader_disable -gvh_disable -projectPath "C:\GitHub\CloudOnce\build\CloudOnce" -importPackage "C:\GitHub\CloudOnce\build\source.unitypackage" -exportPackage Assets "C:\GitHub\CloudOnce\current-build\CloudOnce-v2.7.4.unitypackage" -quit`
 
 ## History
 This plug-in was originally developed for internal use by Trollpants Game Studio. [Sindri Jóelsson](http://github.com/sindrijo) wrote most of the original code, and [Jan Ivar Z. Carlsen](http://github.com/jizc) assisted by writing the implementations for Google Play and iOS.
