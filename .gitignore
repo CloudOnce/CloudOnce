@@ -11,6 +11,7 @@ AssetStoreTools/
 Library/
 source/PluginDev/.vsconfig
 source/PluginDev/ProjectSettings/
+source/PluginDev/UnityPackageManager/manifest.json
 Temp/
 Logs/
 Packages/
