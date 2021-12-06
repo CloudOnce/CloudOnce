@@ -10,6 +10,10 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 2.7.5
+- Updated GPGS from v0.10.13 to v0.10.14
+- Fixed AndroidManifest path
+
 Version 2.7.4
 - Dropped support for Unity 5
 - Updated GPGS from v0.10.12 to v0.10.13
