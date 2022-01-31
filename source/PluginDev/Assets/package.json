@@ -1,0 +1,12 @@
+{
+  "name": "jizc.cloudonce.io",
+  "displayName": "CloudOnce",
+  "version": "2.7.5-upm",
+  "unity": "2018.1",
+  "description": "Unified Game Services API for Unity",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jizc/CloudOnce"
+  },
+  "dependencies": {}
+}

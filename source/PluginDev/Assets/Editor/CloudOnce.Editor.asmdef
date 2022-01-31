@@ -1,0 +1,16 @@
+{
+    "name": "CloudOnce.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d3dcef47223d8b042ae5a05d8131939e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

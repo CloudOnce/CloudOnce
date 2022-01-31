@@ -3,7 +3,13 @@
 # CloudOnce - Unified Game Services API
 CloudOnce is a [Unity](http://unity3d.com/) plug-in that provides a unified game services API for [Google Play Game Services](https://github.com/playgameservices/play-games-plugin-for-unity/) and Apple Game Center (iOS & tvOS). Ease of use is the primary focus for the plug-in, but it also attempts to satisfy the needs of power users.
 
-## Getting Started
+## Getting Started (Unity Package Manager)
+Add to manifest.json
+```
+"jizc.cloudonce.io": "https://github.com/jizc/CloudOnce.git?path=/source/PluginDev/Assets#2.7.5-upm",
+```
+
+## Getting Started (.unitypackage file)
 Download the [latest release](https://github.com/jizc/CloudOnce/releases/latest) and then check out the [Getting Started](http://jizc.github.io/CloudOnce/gettingStarted.html) guide for an overview of available features and how to implement them.
 
 ## API Documentation

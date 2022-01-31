@@ -52,7 +52,7 @@ namespace CloudOnce.Internal.Editor.Utils
         {
             var cloudConfig = ScriptableObject.CreateInstance<CloudConfig>();
             var settingsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsProjectSettings);
-            var assetsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsAssets);
+            var assetsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsCloudOnce);
 
             string settingsJson = null;
             if (File.Exists(settingsPath))
@@ -85,7 +85,7 @@ namespace CloudOnce.Internal.Editor.Utils
         public static void SerializeCloudConfig(CloudConfig cloudConfig, bool onlySettingsFile = false)
         {
             var projectSettingsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsProjectSettings);
-            var assetsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsAssets);
+            var assetsPath = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.SettingsCloudOnce);
             string settingsPath;
             switch (cloudConfig.SettingsLocation)
             {
@@ -155,6 +155,7 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <param name="cloudConfig">The CloudConfig instance to generate the static script from.</param>
         private static void CreateCloudIDsScript(CloudConfig cloudConfig)
         {
+            Directory.CreateDirectory(GPGSUtil.SlashesToPlatformSeparator(cloudIDsPath.Substring(0, cloudIDsPath.LastIndexOf('/'))));
             using (var writer = new StreamWriter(GPGSUtil.SlashesToPlatformSeparator(cloudIDsPath)))
             {
                 string newCloudIDsScript;
@@ -206,6 +207,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
+                Directory.CreateDirectory(GPGSUtil.SlashesToPlatformSeparator(cloudIDsPath.Substring(0, cloudIDsPath.LastIndexOf('/'))));
                 AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(cloudIDsPath));
             }
             catch (Exception)
@@ -254,7 +256,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
                 if (cloudConfig.AchievementIDs.Count > 0)
                 {
-                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
+                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2, 2);
                 }
 
                 builder.AppendLine(allAchievementsTemplate).AppendLine("        {");
@@ -273,6 +275,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
+                Directory.CreateDirectory(GPGSUtil.SlashesToPlatformSeparator(achievementsPath.Substring(0, achievementsPath.LastIndexOf('/'))));
                 AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(achievementsPath));
             }
             catch (Exception)
@@ -326,7 +329,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
                 if (cloudConfig.LeaderboardIDs.Count > 0)
                 {
-                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2 , 2);
+                    dictionaryBuilder.Remove(dictionaryBuilder.Length - 2, 2);
                 }
 
                 newLeaderboardsScript = newLeaderboardsScript.Replace("// LEADERBOARD_IDS", builder.ToString());
@@ -337,6 +340,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
+                Directory.CreateDirectory(GPGSUtil.SlashesToPlatformSeparator(leaderboardsPath.Substring(0, leaderboardsPath.LastIndexOf('/'))));
                 AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(leaderboardsPath));
             }
             catch (Exception)
@@ -421,6 +425,7 @@ namespace CloudOnce.Internal.Editor.Utils
 
             try
             {
+                Directory.CreateDirectory(GPGSUtil.SlashesToPlatformSeparator(cloudVariablesPath.Substring(0, cloudVariablesPath.LastIndexOf('/'))));
                 AssetDatabase.ImportAsset(GPGSUtil.SlashesToPlatformSeparator(cloudVariablesPath));
             }
             catch (Exception)
@@ -475,7 +480,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 case CloudVariableType.UInt:
                 case CloudVariableType.Long:
                 case CloudVariableType.DateTime:
-                return defaultValueString;
+                    return defaultValueString;
                 case CloudVariableType.Float:
                 case CloudVariableType.CurrencyFloat:
                     return defaultValueString + "f";
