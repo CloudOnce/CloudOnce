@@ -17,17 +17,16 @@ namespace CloudOnce.Internal.Editor.Utils
     /// </summary>
     public class AndroidManifestModifier : IXmlNamespaceResolver
     {
-        #region Fields & properties
-
+#region Fields & properties
         private const string androidManifestFileName = "/AndroidManifest.xml";
-        private const string mainAndroidManifestPath = CloudOncePaths.Android + androidManifestFileName;
+        private const string mainAndroidManifestPath = CloudOncePaths.AndroidAssets + androidManifestFileName;
         private const string mainAndroidManifestTemplatePath = CloudOncePaths.Templates + "/AndroidManifestTemplate.xml";
 
         private XDocument manifest;
 
-        #endregion /Fields & properties
+#endregion /Fields & properties
 
-        #region IXmlNamespaceResolver implementation
+#region IXmlNamespaceResolver implementation
 
         /// <summary>
         /// Not implemented. Method required by <see cref="IXmlNamespaceResolver"/>.
@@ -64,9 +63,9 @@ namespace CloudOnce.Internal.Editor.Utils
             throw new NotImplementedException();
         }
 
-        #endregion
+#endregion
 
-        #region Public methods
+#region Public methods
 
         /// <summary>
         /// Will switch out code in the Android manifest to fit a Google Play build.
@@ -76,9 +75,9 @@ namespace CloudOnce.Internal.Editor.Utils
             EnsureMainManifestExists();
         }
 
-        #endregion /Public methods
+#endregion /Public methods
 
-        #region Private methods
+#region Private methods
 
         /// <summary>
         /// Checks if AndroidManifest.xml exists, if it doesn't it's created.
@@ -119,7 +118,7 @@ namespace CloudOnce.Internal.Editor.Utils
             }
         }
 
-        #endregion / Private methods
+#endregion / Private methods
     }
 }
 #endif
