@@ -35,6 +35,7 @@ namespace CloudOnce.Internal.Editor.Utils
         }
 
         private const string manifestTemplate = CloudOncePaths.GoogleTemplates + "/template-AndroidManifest.txt";
+        private const string projectPropertiesTemplate = CloudOncePaths.GoogleTemplates + "/template-project.properties";
 
         private const string appIdPlaceholder = "__APP_ID__";
         private const string pluginVersionPlaceholder = "__PLUGIN_VERSION__";
@@ -67,6 +68,11 @@ namespace CloudOnce.Internal.Editor.Utils
 #endif
             manifestBody = manifestBody.Replace(serviceIdPlaceholder, string.Empty);
             GPGSUtil.WriteFile(destination, manifestBody);
+
+            // Generate project.properties
+            var destinationPP = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.GooglePlayLib + "/project.properties");
+            var projectPropertiesBody = GPGSUtil.ReadFile(projectPropertiesTemplate);
+            GPGSUtil.WriteFile(destinationPP, projectPropertiesBody);
 
             // Resolve dependencies
             Google.VersionHandler.UpdateVersionedAssets(true);

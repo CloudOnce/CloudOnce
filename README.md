@@ -6,7 +6,7 @@ CloudOnce is a [Unity](http://unity3d.com/) plug-in that provides a unified game
 ## Getting Started (Unity Package Manager)
 Add to manifest.json
 ```
-"jizc.cloudonce.io": "https://github.com/jizc/CloudOnce.git?path=/source/PluginDev/Assets#2.7.5-upm",
+"jizc.cloudonce.io": "https://github.com/bilal-arikan/CloudOnce-upm.git?path=/source/PluginDev/Assets#2.7.5-upm",
 ```
 
 ## Getting Started (.unitypackage file)
