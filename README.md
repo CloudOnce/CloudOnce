@@ -4,10 +4,10 @@
 CloudOnce is a [Unity](https://unity3d.com/) plug-in that provides a unified game services API for [Google Play Game Services](https://github.com/playgameservices/play-games-plugin-for-unity/) and Apple Game Center (iOS & tvOS). Ease of use is the primary focus for the plug-in, but it also attempts to satisfy the needs of power users.
 
 ## Getting Started
-Download the [latest release](https://github.com/jizc/CloudOnce/releases/latest) and then check out the [Getting Started](https://jizc.github.io/CloudOnce/gettingStarted.html) guide for an overview of available features and how to implement them.
+Download the [latest release](https://github.com/CloudOnce/CloudOnce/releases/latest) and then check out the [Getting Started](https://cloudonce.github.io/gettingStarted.html) guide for an overview of available features and how to implement them.
 
 ## API Documentation
-If you need more technical or more complete documentation of the plug-in, you can check out the [API documentation](https://jizc.github.io/CloudOnce/api-docs/index.html).
+If you need more technical or more complete documentation of the plug-in, you can check out the [API documentation](https://cloudonce.github.io/api-docs/index.html).
 
 ## Building
 If you want to modify CloudOnce and build your own unitypackage, there are a few required steps.
@@ -32,8 +32,8 @@ CloudOnce has evolved a lot since then, and on June 1st 2016 it was made open-so
 
 ## Trollpants Game Studio games
 All the games created by Trollpants Game Studio have been released as open source. They all use CloudOnce and have been updated to run in Unity 2017.3. Check them out for examples of how CloudOnce can be used.
-* [Trollpants repository](https://github.com/jizc/Trollpants)
-* [Trollpants WebGL builds](https://jizc.github.io/Trollpants)
+* [Trollpants GitHub](https://github.com/Trollpants)
+* [Trollpants WebGL builds](https://trollpants.github.io)
 
 ## License
 The contents of this project is licensed under the MIT license, unless other is specified in file header. See [LICENSE](./LICENSE) file in the project root for full license information.
