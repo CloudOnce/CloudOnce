@@ -1,5 +1,5 @@
 CloudOnce - Unified Game Services API
-https://jizc.github.io/CloudOnce
+https://cloudonce.github.io/CloudOnce
 
 Description
 -----------
