@@ -264,7 +264,29 @@ namespace GooglePlayGames.Android
 
             mTokenClient = new AndroidTokenClient();
 
-            if (!GameInfo.WebClientIdInitialized() &&
+            string webClientId = null;
+            try
+            {
+                AndroidJavaClass UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+                using (var activity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                {
+                    string packageName = activity.Call<string>("getPackageName");
+                    using (var pm = activity.Call<AndroidJavaObject>("getPackageManager"))
+                    using (var appInfo = pm.Call<AndroidJavaObject>("getApplicationInfo", packageName, 0x00000080))
+                    using (var bundle = appInfo.Get<AndroidJavaObject>("metaData"))
+                    {
+                        webClientId = bundle.Call<string>("getString", "com.google.android.gms.games.WEB_CLIENTID");
+                        OurUtils.Logger.d("WebClientId from Manifest: " + webClientId);
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogException(e);
+            }
+
+
+            if (string.IsNullOrEmpty(webClientId) &&
                 (mConfiguration.IsRequestingIdToken || mConfiguration.IsRequestingAuthCode))
             {
                 OurUtils.Logger.e("Server Auth Code and ID Token require web clientId to configured.");
@@ -272,7 +294,7 @@ namespace GooglePlayGames.Android
 
             string[] scopes = mConfiguration.Scopes;
             // Set the auth flags in the token client.
-            mTokenClient.SetWebClientId(GameInfo.WebClientId);
+            mTokenClient.SetWebClientId(webClientId);
             mTokenClient.SetRequestAuthCode(mConfiguration.IsRequestingAuthCode, mConfiguration.IsForcingRefresh);
             mTokenClient.SetRequestEmail(mConfiguration.IsRequestingEmail);
             mTokenClient.SetRequestIdToken(mConfiguration.IsRequestingIdToken);

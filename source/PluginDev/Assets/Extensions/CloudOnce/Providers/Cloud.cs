@@ -232,9 +232,9 @@ namespace CloudOnce
         /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
-        public static void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
+        public static void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true, bool requestAuthToken = false)
         {
-            Provider.Initialize(activateCloudSave, autoSignIn, autoCloudLoad);
+            Provider.Initialize(activateCloudSave, autoSignIn, autoCloudLoad, requestAuthToken);
         }
 
         /// <summary>

@@ -83,7 +83,11 @@ namespace CloudOnce.Internal.Providers
         /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
-        public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
+        /// </param>
+        /// <param name="requestAuthToken">
+        /// for Firebase authentication or something else
+        /// </param>
+        public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true, bool requestAuthToken = false)
         {
             cloudOnceEvents.RaiseOnInitializeComplete();
             cloudOnceEvents.RaiseOnPlayerImageDownloaded(Texture2D.whiteTexture);

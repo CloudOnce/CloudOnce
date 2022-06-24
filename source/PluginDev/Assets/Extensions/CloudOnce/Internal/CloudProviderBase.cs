@@ -121,7 +121,10 @@ namespace CloudOnce.Internal
         /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
-        public abstract void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true);
+        /// <param name="requestAuthToken">
+        /// for Firebase authentication or something else
+        /// </param>
+        public abstract void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true, bool requestAuthToken = false);
 
         /// <summary>
         /// Signs in to the current cloud provider.

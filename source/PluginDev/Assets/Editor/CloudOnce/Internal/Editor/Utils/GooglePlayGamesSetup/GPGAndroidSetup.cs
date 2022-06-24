@@ -38,10 +38,11 @@ namespace CloudOnce.Internal.Editor.Utils
         private const string projectPropertiesTemplate = CloudOncePaths.GoogleTemplates + "/template-project.properties";
 
         private const string appIdPlaceholder = "__APP_ID__";
+        private const string webClientIdPlaceholder = "__WEB_CLIENTID__";
         private const string pluginVersionPlaceholder = "__PLUGIN_VERSION__";
         private const string serviceIdPlaceholder = "__NEARBY_SERVICE_ID__";
 
-        public static bool DoSetup(string appID)
+        public static bool DoSetup(string appID, string webClientID)
         {
             // check for valid app id
             if (!GPGSUtil.LooksLikeValidAppId(appID))
@@ -63,6 +64,11 @@ namespace CloudOnce.Internal.Editor.Utils
             var destination = GPGSUtil.SlashesToPlatformSeparator(CloudOncePaths.GooglePlayLib + "/AndroidManifest.xml");
             var manifestBody = GPGSUtil.ReadFile(manifestTemplate);
             manifestBody = manifestBody.Replace(appIdPlaceholder, appID);
+
+            if(!string.IsNullOrEmpty(webClientID))
+            {
+                manifestBody = manifestBody.Replace(webClientIdPlaceholder, webClientID);
+            }
 #if UNITY_ANDROID
             manifestBody = manifestBody.Replace(pluginVersionPlaceholder, PluginVersion.VersionString);
 #endif

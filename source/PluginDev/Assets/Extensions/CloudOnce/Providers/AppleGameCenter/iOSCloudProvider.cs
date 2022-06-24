@@ -86,11 +86,18 @@ namespace CloudOnce.Internal.Providers
         /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated.
         /// </param>
-        public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
+        /// </param>
+        /// <param name="requestAuthToken">
+        /// for Firebase authentication or something else
+        /// </param>
+        public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true, bool requestAuthToken = false)
         {
             // Ignore repeated calls on Initialize
             if (isInitializing)
             {
+#if CLOUDONCE_DEBUG
+                Debug.Log("Already Initializing");
+#endif
                 return;
             }
 #if CLOUDONCE_DEBUG

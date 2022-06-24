@@ -23,6 +23,7 @@ namespace CloudOnce.Internal.Editor.Data
         GoogleSupport,
         AndroidPlatform,
         GoogleAppID,
+        GoogleWebClientID,
         GoogleSetupRun,
         DebugMode,
         SettingsLocation
@@ -46,6 +47,7 @@ namespace CloudOnce.Internal.Editor.Data
         private const string appleSupportedName = "AppleSupported";
         private const string googleSupportedName = "GoogleSupported";
         private const string googleAppIDName = "GoogleAppID";
+        private const string googleWebClientIDName = "GoogleWebClientID";
         private const string googleSetupRunName = "GoogleSetupRun";
         private const string debugModeEnabledName = "DebugModeEnabled";
         private const string versionName = "Version";
@@ -57,6 +59,7 @@ namespace CloudOnce.Internal.Editor.Data
         [SerializeField] private bool appleSupported;
         [SerializeField] private bool googleSupported;
         [SerializeField] private string googleAppID;
+        [SerializeField] private string googleWebClientID;
         [SerializeField] private bool googleSetupRun;
         [SerializeField] private bool debugModeEnabled;
         [SerializeField] private string version;
@@ -98,6 +101,12 @@ namespace CloudOnce.Internal.Editor.Data
         {
             get { return googleAppID; }
             set { googleAppID = value; }
+        }
+
+        public string GoogleWebClientID
+        {
+            get { return googleWebClientID; }
+            set { googleWebClientID = value; }
         }
 
         public bool GoogleSetupRun
@@ -143,6 +152,7 @@ namespace CloudOnce.Internal.Editor.Data
             return AppleSupported == otherConfig.AppleSupported
                 && GoogleSupported == otherConfig.GoogleSupported
                 && GoogleAppID == otherConfig.GoogleAppID
+                && GoogleWebClientID == otherConfig.GoogleWebClientID
                 && GoogleSetupRun == otherConfig.GoogleSetupRun
                 && DebugModeEnabled == otherConfig.DebugModeEnabled
                 && SettingsLocation == otherConfig.SettingsLocation;
@@ -186,6 +196,7 @@ namespace CloudOnce.Internal.Editor.Data
             jsonObject.AddField(appleSupportedName, AppleSupported);
             jsonObject.AddField(googleSupportedName, GoogleSupported);
             jsonObject.AddField(googleAppIDName, GoogleAppID);
+            jsonObject.AddField(googleWebClientIDName, GoogleWebClientID);
             jsonObject.AddField(googleSetupRunName, GoogleSetupRun);
             jsonObject.AddField(debugModeEnabledName, DebugModeEnabled);
             jsonObject.AddField(versionName, Version = PluginVersion.VersionString);
@@ -228,7 +239,7 @@ namespace CloudOnce.Internal.Editor.Data
         private void FromJSONObject(JSONObject jsonObject)
         {
             if (!jsonObject.HasFields(achievementIDsName, leaderboardIDsName, cloudVariablesName, appleSupportedName, googleSupportedName,
-                googleAppIDName, googleSetupRunName, debugModeEnabledName, versionName))
+                googleAppIDName, googleWebClientIDName, googleSetupRunName, debugModeEnabledName, versionName))
             {
                 throw new SerializationException("JSONObject missing fields, cannot deserialize to " + typeof(CloudConfig).Name);
             }
@@ -239,6 +250,7 @@ namespace CloudOnce.Internal.Editor.Data
             AppleSupported = jsonObject[appleSupportedName].B;
             GoogleSupported = jsonObject[googleSupportedName].B;
             GoogleAppID = jsonObject[googleAppIDName].String;
+            GoogleWebClientID = jsonObject[googleWebClientIDName].String;
             GoogleSetupRun = jsonObject[googleSetupRunName].B;
             DebugModeEnabled = jsonObject[debugModeEnabledName].B;
             Version = jsonObject[versionName].String;

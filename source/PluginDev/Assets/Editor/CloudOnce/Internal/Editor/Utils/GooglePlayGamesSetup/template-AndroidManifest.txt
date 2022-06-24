@@ -16,6 +16,9 @@
         <meta-data android:name="com.google.android.gms.games.APP_ID"
             android:value="\u003__APP_ID__" />
 
+        <meta-data android:name="com.google.android.gms.games.WEB_CLIENTID"
+            android:value="\u003__WEB_CLIENTID__" />
+
         <!-- Keep track of which plugin is being used -->
         <meta-data android:name="com.google.android.gms.games.unityVersion"
             android:value="\u003__PLUGIN_VERSION__" />

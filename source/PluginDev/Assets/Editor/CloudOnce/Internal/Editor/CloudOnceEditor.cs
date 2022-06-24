@@ -798,6 +798,8 @@ namespace CloudOnce.Internal.Editor
             EditorGUILayout.BeginHorizontal();
             Undo.RecordObject(tmpConfig, "Set Google App ID");
             tmpConfig.GoogleAppID = EditorGUILayout.TextField(tmpConfig.GoogleAppID);
+            Undo.RecordObject(tmpConfig, "Set Google WebClient ID");
+            tmpConfig.GoogleWebClientID = EditorGUILayout.TextField(tmpConfig.GoogleWebClientID);
             GUI.enabled = !string.IsNullOrEmpty(tmpConfig.GoogleAppID);
             if (GUILayout.Button(GPGSStrings.Setup.SetupButton, EditorStyles.miniButton))
             {
@@ -812,7 +814,7 @@ namespace CloudOnce.Internal.Editor
                 }
                 else
                 {
-                    tmpConfig.GoogleSetupRun = GPGAndroidSetup.DoSetup(tmpConfig.GoogleAppID);
+                    tmpConfig.GoogleSetupRun = GPGAndroidSetup.DoSetup(tmpConfig.GoogleAppID, tmpConfig.GoogleWebClientID);
                     GUIUtility.ExitGUI();
                 }
             }

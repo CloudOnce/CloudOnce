@@ -82,6 +82,19 @@ namespace CloudOnce.Internal
         /// <returns>A <see cref="string"/> array of the changed keys. Will be empty if no data changed.</returns>
         public string[] MergeWith(GameData otherData)
         {
+            if(otherData == null)
+            {
+                throw new System.ArgumentNullException("otherData");
+            }
+            if(otherData.SyncableItems == null)
+            {
+                throw new System.ArgumentNullException("otherData.SyncableItems");
+            }
+            if(otherData.SyncableCurrencies == null)
+            {
+                throw new System.ArgumentNullException("otherData.SyncableCurrencies");
+            }
+
             var changedKeys = new List<string>();
             foreach (var otherItem in otherData.SyncableItems)
             {
