@@ -112,7 +112,7 @@ namespace CloudOnce.Internal.Editor.Utils
         public static string GetAndroidSdkPath()
         {
             var sdkPath = EditorPrefs.GetString("AndroidSdkRoot");
-#if UNITY_2019 || UNITY_2020
+#if UNITY_2019_1_OR_NEWER
             // Unity 2019.x added installation of the Android SDK in the AndroidPlayer directory
             // so fallback to searching for it there.
             if (string.IsNullOrEmpty(sdkPath) || EditorPrefs.GetBool("SdkUseEmbedded"))
