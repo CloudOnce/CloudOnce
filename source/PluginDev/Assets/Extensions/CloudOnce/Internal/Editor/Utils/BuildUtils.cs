@@ -10,6 +10,7 @@ namespace CloudOnce.Internal.Editor.Utils
     using System.Linq;
     using UnityEditor;
     using UnityEngine;
+    using UnityEditor.Build;
 
     /// <summary>
     /// Build utilities used by the CloudOnce editor.
@@ -92,7 +93,7 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <returns>List of defined build constraint symbols.</returns>
         private static List<string> GetAndroidDefinesList()
         {
-            return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android).Split(';').ToList();
+            return PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.Android).Split(';').ToList();
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <returns>List of defined build constraint symbols.</returns>
         private static List<string> GetiOSDefinesList()
         {
-            return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS).Split(';').ToList();
+            return PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.iOS).Split(';').ToList();
         }
 
         /// <summary>
@@ -141,8 +142,7 @@ namespace CloudOnce.Internal.Editor.Utils
                     {
                         if (disableSymbols.Contains(defineSymbol))
                         {
-                            Debug.LogWarning(string.Format(
-                                    "Define Symbol \"{0}\" is being disabled and enabled in the same operation!", defineSymbol));
+                            Debug.LogWarning($"Define Symbol \"{defineSymbol}\" is being disabled and enabled in the same operation!");
                         }
                     }
 
@@ -161,7 +161,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
             }
 
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, string.Join(";", definedSymbols.ToArray()));
+            PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.Android, string.Join(";", definedSymbols.ToArray()));
         }
 
         /// <summary>
@@ -181,8 +181,7 @@ namespace CloudOnce.Internal.Editor.Utils
                     {
                         if (disableSymbols.Contains(defineSymbol))
                         {
-                            Debug.LogWarning(string.Format(
-                                    "Define Symbol \"{0}\" is being disabled and enabled in the same operation!", defineSymbol));
+                            Debug.LogWarning($"Define Symbol \"{defineSymbol}\" is being disabled and enabled in the same operation!");
                         }
                     }
 
@@ -201,7 +200,7 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
             }
 
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, string.Join(";", definedSymbols.ToArray()));
+            PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.iOS, string.Join(";", definedSymbols.ToArray()));
         }
 
         #endregion / Private methods
