@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce.Internal.Providers
 {
     using System;
@@ -25,14 +26,13 @@ namespace CloudOnce.Internal.Providers
         public void UnlockAchievement(string achievementId, Action<CloudRequestResult<bool>> onComplete = null)
         {
 #if CLOUDONCE_DEBUG
-            UnityEngine.Debug.Log(string.Format("Attempting to unlock {0}.", achievementId));
+            UnityEngine.Debug.Log($"Attempting to unlock {achievementId}.");
 #endif
-            Action<CloudRequestResult<bool>> callback = response =>
-            {
-                OnUpdateAchievementCompleted(response, onComplete);
-            };
 
-            CloudOnceUtils.AchievementUtils.Unlock(achievementId, callback);
+            CloudOnceUtils.AchievementUtils.Unlock(achievementId, Callback);
+            return;
+
+            void Callback(CloudRequestResult<bool> response) => OnUpdateAchievementCompleted(response, onComplete);
         }
 
         /// <summary>
@@ -46,14 +46,13 @@ namespace CloudOnce.Internal.Providers
         public void RevealAchievement(string achievementId, Action<CloudRequestResult<bool>> onComplete = null)
         {
 #if CLOUDONCE_DEBUG
-            UnityEngine.Debug.Log(string.Format("Attempting to reveal {0}.", achievementId));
+            UnityEngine.Debug.Log($"Attempting to reveal {achievementId}.");
 #endif
-            Action<CloudRequestResult<bool>> callback = response =>
-            {
-                OnUpdateAchievementCompleted(response, onComplete);
-            };
 
-            CloudOnceUtils.AchievementUtils.Reveal(achievementId, callback);
+            CloudOnceUtils.AchievementUtils.Reveal(achievementId, Callback);
+            return;
+
+            void Callback(CloudRequestResult<bool> response) => OnUpdateAchievementCompleted(response, onComplete);
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace CloudOnce.Internal.Providers
         /// <param name="achievementId">Current platform's ID for the achievement.</param>
         /// <param name="progress">
         /// The current progress of this achievement, represented as a number between 0.0 and 100.0.
-        /// A progress of 0.0 will reveal the achievement and 100.0 will unlock it.
+        /// Progress of 0.0 will reveal the achievement and 100.0 will unlock it.
         /// <para> </para>
         /// This value is interpreted as the total percentage of the achievement's progress that the
         /// player should have as a result of this call (regardless of the progress they had before).
@@ -96,7 +95,7 @@ namespace CloudOnce.Internal.Providers
         {
             if (progress < 0.0)
             {
-                throw new ArgumentException("Value must not be negative!", "progress");
+                throw new ArgumentException("Value must not be negative!", nameof(progress));
             }
 
             if (progress.Equals(0.0))
@@ -116,42 +115,33 @@ namespace CloudOnce.Internal.Providers
             else
             {
 #if CLOUDONCE_DEBUG
-                UnityEngine.Debug.Log(string.Format("Attempting to increment {0} to {1:F2}%.", achievementId, progress));
+                UnityEngine.Debug.Log($"Attempting to increment {achievementId} to {progress:F2}%.");
 #endif
-                Action<CloudRequestResult<bool>> callback = response =>
-                {
-                    OnUpdateAchievementCompleted(response, onComplete);
-                };
 
-                CloudOnceUtils.AchievementUtils.Increment(achievementId, progress, callback);
+                CloudOnceUtils.AchievementUtils.Increment(achievementId, progress, Callback);
+                return;
+
+                void Callback(CloudRequestResult<bool> response) => OnUpdateAchievementCompleted(response, onComplete);
             }
         }
 
         /// <summary>
         /// Shows the native achievement user interface, allowing the player to browse achievements.
         /// </summary>
-        public void ShowOverlay()
-        {
-            CloudOnceUtils.AchievementUtils.ShowOverlay();
-        }
+        public void ShowOverlay() => CloudOnceUtils.AchievementUtils.ShowOverlay();
 
         /// <summary>
         /// Loads the achievement descriptions associated with this application.
         /// </summary>
         /// <param name="callback">Callback to handle the achievement descriptions.</param>
         public void LoadAchievementDescriptions(Action<IAchievementDescription[]> callback)
-        {
-            CloudOnceUtils.AchievementUtils.LoadAchievementDescriptions(callback);
-        }
+            => CloudOnceUtils.AchievementUtils.LoadAchievementDescriptions(callback);
 
         /// <summary>
-        /// Load the achievements the logged in user has already achieved or reported progress on.
+        /// Load the achievements the logged-in user has already achieved or reported progress on.
         /// </summary>
         /// <param name="callback">Callback to handle the achievements.</param>
-        public void LoadAchievements(Action<IAchievement[]> callback)
-        {
-            CloudOnceUtils.AchievementUtils.LoadAchievements(callback);
-        }
+        public void LoadAchievements(Action<IAchievement[]> callback) => CloudOnceUtils.AchievementUtils.LoadAchievements(callback);
 
         private void OnUpdateAchievementCompleted(CloudRequestResult<bool> response, Action<CloudRequestResult<bool>> callbackAction)
         {

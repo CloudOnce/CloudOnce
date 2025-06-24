@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce.Internal.Providers
 {
     using System;
@@ -21,49 +22,34 @@ namespace CloudOnce.Internal.Providers
         /// <summary>
         /// ID for currently signed in player. Will always return DummyPlayerID when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override string PlayerID
-        {
-            get { return "DummyPlayerID"; }
-        }
+        public override string PlayerID => "DummyPlayerID";
 
         /// <summary>
         /// Display name for currently signed in player. Will always return DummyPlayerName when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override string PlayerDisplayName
-        {
-            get { return "DummyPlayerName"; }
-        }
+        public override string PlayerDisplayName => "DummyPlayerName";
 
         /// <summary>
         /// Profile picture for currently signed in player. Will always return <see cref="Texture2D.whiteTexture"/> when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override Texture2D PlayerImage
-        {
-            get { return Texture2D.whiteTexture; }
-        }
+        public override Texture2D PlayerImage => Texture2D.whiteTexture;
 
         /// <summary>
-        /// Whether or not the user is currently signed in. Is always disabled when using <see cref="DummyProvider"/>.
+        /// Whether the user is currently signed in. Is always disabled when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override bool IsSignedIn
-        {
-            get { return false; }
-        }
+        public override bool IsSignedIn => false;
 
         /// <summary>
-        /// Whether or not Cloud Save has been initialized. Is always <c>false</c> when using <see cref="DummyProvider"/>.
+        /// Whether Cloud Save has been initialized. Is always <c>false</c> when using <see cref="DummyProvider"/>.
         /// </summary>
-        public bool CloudSaveInitialized
-        {
-            get { return false; }
-        }
+        public bool CloudSaveInitialized => false;
 
         /// <summary>
-        /// Whether or not Cloud Save is enabled. Is always disabled when using <see cref="DummyProvider"/>.
+        /// Whether Cloud Save is enabled. Is always disabled when using <see cref="DummyProvider"/>.
         /// </summary>
         public override bool CloudSaveEnabled
         {
-            get { return false; }
+            get => false;
             set { }
         }
 
@@ -75,12 +61,12 @@ namespace CloudOnce.Internal.Providers
         /// <summary>
         /// Dummy Initialize method.
         /// </summary>
-        /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
+        /// <param name="activateCloudSave">Whether Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
-        /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
+        /// Whether <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
         /// </param>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
@@ -97,7 +83,7 @@ namespace CloudOnce.Internal.Providers
         /// Dummy SignIn method.
         /// </summary>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically when the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically when the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         /// <param name='callback'>

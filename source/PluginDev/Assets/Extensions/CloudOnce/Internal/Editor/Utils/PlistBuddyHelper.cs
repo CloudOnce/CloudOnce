@@ -85,7 +85,7 @@ namespace CloudOnce.Internal.Editor.Utils
             using (var process = new Process())
             {
                 process.StartInfo.FileName = "/usr/libexec/PlistBuddy";
-                process.StartInfo.Arguments = string.Format("-c \"{0}\" \"{1}\"", command, mPlistPath);
+                process.StartInfo.Arguments = $"-c \"{command}\" \"{mPlistPath}\"";
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 process.StartInfo.UseShellExecute = false;

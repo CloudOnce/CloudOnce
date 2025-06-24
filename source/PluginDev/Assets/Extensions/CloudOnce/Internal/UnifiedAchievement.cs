@@ -39,7 +39,7 @@ namespace CloudOnce.Internal
         public string ID { get; private set; }
 
         /// <summary>
-        /// Whether or not this achievement has been unlocked.
+        /// Whether this achievement has been unlocked.
         /// </summary>
         public bool IsUnlocked { get; private set; }
 
@@ -48,19 +48,13 @@ namespace CloudOnce.Internal
         /// </summary>
         public double Progress
         {
-            get
-            {
-                return achievementProgress;
-            }
-
+            get => achievementProgress;
             private set
             {
-                if (value < achievementProgress)
+                if (!(value < achievementProgress))
                 {
-                    return;
+                    achievementProgress = value > 100.0 ? 100.0 : value;
                 }
-
-                achievementProgress = value > 100.0 ? 100.0 : value;
             }
         }
 
@@ -80,20 +74,17 @@ namespace CloudOnce.Internal
             if (!IsUnlocked)
             {
 #if CLOUDONCE_DEBUG
-                UnityEngine.Debug.Log(string.Format("Attempting to unlock {0} ({1}).", internalID, ID));
+                UnityEngine.Debug.Log($"Attempting to unlock {internalID} ({ID}).");
 #endif
-                Action<CloudRequestResult<bool>> callback = response =>
-                    {
-                        OnUnlockCompleted(response, onComplete);
-                    };
 
-                CloudOnceUtils.AchievementUtils.Unlock(ID, callback, internalID);
+                CloudOnceUtils.AchievementUtils.Unlock(ID, Callback, internalID);
+                return;
+
+                void Callback(CloudRequestResult<bool> response) => OnUnlockCompleted(response, onComplete);
             }
-            else
-            {
-                var error = string.Format("Can't unlock {0}. Achievement has already been unlocked.", ID);
-                ReportError(error, onComplete);
-            }
+
+            var error = $"Can't unlock {ID}. Achievement has already been unlocked.";
+            ReportError(error, onComplete);
         }
 
         /// <summary>
@@ -108,20 +99,17 @@ namespace CloudOnce.Internal
             if (isAchievementHidden)
             {
 #if CLOUDONCE_DEBUG
-                UnityEngine.Debug.Log(string.Format("Attempting to reveal {0} ({1}).", internalID, ID));
+                UnityEngine.Debug.Log($"Attempting to reveal {internalID} ({ID}).");
 #endif
-                Action<CloudRequestResult<bool>> callback = response =>
-                {
-                    OnRevealCompleted(response, onComplete);
-                };
 
-                CloudOnceUtils.AchievementUtils.Reveal(ID, callback, internalID);
+                CloudOnceUtils.AchievementUtils.Reveal(ID, Callback, internalID);
+                return;
+
+                void Callback(CloudRequestResult<bool> response) => OnRevealCompleted(response, onComplete);
             }
-            else
-            {
-                var error = string.Format("Can't reveal {0}. Achievement has already been revealed.", ID);
-                ReportError(error, onComplete);
-            }
+
+            var error = $"Can't reveal {ID}. Achievement has already been revealed.";
+            ReportError(error, onComplete);
         }
 
         /// <summary>
@@ -147,7 +135,7 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="progress">
         /// The current progress of this achievement, represented as a number between 0.0 and 100.0.
-        /// A progress of 0.0 will reveal the achievement and 100.0 will unlock it.
+        /// Progress of 0.0 will reveal the achievement and 100.0 will unlock it.
         /// <para> </para>
         /// This value is interpreted as the total percentage of the achievement's progress that the
         /// player should have as a result of this call (regardless of the progress they had before).
@@ -162,47 +150,45 @@ namespace CloudOnce.Internal
         {
             if (IsUnlocked)
             {
-                var error = string.Format("Can't increment {0} ({1}). Achievement is already unlocked.", internalID, ID);
+                var error = $"Can't increment {internalID} ({ID}). Achievement is already unlocked.";
+                ReportError(error, onComplete);
+                return;
+            }
+
+            if (progress < 0.0)
+            {
+                throw new ArgumentException("Value must not be negative!", nameof(progress));
+            }
+
+            if (progress.Equals(0.0))
+            {
+#if CLOUDONCE_DEBUG
+                UnityEngine.Debug.Log("Progress equals 0.0. Revealing achievement.");
+#endif
+                Reveal(onComplete);
+            }
+            else if (progress >= 100.0)
+            {
+#if CLOUDONCE_DEBUG
+                    UnityEngine.Debug.Log("Progress equals 100.0 or more. Unlocking achievement.");
+#endif
+                Unlock(onComplete);
+            }
+            else if (progress <= Progress)
+            {
+                var error = $"Can't increment {internalID} ({ID}) to {progress:F2}%. Achievement is already at {Progress:F2}%.";
                 ReportError(error, onComplete);
             }
             else
             {
-                if (progress < 0.0)
-                {
-                    throw new ArgumentException("Value must not be negative!", "progress");
-                }
+#if CLOUDONCE_DEBUG
+                UnityEngine.Debug.Log($"Attempting to increment {internalID} ({ID}) to {progress:F2}%.");
+#endif
 
-                if (progress.Equals(0.0))
-                {
-#if CLOUDONCE_DEBUG
-                    UnityEngine.Debug.Log("Progress equals 0.0. Revealing achievement.");
-#endif
-                    Reveal(onComplete);
-                }
-                else if (progress >= 100.0)
-                {
-#if CLOUDONCE_DEBUG
-                    UnityEngine.Debug.Log("Progress equals 100.0 or more. Unlocking achievement.");
-#endif
-                    Unlock(onComplete);
-                }
-                else if (progress <= Progress)
-                {
-                    var error = string.Format("Can't increment {0} ({1}) to {2:F2}%. Achievement is already at {3:F2}%.", internalID, ID, progress, Progress);
-                    ReportError(error, onComplete);
-                }
-                else
-                {
-#if CLOUDONCE_DEBUG
-                    UnityEngine.Debug.Log(string.Format("Attempting to increment {0} ({1}) to {2:F2}%.", internalID, ID, progress));
-#endif
-                    Action<CloudRequestResult<bool>> callback = response =>
-                    {
-                        OnIncrementCompleted(response, progress, onComplete);
-                    };
+                CloudOnceUtils.AchievementUtils.Increment(ID, progress, Callback, internalID);
+                return;
 
-                    CloudOnceUtils.AchievementUtils.Increment(ID, progress, callback, internalID);
-                }
+                void Callback(CloudRequestResult<bool> response) => OnIncrementCompleted(response, progress, onComplete);
             }
         }
 
@@ -210,42 +196,38 @@ namespace CloudOnce.Internal
         /// Updates locked status and progress with data received from native API.
         /// <para>Only intended to be used by internal CloudOnce systems.</para>
         /// </summary>
-        /// <param name="isUnlocked">Whether or not this achievement has been unlocked.</param>
+        /// <param name="isUnlocked">Whether this achievement has been unlocked.</param>
         /// <param name="progress">The current progress of this achievement, represented as a number between 0.0 and 100.0.</param>
-        /// <param name="isHidden">Whether or not this achievement is hidden.</param>
+        /// <param name="isHidden">Whether this achievement is hidden.</param>
         public void UpdateData(bool isUnlocked, double progress, bool isHidden)
         {
 #if CLOUDONCE_DEBUG
-            UnityEngine.Debug.Log(string.Format("Updating data for {0} ({1}) achievement.", internalID, ID));
+            UnityEngine.Debug.Log($"Updating data for {internalID} ({ID}) achievement.");
 #endif
             if (IsUnlocked && !isUnlocked)
             {
 #if CLOUDONCE_DEBUG
                 UnityEngine.Debug.LogWarning(
-                    string.Format("Inconsistency detected between local and remote unlocked status. Achievement {0} ({1}) should be unlocked. Attempting to correct.", internalID, ID));
+                    $"Inconsistency detected between local and remote unlocked status. Achievement {internalID} ({ID}) should be unlocked. Attempting to correct.");
 #endif
-                Action<CloudRequestResult<bool>> callback = response =>
-                {
-                    OnUnlockCompleted(response, null);
-                };
 
-                CloudOnceUtils.AchievementUtils.Unlock(ID, callback, internalID);
+                CloudOnceUtils.AchievementUtils.Unlock(ID, Callback, internalID);
                 return;
+
+                void Callback(CloudRequestResult<bool> response) => OnUnlockCompleted(response, null);
             }
 
             if (Progress > progress)
             {
 #if CLOUDONCE_DEBUG
                 UnityEngine.Debug.LogWarning(
-                    string.Format("Inconsistency detected between local and remote progress status. Achievement {0} ({1}) should be at {2:F2}%. Attempting to correct.", internalID, ID, Progress));
+                    $"Inconsistency detected between local and remote progress status. Achievement {internalID} ({ID}) should be at {Progress:F2}%. Attempting to correct.");
 #endif
-                Action<CloudRequestResult<bool>> callback = response =>
-                {
-                    OnIncrementCompleted(response, progress, null);
-                };
 
-                CloudOnceUtils.AchievementUtils.Increment(ID, progress, callback, internalID);
+                CloudOnceUtils.AchievementUtils.Increment(ID, progress, Callback, internalID);
                 return;
+
+                void Callback(CloudRequestResult<bool> response) => OnIncrementCompleted(response, progress, null);
             }
 
             IsUnlocked = isUnlocked;
@@ -255,21 +237,20 @@ namespace CloudOnce.Internal
             {
 #if CLOUDONCE_DEBUG
                 UnityEngine.Debug.LogWarning(
-                    string.Format("Inconsistency detected between progress and unlocked status. Achievement {0} ({1}) should be unlocked. Attempting to correct.", internalID, ID));
+                    $"Inconsistency detected between progress and unlocked status. Achievement {internalID} ({ID}) should be unlocked. Attempting to correct.");
 #endif
-                Action<CloudRequestResult<bool>> callback = response =>
-                {
-                    OnUnlockCompleted(response, null);
-                };
 
-                CloudOnceUtils.AchievementUtils.Unlock(ID, callback, internalID);
+                CloudOnceUtils.AchievementUtils.Unlock(ID, Callback, internalID);
+                return;
+
+                void Callback(CloudRequestResult<bool> response) => OnUnlockCompleted(response, null);
             }
         }
 
         public void ResetLocalState()
         {
 #if CLOUDONCE_DEBUG
-            UnityEngine.Debug.Log(string.Format("Resetting local state for achievement {0} ({1})", internalID, ID));
+            UnityEngine.Debug.Log($"Resetting local state for achievement {internalID} ({ID})");
 #endif
             IsUnlocked = false;
             isAchievementHidden = true;

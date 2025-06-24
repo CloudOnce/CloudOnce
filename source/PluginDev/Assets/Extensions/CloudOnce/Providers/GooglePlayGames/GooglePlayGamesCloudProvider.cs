@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 #if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Providers
 {
@@ -77,7 +78,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not the user is currently signed in.
+        /// Whether the user is currently signed in.
         /// </summary>
         public override bool IsSignedIn
         {
@@ -85,12 +86,12 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not Cloud Save has been initialized. Is initilized with <see cref="Cloud.Initialize"/> method.
+        /// Whether Cloud Save has been initialized. Is initilized with <see cref="Cloud.Initialize"/> method.
         /// </summary>
         public bool CloudSaveInitialized { get; private set; }
 
         /// <summary>
-        /// Whether or not Cloud Save is enabled.
+        /// Whether Cloud Save is enabled.
         /// Disabling Cloud Save will make <c>Cloud.Storage.Save</c> only save to disk.
         /// Can only be enabled if Cloud Save was initialized in <see cref="Cloud.Initialize"/> method.
         /// </summary>
@@ -114,7 +115,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not GPGS has been initlialized yet.
+        /// Whether GPGS has been initlialized yet.
         /// Needed to make sure that it's not initialized by mistake with the wrong settings.
         /// </summary>
         public bool IsGpgsInitialized { get; private set; }
@@ -131,12 +132,12 @@ namespace CloudOnce.Internal.Providers
         /// <summary>
         /// Initializes Google Play Game Services.
         /// </summary>
-        /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
+        /// <param name="activateCloudSave">Whether Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
-        /// Whether or not <see cref="SignIn"/> will be called automatically once Google Play Game Services is initialized.
+        /// Whether <see cref="SignIn"/> will be called automatically once Google Play Game Services is initialized.
         /// </param>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
@@ -155,16 +156,9 @@ namespace CloudOnce.Internal.Providers
 #if CLOUDONCE_DEBUG
             Debug.Log("Saved Games support " + (activateCloudSave ? "enabled." : "disabled."));
 #endif
-            var config = new PlayGamesClientConfiguration.Builder();
-            if (activateCloudSave)
-            {
-                config.EnableSavedGames();
-                CloudSaveInitialized = true;
-            }
+            CloudSaveInitialized = activateCloudSave;
 
-            PlayGamesPlatform.InitializeInstance(config.Build());
-
-            SubscribeOnAuthenticatedEvent();
+            PlayGamesPlatform.Activate();
 
 #if CLOUDONCE_DEBUG   // Enable/disable logs on the PlayGamesPlatform
             PlayGamesPlatform.DebugLogEnabled = true;
@@ -176,7 +170,7 @@ namespace CloudOnce.Internal.Providers
             IsGpgsInitialized = true;
             if (!IsGuestUserDefault && autoSignIn)
             {
-                var onSignedIn = new UnityAction<bool>(arg0 =>
+                var onSignedIn = new UnityAction<bool>(_ =>
                 {
                     cloudOnceEvents.RaiseOnInitializeComplete();
                     initializing = false;
@@ -204,7 +198,7 @@ namespace CloudOnce.Internal.Providers
         /// Signs in to Google Play Game Services.
         /// </summary>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         /// <param name='callback'>
@@ -225,16 +219,46 @@ namespace CloudOnce.Internal.Providers
             IsGuestUserDefault = false;
             Logger.d("Attempting to sign in to Google Play Game Services.");
 
-            PlayGamesPlatform.Instance.Authenticate(success =>
+            PlayGamesPlatform.Instance.Authenticate(signInStatus =>
             {
-                // Success is handled by OnAuthenticated method
-                if (!success)
+                if (signInStatus is SignInStatus.Success)
+                {
+                    cloudOnceEvents.RaiseOnSignedInChanged(true);
+                    Logger.d("Successfully signed in to Google Play Game Services. Player: " + PlayerDisplayName);
+                    IsGuestUserDefault = false;
+                    GetPlayerImage();
+                    if (playerIdCache != null && !string.Equals(playerIdCache, PlayerID, StringComparison.InvariantCulture))
+                    {
+                        // Switching user
+                        foreach (var achievement in Achievements.All)
+                        {
+                            achievement.ResetLocalState();
+                        }
+
+                        if (cloudSaveEnabled)
+                        {
+                            GooglePlayGamesCloudSaveWrapper.LoadDataString(OnDataStringLoaded);
+                        }
+                    }
+                    else if (autoLoadEnabled && cloudSaveEnabled)
+                    {
+                        Cloud.Storage.Load();
+                    }
+
+                    playerIdCache = PlayerID;
+                    if (Achievements.All.Length > 0)
+                    {
+                        PlayGamesPlatform.Instance.LoadAchievements(UpdateAchievementsData);
+                    }
+                }
+                else
                 {
                     Logger.w("Failed to sign in to Google Play Game Services.");
                     bool hasNoInternet;
                     try
                     {
-                        hasNoInternet = InternetConnectionUtils.GetConnectionStatus() != InternetConnectionStatus.Connected;
+                        hasNoInternet = InternetConnectionUtils.GetConnectionStatus() !=
+                                        InternetConnectionStatus.Connected;
                     }
                     catch (NotSupportedException)
                     {
@@ -248,7 +272,7 @@ namespace CloudOnce.Internal.Providers
                     else
                     {
                         Logger.d("Must assume the failure is due to player opting out"
-                              + " of the sign-in process, setting guest user as default");
+                                 + " of the sign-in process, setting guest user as default");
                         IsGuestUserDefault = true;
                     }
 
@@ -259,7 +283,7 @@ namespace CloudOnce.Internal.Providers
                     }
                 }
 
-                CloudOnceUtils.SafeInvoke(callback, success);
+                CloudOnceUtils.SafeInvoke(callback, signInStatus is SignInStatus.Success);
             });
         }
 
@@ -270,12 +294,11 @@ namespace CloudOnce.Internal.Providers
         public override void SignOut()
         {
             Logger.d("Signing out of Google Play Game Services.");
-            PlayGamesPlatform.Instance.SignOut();
             ActivateGuestUserMode();
         }
 
         /// <summary>
-        /// Load the user profiles accociated with the given array of user IDs.
+        /// Load the user profiles associated with the given array of user IDs.
         /// </summary>
         /// <param name="userIDs">The users to retrieve profiles for.</param>
         /// <param name="callback">Callback to handle the user profiles.</param>
@@ -348,52 +371,10 @@ namespace CloudOnce.Internal.Providers
                 if (!achievementFound)
                 {
 #if CLOUDONCE_DEBUG
-                    Debug.Log(string.Format(
-                        "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
+                    Debug.Log($"An achievement ({achievement.id}) that doesn't exist in the Achievements class was loaded from native API.");
 #endif
                 }
             }
-        }
-
-        private void SubscribeOnAuthenticatedEvent()
-        {
-            PlayGamesPlatform.Instance.OnAuthenticated -= OnAuthenticated;
-            PlayGamesPlatform.Instance.OnAuthenticated += OnAuthenticated;
-        }
-
-        private void OnAuthenticated()
-        {
-            GooglePlayGames.OurUtils.PlayGamesHelperObject.RunOnGameThread(
-                () =>
-                {
-                    cloudOnceEvents.RaiseOnSignedInChanged(true);
-                    Logger.d("Successfully signed in to Google Play Game Services. Player: " + PlayerDisplayName);
-                    IsGuestUserDefault = false;
-                    GetPlayerImage();
-                    if (playerIdCache != null && !string.Equals(playerIdCache, PlayerID, StringComparison.InvariantCulture))
-                    {
-                        // Switching user
-                        foreach (var achievement in Achievements.All)
-                        {
-                            achievement.ResetLocalState();
-                        }
-
-                        if (cloudSaveEnabled)
-                        {
-                            GooglePlayGamesCloudSaveWrapper.LoadDataString(OnDataStringLoaded);
-                        }
-                    }
-                    else if (autoLoadEnabled && cloudSaveEnabled)
-                    {
-                        Cloud.Storage.Load();
-                    }
-
-                    playerIdCache = PlayerID;
-                    if (Achievements.All.Length > 0)
-                    {
-                        PlayGamesPlatform.Instance.LoadAchievements(UpdateAchievementsData);
-                    }
-                });
         }
 
         private void OnDataStringLoaded(string dataString)
@@ -419,7 +400,7 @@ namespace CloudOnce.Internal.Providers
             {
                 yield return request.SendWebRequest();
 #if UNITY_2020_1_OR_NEWER
-                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+                if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
 #else
                 if (request.isNetworkError || request.isHttpError)
 #endif

@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 #if UNITY_EDITOR
 namespace CloudOnce.Internal.Providers
 {
@@ -50,7 +51,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not the user is currently signed in.
+        /// Whether the user is currently signed in.
         /// </summary>
         public override bool IsSignedIn
         {
@@ -58,12 +59,12 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not Cloud Save has been initialized. Is initialized with <see cref="Cloud.Initialize"/> method.
+        /// Whether Cloud Save has been initialized. Is initialized with <see cref="Cloud.Initialize"/> method.
         /// </summary>
         public bool CloudSaveInitialized { get; private set; }
 
         /// <summary>
-        /// Whether or not Cloud Save is enabled.
+        /// Whether Cloud Save is enabled.
         /// Disabling Cloud Save will make <c>Cloud.Storage.Save</c> only save to disk.
         /// Can only be enabled if Cloud Save was initialized in <see cref="Cloud.Initialize"/> method.
         /// </summary>
@@ -94,12 +95,12 @@ namespace CloudOnce.Internal.Providers
         /// <summary>
         /// Emulates initialization with a randomized delay.
         /// </summary>
-        /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
+        /// <param name="activateCloudSave">Whether Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
-        /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
+        /// Whether <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
         /// </param>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
@@ -108,7 +109,7 @@ namespace CloudOnce.Internal.Providers
             cloudSaveEnabled = activateCloudSave;
 
             var delay = Random.Range(0.5f, 2f);
-            Debug.Log(string.Format("Simulating random Initialize delay of {0} seconds", delay));
+            Debug.Log($"Simulating random Initialize delay of {delay} seconds");
 
             // Normal MonoBehaviour Invoke uses scalable delta time, some games use timescale to pause and use unscaled time in GUI
             // To Simulate Random Cloud Init Delay right we need to invoke at unscaled time
@@ -116,7 +117,7 @@ namespace CloudOnce.Internal.Providers
             {
                 var onInitializeComplete = new UnityAction(() =>
                 {
-                    SignIn(autoCloudLoad, arg0 => cloudOnceEvents.RaiseOnInitializeComplete());
+                    SignIn(autoCloudLoad, _ => cloudOnceEvents.RaiseOnInitializeComplete());
                 });
                 StartCoroutine(CloudOnceUtils.InvokeUnscaledTime(onInitializeComplete, delay));
             }
@@ -128,7 +129,7 @@ namespace CloudOnce.Internal.Providers
             if (activateCloudSave && autoCloudLoad)
             {
                 var loadDelay = Random.Range(delay, delay + 2f);
-                Debug.Log(string.Format("Simulating random Cloud load delay of {0} seconds", loadDelay));
+                Debug.Log($"Simulating random Cloud load delay of {loadDelay} seconds");
                 StartCoroutine(CloudOnceUtils.InvokeUnscaledTime(Cloud.Storage.Load, loadDelay));
             }
         }
@@ -137,7 +138,7 @@ namespace CloudOnce.Internal.Providers
         /// Simulates signing in.
         /// </summary>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically when the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically when the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         /// <param name='callback'>
@@ -150,7 +151,7 @@ namespace CloudOnce.Internal.Providers
             CloudOnceUtils.SafeInvoke(callback, true);
             cloudOnceEvents.RaiseOnSignedInChanged(true);
             var delay = Random.Range(0.5f, 2f);
-            Debug.Log(string.Format("Simulating random PlayerImageDownload delay of {0} seconds", delay));
+            Debug.Log($"Simulating random PlayerImageDownload delay of {delay} seconds");
             StartCoroutine(
                 CloudOnceUtils.InvokeUnscaledTime(
                     cloudOnceEvents.RaiseOnPlayerImageDownloaded, Texture2D.whiteTexture, delay));
@@ -231,12 +232,12 @@ namespace CloudOnce.Internal.Providers
             public TestUserProfile()
             {
                 var randomId = Random.Range(1, 99999);
-                id = string.Format("{0:D5}", randomId);
+                id = $"{randomId:D5}";
 #if UNITY_2020_1_OR_NEWER
                 gameId = id;
 #endif
                 userName = "User" + id;
-                isFriend = Random.Range(0, 2) == 1;
+                isFriend = Random.Range(0, 2) is 1;
                 state = (UserState)Random.Range(0, 5);
                 image = Texture2D.whiteTexture;
             }
@@ -266,7 +267,7 @@ namespace CloudOnce.Internal.Providers
 
             /// <summary>
             /// <para>
-            /// Is this user a friend of the current logged in user?
+            /// Is this user a friend of the current logged-in user?
             /// </para>
             /// </summary>
             public bool isFriend { get; private set; }

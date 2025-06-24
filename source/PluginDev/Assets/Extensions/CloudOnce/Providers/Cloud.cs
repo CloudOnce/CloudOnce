@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce
 {
     using System;
@@ -18,7 +19,6 @@ namespace CloudOnce
     public static class Cloud
     {
         private static readonly CloudOnceEvents s_cloudOnceEvents;
-        private static Interval s_autoLoadInterval = Interval.Disabled;
         private static bool s_isProviderInitialized;
 
         static Cloud()
@@ -33,8 +33,8 @@ namespace CloudOnce
         /// </summary>
         public static event UnityAction OnInitializeComplete
         {
-            add { s_cloudOnceEvents.OnInitializeComplete += value; }
-            remove { s_cloudOnceEvents.OnInitializeComplete -= value; }
+            add => s_cloudOnceEvents.OnInitializeComplete += value;
+            remove => s_cloudOnceEvents.OnInitializeComplete -= value;
         }
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace CloudOnce
         /// </summary>
         public static event UnityAction<bool> OnSignedInChanged
         {
-            add { s_cloudOnceEvents.OnSignedInChanged += value; }
-            remove { s_cloudOnceEvents.OnSignedInChanged -= value; }
+            add => s_cloudOnceEvents.OnSignedInChanged += value;
+            remove => s_cloudOnceEvents.OnSignedInChanged -= value;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace CloudOnce
         /// </summary>
         public static event UnityAction OnSignInFailed
         {
-            add { s_cloudOnceEvents.OnSignInFailed += value; }
-            remove { s_cloudOnceEvents.OnSignInFailed -= value; }
+            add => s_cloudOnceEvents.OnSignInFailed += value;
+            remove => s_cloudOnceEvents.OnSignInFailed -= value;
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace CloudOnce
         /// </summary>
         public static event UnityAction<Texture2D> OnPlayerImageDownloaded
         {
-            add { s_cloudOnceEvents.OnPlayerImageDownloaded += value; }
-            remove { s_cloudOnceEvents.OnPlayerImageDownloaded -= value; }
+            add => s_cloudOnceEvents.OnPlayerImageDownloaded += value;
+            remove => s_cloudOnceEvents.OnPlayerImageDownloaded -= value;
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace CloudOnce
         /// </summary>
         public static event UnityAction<bool> OnCloudSaveComplete
         {
-            add { s_cloudOnceEvents.OnCloudSaveComplete += value; }
-            remove { s_cloudOnceEvents.OnCloudSaveComplete -= value; }
+            add => s_cloudOnceEvents.OnCloudSaveComplete += value;
+            remove => s_cloudOnceEvents.OnCloudSaveComplete -= value;
         }
 
         /// <summary>
@@ -78,8 +78,8 @@ namespace CloudOnce
         /// </summary>
         public static event UnityAction<bool> OnCloudLoadComplete
         {
-            add { s_cloudOnceEvents.OnCloudLoadComplete += value; }
-            remove { s_cloudOnceEvents.OnCloudLoadComplete -= value; }
+            add => s_cloudOnceEvents.OnCloudLoadComplete += value;
+            remove => s_cloudOnceEvents.OnCloudLoadComplete -= value;
         }
 
         /// <summary>
@@ -87,69 +87,50 @@ namespace CloudOnce
         /// </summary>
         public static event UnityAction<string[]> OnNewCloudValues
         {
-            add { s_cloudOnceEvents.OnNewCloudValues += value; }
-            remove { s_cloudOnceEvents.OnNewCloudValues -= value; }
+            add => s_cloudOnceEvents.OnNewCloudValues += value;
+            remove => s_cloudOnceEvents.OnNewCloudValues -= value;
         }
 
         /// <summary>
         /// Name of the currently used service, e.g. "Apple Game Center".
         /// </summary>
-        public static string ServiceName
-        {
-            get { return Provider.ServiceName; }
-        }
+        public static string ServiceName => Provider.ServiceName;
 
         /// <summary>
         /// ID for currently signed in player. Will return an empty <see cref="string"/> if no player is signed in.
         /// </summary>
-        public static string PlayerID
-        {
-            get { return Provider.PlayerID; }
-        }
+        public static string PlayerID => Provider.PlayerID;
 
         /// <summary>
         /// Display name for currently signed in player. Will return an empty <see cref="string"/> if no player is signed in.
         /// </summary>
-        public static string PlayerDisplayName
-        {
-            get { return Provider.PlayerDisplayName; }
-        }
+        public static string PlayerDisplayName => Provider.PlayerDisplayName;
 
         /// <summary>
         /// Profile picture for currently signed in player. Will return <c>null</c> if the user has no avatar, or it has not loaded yet.
         /// </summary>
-        public static Texture2D PlayerImage
-        {
-            get { return Provider.PlayerImage; }
-        }
+        public static Texture2D PlayerImage => Provider.PlayerImage;
 
         /// <summary>
-        /// Whether or not the user is currently signed in.
+        /// Whether the user is currently signed in.
         /// </summary>
-        public static bool IsSignedIn
-        {
-            get { return Provider.IsSignedIn; }
-        }
+        public static bool IsSignedIn => Provider.IsSignedIn;
 
         /// <summary>
-        /// Whether or not Cloud Save is enabled.
+        /// Whether Cloud Save is enabled.
         /// Disabling Cloud Save will make <c>Cloud.Storage.Save</c> only save to disk.
         /// Can only be enabled if Cloud Save was initialized in <see cref="Cloud.Initialize"/> method.
         /// </summary>
         public static bool CloudSaveEnabled
         {
-            get { return Provider.CloudSaveEnabled; }
-            set { Provider.CloudSaveEnabled = value; }
+            get => Provider.CloudSaveEnabled;
+            set => Provider.CloudSaveEnabled = value;
         }
 
         /// <summary>
         /// How often to check for new cloud data.
         /// </summary>
-        public static Interval AutoLoadInterval
-        {
-            get { return s_autoLoadInterval; }
-            set { s_autoLoadInterval = value; }
-        }
+        public static Interval AutoLoadInterval { get; set; } = Interval.Disabled;
 
         /// <summary>
         /// Interface for accessing leaderboards on the current platform.
@@ -164,10 +145,7 @@ namespace CloudOnce
         /// <summary>
         /// Interface for accessing cloud save on the current platform.
         /// </summary>
-        public static ICloudStorageProvider Storage
-        {
-            get { return Provider.Storage; }
-        }
+        public static ICloudStorageProvider Storage => Provider.Storage;
 
         private static ICloudProvider Provider
         {
@@ -224,51 +202,40 @@ namespace CloudOnce
         /// <summary>
         /// Initializes the current cloud provider.
         /// </summary>
-        /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
+        /// <param name="activateCloudSave">Whether Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
-        /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
+        /// Whether <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
         /// </param>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         public static void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
-        {
-            Provider.Initialize(activateCloudSave, autoSignIn, autoCloudLoad);
-        }
+            => Provider.Initialize(activateCloudSave, autoSignIn, autoCloudLoad);
 
         /// <summary>
         /// Signs in to the current cloud provider.
         /// </summary>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically when the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically when the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         /// <param name='callback'>
         /// The callback to call when authentication finishes. It will be called
         /// with <c>true</c> if authentication was successful, <c>false</c> otherwise.
         /// </param>
-        public static void SignIn(bool autoCloudLoad = true, UnityAction<bool> callback = null)
-        {
-            Provider.SignIn(autoCloudLoad, callback);
-        }
+        public static void SignIn(bool autoCloudLoad = true, UnityAction<bool> callback = null) => Provider.SignIn(autoCloudLoad, callback);
 
         /// <summary>
         /// Signs out of the current cloud provider.
         /// </summary>
-        public static void SignOut()
-        {
-            Provider.SignOut();
-        }
+        public static void SignOut() => Provider.SignOut();
 
         /// <summary>
         /// Load the user profiles associated with the given array of user IDs.
         /// </summary>
         /// <param name="userIDs">The users to retrieve profiles for.</param>
         /// <param name="callback">Callback to handle the user profiles.</param>
-        public static void LoadUsers(string[] userIDs, Action<IUserProfile[]> callback)
-        {
-            Provider.LoadUsers(userIDs, callback);
-        }
+        public static void LoadUsers(string[] userIDs, Action<IUserProfile[]> callback) => Provider.LoadUsers(userIDs, callback);
     }
 }

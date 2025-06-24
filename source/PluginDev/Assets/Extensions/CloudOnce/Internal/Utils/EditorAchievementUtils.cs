@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce.Internal.Utils
 {
     using System;
@@ -107,7 +108,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Load the achievements the logged in user has already achieved or reported progress on.
+        /// Load the achievements the logged-in user has already achieved or reported progress on.
         /// </summary>
         /// <param name="callback">Callback to handle the achievements.</param>
         public void LoadAchievements(Action<IAchievement[]> callback)
@@ -132,7 +133,7 @@ namespace CloudOnce.Internal.Utils
             if (response)
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
+                Debug.Log($"Achievement {internalID} ({id}) was successfully {action}ed.");
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }
@@ -140,8 +141,8 @@ namespace CloudOnce.Internal.Utils
             {
                 // Customize error message to fit either new or old achievement system.
                 var error = string.IsNullOrEmpty(internalID)
-                        ? string.Format("Native API failed to {0} achievement {1}. Cause unknown.", action, id)
-                        : string.Format("Native API failed to {0} achievement {1} ({2}). Cause unknown.", action, internalID, id);
+                        ? $"Native API failed to {action} achievement {id}. Cause unknown."
+                        : $"Native API failed to {action} achievement {internalID} ({id}). Cause unknown.";
                 ReportError(error, callbackAction);
             }
         }

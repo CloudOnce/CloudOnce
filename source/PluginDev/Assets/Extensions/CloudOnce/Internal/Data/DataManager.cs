@@ -41,7 +41,7 @@ namespace CloudOnce.Internal
         private static bool s_isInitialized;
 
         /// <summary>
-        /// Whether or not any of the local data has been changed since the last upload to the cloud.
+        /// Whether any of the local data has been changed since the last upload to the cloud.
         /// </summary>
         public static bool IsLocalDataDirty
         {
@@ -603,7 +603,7 @@ namespace CloudOnce.Internal
         /// <summary>
         /// Resets a CloudPref to its default value.
         /// </summary>
-        /// <returns>Whether or not the CloudPref was successfully reset.</returns>
+        /// <returns>Whether the CloudPref was successfully reset.</returns>
         public static bool ResetCloudPref(string key)
         {
             if (CloudPrefs.ContainsKey(key))

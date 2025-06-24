@@ -22,7 +22,7 @@ namespace CloudOnce.Internal
         /// <param name="key">The Key that caused the exception.</param>
         /// <param name="type">The expected value type.</param>
         public UnexpectedCollectionElementTypeException(string key, Type type)
-            : base(string.Format("Unexpected type at index {0}, expected {1} ", key, type))
+            : base($"Unexpected type at index {key}, expected {type} ")
         {
         }
     }

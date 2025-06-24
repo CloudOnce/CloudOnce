@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 #if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Utils
 {
@@ -33,7 +34,7 @@ namespace CloudOnce.Internal.Utils
         {
             if (string.IsNullOrEmpty(id))
             {
-                ReportError(string.Format("Can't submit score to {0} leaderboard. Platform ID is null or empty!", internalID), onComplete);
+                ReportError($"Can't submit score to {internalID} leaderboard. Platform ID is null or empty!", onComplete);
                 return;
             }
 
@@ -44,8 +45,10 @@ namespace CloudOnce.Internal.Utils
                 return;
             }
 
-            Action<bool> callback = response => OnSubmitScoreCompleted(response, score, onComplete, id, internalID);
-            PlayGamesPlatform.Instance.ReportScore(score, id, callback);
+            PlayGamesPlatform.Instance.ReportScore(score, id, Callback);
+            return;
+
+            void Callback(bool response) => OnSubmitScoreCompleted(response, score, onComplete, id, internalID);
         }
 
         /// <summary>
@@ -74,8 +77,8 @@ namespace CloudOnce.Internal.Utils
             {
 #if CLOUDONCE_DEBUG
                 UnityEngine.Debug.Log(string.IsNullOrEmpty(internalID)
-                    ? string.Format("Showing {0} leaderboard overlay.", id)
-                    : string.Format("Showing {0} ({1}) leaderboard overlay.", internalID, id));
+                    ? $"Showing {id} leaderboard overlay."
+                    : $"Showing {internalID} ({id}) leaderboard overlay.");
 #endif
                 PlayGamesPlatform.Instance.ShowLeaderboardUI(id, OnShowOverlayCompleted);
             }
@@ -86,10 +89,7 @@ namespace CloudOnce.Internal.Utils
         /// </summary>
         /// <param name="leaderboardID">Current platform's ID for the leaderboard.</param>
         /// <param name="callback">Callback with scores.</param>
-        public void LoadScores(string leaderboardID, Action<IScore[]> callback)
-        {
-            PlayGamesPlatform.Instance.LoadScores(leaderboardID, callback);
-        }
+        public void LoadScores(string leaderboardID, Action<IScore[]> callback) => PlayGamesPlatform.Instance.LoadScores(leaderboardID, callback);
 
         #endregion /Public methods
 
@@ -122,13 +122,14 @@ namespace CloudOnce.Internal.Utils
             if (response)
             {
 #if CLOUDONCE_DEBUG
-                UnityEngine.Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
+                UnityEngine.Debug.Log($"Successfully submitted a score of {score} to {internalID} ({id}) leaderboard.");
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }
             else
             {
-                var error = string.Format("Native API failed to submit a score of {0} to {1} ({2}) leaderboard. Cause unknown.", score, internalID, id);
+                var error =
+                    $"Native API failed to submit a score of {score} to {internalID} ({id}) leaderboard. Cause unknown.";
                 ReportError(error, callbackAction);
             }
         }

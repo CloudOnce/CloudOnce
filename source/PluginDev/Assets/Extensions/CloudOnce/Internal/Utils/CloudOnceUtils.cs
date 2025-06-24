@@ -142,7 +142,7 @@ namespace CloudOnce.Internal.Utils
         /// Checks if a <see cref="string"/> is a JSON <see cref="string"/>.
         /// </summary>
         /// <param name="input">The <see cref="string"/> that might be a JSON <see cref="string"/>.</param>
-        /// <returns>Whether or not the <see cref="string"/> is a JSON <see cref="string"/>.</returns>
+        /// <returns>Whether the <see cref="string"/> is a JSON <see cref="string"/>.</returns>
         public static bool IsJson(this string input)
         {
             input = input.TrimStart();

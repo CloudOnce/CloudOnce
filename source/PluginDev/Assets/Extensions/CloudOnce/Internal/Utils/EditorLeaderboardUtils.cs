@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce.Internal.Utils
 {
     using System;
@@ -30,12 +31,12 @@ namespace CloudOnce.Internal.Utils
         {
             if (string.IsNullOrEmpty(id))
             {
-                ReportError(string.Format("Can't submit score to {0} leaderboard. Platform ID is null or empty!", internalID), onComplete);
+                ReportError($"Can't submit score to {internalID} leaderboard. Platform ID is null or empty!", onComplete);
                 return;
             }
 
 #if CLOUDONCE_DEBUG
-            Debug.Log(string.Format("Successfully submitted a score of {0} to {1} ({2}) leaderboard.", score, internalID, id));
+            Debug.Log($"Successfully submitted a score of {score} to {internalID} ({id}) leaderboard.");
 #endif
             CloudOnceUtils.SafeInvoke(onComplete, new CloudRequestResult<bool>(true));
         }
@@ -58,7 +59,7 @@ namespace CloudOnce.Internal.Utils
         public void LoadScores(string leaderboardID, Action<IScore[]> callback)
         {
             Debug.LogWarning("Leaderboards overlay is not supported in the Unity Editor.");
-            CloudOnceUtils.SafeInvoke(callback, new IScore[0]);
+            CloudOnceUtils.SafeInvoke(callback, Array.Empty<IScore>());
         }
 
         #endregion /Public methods

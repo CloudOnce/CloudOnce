@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 #if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Utils
 {
@@ -47,14 +48,16 @@ namespace CloudOnce.Internal.Utils
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
                 var authenticationError = string.IsNullOrEmpty(internalID)
-                    ? string.Format("Can't unlock {0}. UnlockAchievement can only be called after authentication.", id)
-                    : string.Format("Can't unlock {0} ({1}). Unlock can only be called after authentication.", internalID, id);
+                    ? $"Can't unlock {id}. UnlockAchievement can only be called after authentication."
+                    : $"Can't unlock {internalID} ({id}). Unlock can only be called after authentication.";
                 ReportError(authenticationError, onComplete);
                 return;
             }
 
-            Action<bool> callback = response => OnReportCompleted(response, onComplete, unlockAction, id, internalID);
-            PlayGamesPlatform.Instance.ReportProgress(id, 100.0, callback);
+            PlayGamesPlatform.Instance.ReportProgress(id, 100.0, Callback);
+            return;
+
+            void Callback(bool response) => OnReportCompleted(response, onComplete, unlockAction, id, internalID);
         }
 
         /// <summary>
@@ -77,14 +80,16 @@ namespace CloudOnce.Internal.Utils
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
                 var authenticationError = string.IsNullOrEmpty(internalID)
-                    ? string.Format("Can't reveal {0}. RevealAchievement can only be called after authentication.", id)
-                    : string.Format("Can't reveal {0} ({1}). Reveal can only be called after authentication.", internalID, id);
+                    ? $"Can't reveal {id}. RevealAchievement can only be called after authentication."
+                    : $"Can't reveal {internalID} ({id}). Reveal can only be called after authentication.";
                 ReportError(authenticationError, onComplete);
                 return;
             }
 
-            Action<bool> callback = response => OnReportCompleted(response, onComplete, revealAction, id, internalID);
-            PlayGamesPlatform.Instance.ReportProgress(id, 0.0, callback);
+            PlayGamesPlatform.Instance.ReportProgress(id, 0.0, Callback);
+            return;
+
+            void Callback(bool response) => OnReportCompleted(response, onComplete, revealAction, id, internalID);
         }
 
         /// <summary>
@@ -110,14 +115,16 @@ namespace CloudOnce.Internal.Utils
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
                 var authenticationError = string.IsNullOrEmpty(internalID)
-                    ? string.Format("Can't increment {0}. IncrementAchievement can only be called after authentication.", id)
-                    : string.Format("Can't increment {0} ({1}). Increment can only be called after authentication.", internalID, id);
+                    ? $"Can't increment {id}. IncrementAchievement can only be called after authentication."
+                    : $"Can't increment {internalID} ({id}). Increment can only be called after authentication.";
                 ReportError(authenticationError, onComplete);
                 return;
             }
 
-            Action<bool> callback = response => OnReportCompleted(response, onComplete, incrementAction, id, internalID);
-            PlayGamesPlatform.Instance.ReportProgress(id, progress, callback);
+            PlayGamesPlatform.Instance.ReportProgress(id, progress, Callback);
+            return;
+
+            void Callback(bool response) => OnReportCompleted(response, onComplete, incrementAction, id, internalID);
         }
 
         /// <summary>
@@ -139,7 +146,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Loads the achievement descriptions accociated with this application.
+        /// Loads the achievement descriptions associated with this application.
         /// </summary>
         /// <param name="callback">Callback to handle the achievement descriptions.</param>
         public void LoadAchievementDescriptions(Action<IAchievementDescription[]> callback)
@@ -158,7 +165,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Load the achievements the logged in user has already achieved or reported progress on.
+        /// Load the achievements the logged-in user has already achieved or reported progress on.
         /// </summary>
         /// <param name="callback">Callback to handle the achievements.</param>
         public void LoadAchievements(Action<IAchievement[]> callback)
@@ -207,7 +214,7 @@ namespace CloudOnce.Internal.Utils
             if (response)
             {
 #if CLOUDONCE_DEBUG
-                UnityEngine.Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
+                UnityEngine.Debug.Log($"Achievement {internalID} ({id}) was successfully {action}ed.");
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }
@@ -215,8 +222,8 @@ namespace CloudOnce.Internal.Utils
             {
                 // Customize error message to fit either new or old achievement system.
                 var error = string.IsNullOrEmpty(internalID)
-                        ? string.Format("Native API failed to {0} achievement {1}. Cause unknown.", action, id)
-                        : string.Format("Native API failed to {0} achievement {1} ({2}). Cause unknown.", action, internalID, id);
+                        ? $"Native API failed to {action} achievement {id}. Cause unknown."
+                        : $"Native API failed to {action} achievement {internalID} ({id}). Cause unknown.";
                 ReportError(error, callbackAction);
             }
         }
