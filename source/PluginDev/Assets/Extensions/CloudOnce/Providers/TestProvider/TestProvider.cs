@@ -109,7 +109,7 @@ namespace CloudOnce.Internal.Providers
             cloudSaveEnabled = activateCloudSave;
 
             var delay = Random.Range(0.5f, 2f);
-            Debug.Log($"Simulating random Initialize delay of {delay} seconds");
+            Debug.Log(string.Format("Simulating random Initialize delay of {0} seconds", delay));
 
             // Normal MonoBehaviour Invoke uses scalable delta time, some games use timescale to pause and use unscaled time in GUI
             // To Simulate Random Cloud Init Delay right we need to invoke at unscaled time
@@ -117,7 +117,7 @@ namespace CloudOnce.Internal.Providers
             {
                 var onInitializeComplete = new UnityAction(() =>
                 {
-                    SignIn(autoCloudLoad, _ => cloudOnceEvents.RaiseOnInitializeComplete());
+                    SignIn(autoCloudLoad, arg0 => cloudOnceEvents.RaiseOnInitializeComplete());
                 });
                 StartCoroutine(CloudOnceUtils.InvokeUnscaledTime(onInitializeComplete, delay));
             }
@@ -129,7 +129,7 @@ namespace CloudOnce.Internal.Providers
             if (activateCloudSave && autoCloudLoad)
             {
                 var loadDelay = Random.Range(delay, delay + 2f);
-                Debug.Log($"Simulating random Cloud load delay of {loadDelay} seconds");
+                Debug.Log(string.Format("Simulating random Cloud load delay of {0} seconds", loadDelay));
                 StartCoroutine(CloudOnceUtils.InvokeUnscaledTime(Cloud.Storage.Load, loadDelay));
             }
         }
@@ -151,7 +151,7 @@ namespace CloudOnce.Internal.Providers
             CloudOnceUtils.SafeInvoke(callback, true);
             cloudOnceEvents.RaiseOnSignedInChanged(true);
             var delay = Random.Range(0.5f, 2f);
-            Debug.Log($"Simulating random PlayerImageDownload delay of {delay} seconds");
+            Debug.Log(string.Format("Simulating random PlayerImageDownload delay of {0} seconds", delay));
             StartCoroutine(
                 CloudOnceUtils.InvokeUnscaledTime(
                     cloudOnceEvents.RaiseOnPlayerImageDownloaded, Texture2D.whiteTexture, delay));
@@ -232,12 +232,12 @@ namespace CloudOnce.Internal.Providers
             public TestUserProfile()
             {
                 var randomId = Random.Range(1, 99999);
-                id = $"{randomId:D5}";
+                id = string.Format("{0:D5}", randomId);
 #if UNITY_2020_1_OR_NEWER
                 gameId = id;
 #endif
                 userName = "User" + id;
-                isFriend = Random.Range(0, 2) is 1;
+                isFriend = Random.Range(0, 2) == 1;
                 state = (UserState)Random.Range(0, 5);
                 image = Texture2D.whiteTexture;
             }

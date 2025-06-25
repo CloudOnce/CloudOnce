@@ -34,7 +34,7 @@ namespace CloudOnce.Internal
         {
             DataType = dataType;
             PersistenceType = persistenceType;
-            if (persistenceType is PersistenceType.Latest)
+            if (persistenceType == PersistenceType.Latest)
             {
                 Timestamp = new DateTime(2014, 06, 30);
             }
@@ -45,7 +45,10 @@ namespace CloudOnce.Internal
         /// Reconstructs the metadata from a <see cref="JSONObject"/>.
         /// </summary>
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the meta data.</param>
-        public SyncableItemMetaData(JSONObject jsonObject) => FromJSONObject(jsonObject);
+        public SyncableItemMetaData(JSONObject jsonObject)
+        {
+            FromJSONObject(jsonObject);
+        }
 
         #endregion /Constructors
 
@@ -106,12 +109,19 @@ namespace CloudOnce.Internal
         /// <returns>The metadata as a formatted <see cref="string"/>.</returns>
         public override string ToString()
         {
-            if (PersistenceType is PersistenceType.Latest)
+            if (PersistenceType == PersistenceType.Latest)
             {
-                return $"DataType: {DataType}, PersistenceType: {PersistenceType}, TimeStamp: {Timestamp}";
+                return string.Format(
+                    "DataType: {0}, PersistenceType: {1}, TimeStamp: {2}",
+                    DataType,
+                    PersistenceType,
+                    Timestamp);
             }
 
-            return $"DataType: {DataType}, PersistenceType: {PersistenceType}";
+            return string.Format(
+                "DataType: {0}, PersistenceType: {1}",
+                DataType,
+                PersistenceType);
         }
 
         /// <summary>
@@ -120,8 +130,8 @@ namespace CloudOnce.Internal
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the meta data.</param>
         public void FromJSONObject(JSONObject jsonObject)
         {
-            var dataTypeAlias = CloudOnceUtils.GetAlias(nameof(SyncableItemMetaData), jsonObject, aliasDataType, oldAliasDataType);
-            var persistenceTypeAlias = CloudOnceUtils.GetAlias(nameof(SyncableItemMetaData), jsonObject, aliasPersistenceType, oldAliasPersistenceType);
+            var dataTypeAlias = CloudOnceUtils.GetAlias(typeof(SyncableItemMetaData).Name, jsonObject, aliasDataType, oldAliasDataType);
+            var persistenceTypeAlias = CloudOnceUtils.GetAlias(typeof(SyncableItemMetaData).Name, jsonObject, aliasPersistenceType, oldAliasPersistenceType);
 
             if (!string.IsNullOrEmpty(jsonObject[dataTypeAlias].String))
             {
@@ -161,7 +171,7 @@ namespace CloudOnce.Internal
 
             jsonObject.AddField(aliasDataType, (short)DataType);
             jsonObject.AddField(aliasPersistenceType, (short)PersistenceType);
-            if (PersistenceType is PersistenceType.Latest)
+            if (PersistenceType == PersistenceType.Latest)
             {
                 jsonObject.AddField(aliasTimestamp, Timestamp.ToBinary().ToString(CultureInfo.InvariantCulture));
             }

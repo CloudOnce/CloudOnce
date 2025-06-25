@@ -10,7 +10,9 @@ namespace CloudOnce.Internal.Editor.Utils
     using System.Linq;
     using UnityEditor;
     using UnityEngine;
+#if UNITY_6000_0_OR_NEWER
     using UnityEditor.Build;
+#endif
 
     /// <summary>
     /// Build utilities used by the CloudOnce editor.
@@ -21,7 +23,9 @@ namespace CloudOnce.Internal.Editor.Utils
 
         private const string debugBuildSymbolConstraint = "CLOUDONCE_DEBUG";
         private const string googleBuildSymbolConstraint = "CLOUDONCE_GOOGLE";
-
+#if !UNITY_2018_3_OR_NEWER
+        private static readonly AndroidManifestModifier s_manifestModifier = new AndroidManifestModifier();
+#endif
         #endregion /Fields & properties
 
         #region Public methods
@@ -61,6 +65,9 @@ namespace CloudOnce.Internal.Editor.Utils
         /// </summary>
         public static void EnableGoogleBuildPlatform()
         {
+#if !UNITY_2018_3_OR_NEWER
+            s_manifestModifier.EnableGoogleBuildPlatform();
+#endif
             if (!AndroidBuildSymbolIsDefined(googleBuildSymbolConstraint))
             {
                 SetAndroidBuildSymbolImpl(new[] { googleBuildSymbolConstraint }, null);
@@ -88,7 +95,11 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <returns>List of defined build constraint symbols.</returns>
         private static List<string> GetAndroidDefinesList()
         {
+#if UNITY_6000_0_OR_NEWER
             return PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.Android).Split(';').ToList();
+#else
+            return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android).Split(';').ToList();
+#endif
         }
 
         /// <summary>
@@ -97,7 +108,11 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <returns>List of defined build constraint symbols.</returns>
         private static List<string> GetiOSDefinesList()
         {
+#if UNITY_6000_0_OR_NEWER
             return PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.iOS).Split(';').ToList();
+#else
+            return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS).Split(';').ToList();
+#endif
         }
 
         /// <summary>
@@ -137,7 +152,8 @@ namespace CloudOnce.Internal.Editor.Utils
                     {
                         if (disableSymbols.Contains(defineSymbol))
                         {
-                            Debug.LogWarning($"Define Symbol \"{defineSymbol}\" is being disabled and enabled in the same operation!");
+                            Debug.LogWarning(string.Format(
+                                    "Define Symbol \"{0}\" is being disabled and enabled in the same operation!", defineSymbol));
                         }
                     }
 
@@ -155,8 +171,11 @@ namespace CloudOnce.Internal.Editor.Utils
                     }
                 }
             }
-
+#if UNITY_6000_0_OR_NEWER
             PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.Android, string.Join(";", definedSymbols.ToArray()));
+#else
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, string.Join(";", definedSymbols.ToArray()));
+#endif
         }
 
         /// <summary>
@@ -176,7 +195,8 @@ namespace CloudOnce.Internal.Editor.Utils
                     {
                         if (disableSymbols.Contains(defineSymbol))
                         {
-                            Debug.LogWarning($"Define Symbol \"{defineSymbol}\" is being disabled and enabled in the same operation!");
+                            Debug.LogWarning(string.Format(
+                                    "Define Symbol \"{0}\" is being disabled and enabled in the same operation!", defineSymbol));
                         }
                     }
 
@@ -195,7 +215,11 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
             }
 
+#if UNITY_6000_0_OR_NEWER
             PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.iOS, string.Join(";", definedSymbols.ToArray()));
+#else
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, string.Join(";", definedSymbols.ToArray()));
+#endif
         }
 
         #endregion / Private methods

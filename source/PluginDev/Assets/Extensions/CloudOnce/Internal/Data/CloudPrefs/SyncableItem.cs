@@ -119,8 +119,8 @@ namespace CloudOnce.Internal
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the item data.</param>
         public void FromJSONObject(JSONObject jsonObject)
         {
-            var valueStringAlias = CloudOnceUtils.GetAlias(nameof(SyncableItem), jsonObject, aliasValueString, oldAliasValueString);
-            var metaDataAlias = CloudOnceUtils.GetAlias(nameof(SyncableItem), jsonObject, aliasMetadata, oldAliasMetadata);
+            var valueStringAlias = CloudOnceUtils.GetAlias(typeof(SyncableItem).Name, jsonObject, aliasValueString, oldAliasValueString);
+            var metaDataAlias = CloudOnceUtils.GetAlias(typeof(SyncableItem).Name, jsonObject, aliasMetadata, oldAliasMetadata);
 
             valueString = jsonObject[valueStringAlias].String;
             Metadata = new SyncableItemMetaData(jsonObject[metaDataAlias]);

@@ -22,34 +22,49 @@ namespace CloudOnce.Internal.Providers
         /// <summary>
         /// ID for currently signed in player. Will always return DummyPlayerID when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override string PlayerID => "DummyPlayerID";
+        public override string PlayerID
+        {
+            get { return "DummyPlayerID"; }
+        }
 
         /// <summary>
         /// Display name for currently signed in player. Will always return DummyPlayerName when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override string PlayerDisplayName => "DummyPlayerName";
+        public override string PlayerDisplayName
+        {
+            get { return "DummyPlayerName"; }
+        }
 
         /// <summary>
         /// Profile picture for currently signed in player. Will always return <see cref="Texture2D.whiteTexture"/> when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override Texture2D PlayerImage => Texture2D.whiteTexture;
+        public override Texture2D PlayerImage
+        {
+            get { return Texture2D.whiteTexture; }
+        }
 
         /// <summary>
         /// Whether the user is currently signed in. Is always disabled when using <see cref="DummyProvider"/>.
         /// </summary>
-        public override bool IsSignedIn => false;
+        public override bool IsSignedIn
+        {
+            get { return false; }
+        }
 
         /// <summary>
         /// Whether Cloud Save has been initialized. Is always <c>false</c> when using <see cref="DummyProvider"/>.
         /// </summary>
-        public bool CloudSaveInitialized => false;
+        public bool CloudSaveInitialized
+        {
+            get { return false; }
+        }
 
         /// <summary>
         /// Whether Cloud Save is enabled. Is always disabled when using <see cref="DummyProvider"/>.
         /// </summary>
         public override bool CloudSaveEnabled
         {
-            get => false;
+            get { return false; }
             set { }
         }
 

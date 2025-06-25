@@ -804,9 +804,10 @@ namespace CloudOnce.Internal.Editor
                 GUI.enabled = true;
                 if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
                 {
-                    var message =
-                        "Can only run setup when Platform in Build Settings (Ctrl+Shift+B) is set to Android. " +
-                        $"It is currently set to {EditorUserBuildSettings.activeBuildTarget}. Please change it and run setup again.";
+                    var message = string.Format(
+                            "Can only run setup when Platform in Build Settings (Ctrl+Shift+B) is set to Android. " +
+                            "It is currently set to {0}. Please change it and run setup again.",
+                            EditorUserBuildSettings.activeBuildTarget);
                     EditorUtility.DisplayDialog("Google Application ID setup", message, "OK");
                 }
                 else

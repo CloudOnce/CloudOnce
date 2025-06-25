@@ -65,7 +65,7 @@ namespace CloudOnce.Internal
                 // we create one and hide it.
                 var obj = new GameObject
                 {
-                    name = $"NewTransient{typeof(T)}Singleton",
+                    name = string.Format("NewTransient{0}Singleton", typeof(T)),
                     hideFlags = HideFlags.HideAndDontSave
                 };
 

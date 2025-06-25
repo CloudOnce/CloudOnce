@@ -133,7 +133,7 @@ namespace CloudOnce.Internal.Utils
             if (response)
             {
 #if CLOUDONCE_DEBUG
-                Debug.Log($"Achievement {internalID} ({id}) was successfully {action}ed.");
+                Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }
@@ -141,8 +141,8 @@ namespace CloudOnce.Internal.Utils
             {
                 // Customize error message to fit either new or old achievement system.
                 var error = string.IsNullOrEmpty(internalID)
-                        ? $"Native API failed to {action} achievement {id}. Cause unknown."
-                        : $"Native API failed to {action} achievement {internalID} ({id}). Cause unknown.";
+                        ? string.Format("Native API failed to {0} achievement {1}. Cause unknown.", action, id)
+                        : string.Format("Native API failed to {0} achievement {1} ({2}). Cause unknown.", action, internalID, id);
                 ReportError(error, callbackAction);
             }
         }

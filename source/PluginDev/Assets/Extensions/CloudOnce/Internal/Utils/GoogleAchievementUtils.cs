@@ -48,16 +48,14 @@ namespace CloudOnce.Internal.Utils
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
                 var authenticationError = string.IsNullOrEmpty(internalID)
-                    ? $"Can't unlock {id}. UnlockAchievement can only be called after authentication."
-                    : $"Can't unlock {internalID} ({id}). Unlock can only be called after authentication.";
+                    ? string.Format("Can't unlock {0}. UnlockAchievement can only be called after authentication.", id)
+                    : string.Format("Can't unlock {0} ({1}). Unlock can only be called after authentication.", internalID, id);
                 ReportError(authenticationError, onComplete);
                 return;
             }
 
-            PlayGamesPlatform.Instance.ReportProgress(id, 100.0, Callback);
-            return;
-
-            void Callback(bool response) => OnReportCompleted(response, onComplete, unlockAction, id, internalID);
+            Action<bool> callback = response => OnReportCompleted(response, onComplete, unlockAction, id, internalID);
+            PlayGamesPlatform.Instance.ReportProgress(id, 100.0, callback);
         }
 
         /// <summary>
@@ -80,16 +78,14 @@ namespace CloudOnce.Internal.Utils
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
                 var authenticationError = string.IsNullOrEmpty(internalID)
-                    ? $"Can't reveal {id}. RevealAchievement can only be called after authentication."
-                    : $"Can't reveal {internalID} ({id}). Reveal can only be called after authentication.";
+                    ? string.Format("Can't reveal {0}. RevealAchievement can only be called after authentication.", id)
+                    : string.Format("Can't reveal {0} ({1}). Reveal can only be called after authentication.", internalID, id);
                 ReportError(authenticationError, onComplete);
                 return;
             }
 
-            PlayGamesPlatform.Instance.ReportProgress(id, 0.0, Callback);
-            return;
-
-            void Callback(bool response) => OnReportCompleted(response, onComplete, revealAction, id, internalID);
+            Action<bool> callback = response => OnReportCompleted(response, onComplete, revealAction, id, internalID);
+            PlayGamesPlatform.Instance.ReportProgress(id, 0.0, callback);
         }
 
         /// <summary>
@@ -115,16 +111,14 @@ namespace CloudOnce.Internal.Utils
             if (!GooglePlayGamesCloudProvider.Instance.IsGpgsInitialized)
             {
                 var authenticationError = string.IsNullOrEmpty(internalID)
-                    ? $"Can't increment {id}. IncrementAchievement can only be called after authentication."
-                    : $"Can't increment {internalID} ({id}). Increment can only be called after authentication.";
+                    ? string.Format("Can't increment {0}. IncrementAchievement can only be called after authentication.", id)
+                    : string.Format("Can't increment {0} ({1}). Increment can only be called after authentication.", internalID, id);
                 ReportError(authenticationError, onComplete);
                 return;
             }
 
-            PlayGamesPlatform.Instance.ReportProgress(id, progress, Callback);
-            return;
-
-            void Callback(bool response) => OnReportCompleted(response, onComplete, incrementAction, id, internalID);
+            Action<bool> callback = response => OnReportCompleted(response, onComplete, incrementAction, id, internalID);
+            PlayGamesPlatform.Instance.ReportProgress(id, progress, callback);
         }
 
         /// <summary>
@@ -214,7 +208,7 @@ namespace CloudOnce.Internal.Utils
             if (response)
             {
 #if CLOUDONCE_DEBUG
-                UnityEngine.Debug.Log($"Achievement {internalID} ({id}) was successfully {action}ed.");
+                UnityEngine.Debug.Log(string.Format("Achievement {0} ({1}) was successfully {2}ed.", internalID, id, action));
 #endif
                 CloudOnceUtils.SafeInvoke(callbackAction, new CloudRequestResult<bool>(true));
             }
@@ -222,8 +216,8 @@ namespace CloudOnce.Internal.Utils
             {
                 // Customize error message to fit either new or old achievement system.
                 var error = string.IsNullOrEmpty(internalID)
-                        ? $"Native API failed to {action} achievement {id}. Cause unknown."
-                        : $"Native API failed to {action} achievement {internalID} ({id}). Cause unknown.";
+                        ? string.Format("Native API failed to {0} achievement {1}. Cause unknown.", action, id)
+                        : string.Format("Native API failed to {0} achievement {1} ({2}). Cause unknown.", action, internalID, id);
                 ReportError(error, callbackAction);
             }
         }

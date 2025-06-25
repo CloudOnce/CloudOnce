@@ -170,7 +170,7 @@ namespace CloudOnce.Internal.Providers
             IsGpgsInitialized = true;
             if (!IsGuestUserDefault && autoSignIn)
             {
-                var onSignedIn = new UnityAction<bool>(_ =>
+                var onSignedIn = new UnityAction<bool>(arg0 =>
                 {
                     cloudOnceEvents.RaiseOnInitializeComplete();
                     initializing = false;
@@ -221,7 +221,7 @@ namespace CloudOnce.Internal.Providers
 
             PlayGamesPlatform.Instance.Authenticate(signInStatus =>
             {
-                if (signInStatus is SignInStatus.Success)
+                if (signInStatus == SignInStatus.Success)
                 {
                     cloudOnceEvents.RaiseOnSignedInChanged(true);
                     Logger.d("Successfully signed in to Google Play Game Services. Player: " + PlayerDisplayName);
@@ -257,8 +257,7 @@ namespace CloudOnce.Internal.Providers
                     bool hasNoInternet;
                     try
                     {
-                        hasNoInternet = InternetConnectionUtils.GetConnectionStatus() !=
-                                        InternetConnectionStatus.Connected;
+                        hasNoInternet = InternetConnectionUtils.GetConnectionStatus() != InternetConnectionStatus.Connected;
                     }
                     catch (NotSupportedException)
                     {
@@ -283,7 +282,7 @@ namespace CloudOnce.Internal.Providers
                     }
                 }
 
-                CloudOnceUtils.SafeInvoke(callback, signInStatus is SignInStatus.Success);
+                CloudOnceUtils.SafeInvoke(callback, signInStatus == SignInStatus.Success);
             });
         }
 
@@ -371,7 +370,8 @@ namespace CloudOnce.Internal.Providers
                 if (!achievementFound)
                 {
 #if CLOUDONCE_DEBUG
-                    Debug.Log($"An achievement ({achievement.id}) that doesn't exist in the Achievements class was loaded from native API.");
+                    Debug.Log(string.Format(
+                        "An achievement ({0}) that doesn't exist in the Achievements class was loaded from native API.", achievement.id));
 #endif
                 }
             }
