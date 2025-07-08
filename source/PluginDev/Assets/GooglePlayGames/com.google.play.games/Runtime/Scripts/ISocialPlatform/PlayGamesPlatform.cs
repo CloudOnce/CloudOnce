@@ -228,14 +228,10 @@ namespace GooglePlayGames
         /// <remarks> After a mapping is
         /// registered, you can use <c>fromId</c> instead of <c>toId</c> when making a call.
         /// For example, the following two snippets are equivalent:
-        /// <code>
-        /// ReportProgress("Cfiwjew894_AQ", 100.0, callback);
-        /// </code>
-        /// ...is equivalent to:
-        /// <code>
-        /// AddIdMapping("super-combo", "Cfiwjew894_AQ");
-        /// ReportProgress("super-combo", 100.0, callback);
-        /// </code>
+        /// <c>ReportProgress("Cfiwjew894_AQ", 100.0, callback);</c>
+        /// is equivalent to:
+        /// <c>AddIdMapping("super-combo", "Cfiwjew894_AQ");</c>
+        /// <c>ReportProgress("super-combo", 100.0, callback);</c>
         /// </remarks>
         /// <param name='fromId'>
         /// The identifier to map.
@@ -312,20 +308,17 @@ namespace GooglePlayGames
         /// Requests server-side access to Player Games Services for the currently signed in player.
         /// </summary>
         /// When requested an authorization code is returned that can be used by your game-server to
-        /// exchange for an access token and conditionally a refresh token (when {@code
-        /// forceRefreshToken} is true). The access token may then be used by your game-server to
+        /// exchange for an access token and conditionally a refresh token (when
+        /// <c>forceRefreshToken</c> is true). The access token may then be used by your game-server to
         /// access the Play Games Services web APIs. This is commonly used to complete a sign-in flow
         /// by verifying the Play Games Services player id.
         ///
-        /// <p>If {@code forceRefreshToken} is true, when exchanging the authorization code a refresh
+        /// <p>If <c>forceRefreshToken</c> is true, when exchanging the authorization code a refresh
         /// token will be returned in addition to the access token. The refresh token allows the
         /// game-server to request additional access tokens, allowing your game-server to continue
-        /// accesses Play Games Services while the user is not actively playing your app. <remarks>
-        ///
-        /// </remarks>
-        /// <param name="forceRefreshToken">If {@code true} when the returned authorization code is
-        /// exchanged a refresh token will be included in addition to an access token.</param> <param
-        /// name="callback"></param>
+        /// accesses Play Games Services while the user is not actively playing your app. </p>
+        /// <param name="forceRefreshToken">If set to <c>true</c>, a refresh token will be returned along with the access token.</param>
+        /// <param name="callback">The callback to invoke with the server authorization code.</param>
         public void RequestServerSideAccess(bool forceRefreshToken, Action<string> callback)
         {
             Misc.CheckNotNull(callback);
@@ -340,7 +333,40 @@ namespace GooglePlayGames
             mClient.RequestServerSideAccess(forceRefreshToken, callback);
         }
 
+        /// <summary>
+        /// Requests server-side access to Player Games Services for the currently signed in player.
+        /// </summary>
+        /// When requested an authorization code is returned that can be used by your game-server to
+        /// exchange for an access token and conditionally a refresh token (when
+        /// <c>forceRefreshToken</c> is true). The access token may then be used by your game-server to
+        /// access the Play Games Services web APIs. This is commonly used to complete a sign-in flow
+        /// by verifying the Play Games Services player id.
+        ///
+        /// <p>If <c>forceRefreshToken</c> is true, when exchanging the authorization code a refresh
+        /// token will be returned in addition to the access token. The refresh token allows the
+        /// game-server to request additional access tokens, allowing your game-server to continue
+        /// accesses Play Games Services while the user is not actively playing your app. </p>
+        /// <param name="forceRefreshToken">If set to <c>true</c>, a refresh token will be returned along with the access token.</param>
+        /// <param name="scopes">The OAuth 2.0 scopes to request access to.</param>
+        /// <param name="callback">The callback to invoke with the AuthResponse.</param>
+        public void RequestServerSideAccess(bool forceRefreshToken, List<AuthScope> scopes, Action<AuthResponse> callback)
+        {
+            Misc.CheckNotNull(callback);
 
+            if (!IsAuthenticated())
+            {
+                OurUtils.Logger.e("RequestServerSideAccess() can only be called after authentication.");
+                InvokeCallbackOnGameThread(callback, null);
+                return;
+            }
+
+            mClient.RequestServerSideAccess(forceRefreshToken, scopes, callback);
+        }
+
+        /// <summary>
+        /// Requests access to the recall API.
+        /// </summary>
+        /// <param name="callback">The callback to invoke with the recall access.</param>
         public void RequestRecallAccess(Action<RecallAccess> callback)
         {
             Misc.CheckNotNull(callback);
@@ -409,7 +435,7 @@ namespace GooglePlayGames
         /// Returns the user's display name.
         /// </summary>
         /// <returns>
-        /// The user display name (e.g. "Bruno Oliveira")
+        /// The user display name. For example, "Bruno Oliveira"
         /// </returns>
         public string GetUserDisplayName()
         {
@@ -427,7 +453,7 @@ namespace GooglePlayGames
         /// Returns the user's avatar URL if they have one.
         /// </summary>
         /// <returns>
-        /// The URL, or <code>null</code> if the user is not authenticated or does not have
+        /// The URL, or null if the user is not authenticated or does not have
         /// an avatar.
         /// </returns>
         public string GetUserImageUrl()
@@ -444,11 +470,11 @@ namespace GooglePlayGames
 
         /// <summary>
         /// Reports the progress of an achievement (reveal, unlock or increment). This method attempts
-        /// to implement the expected behavior of ISocialPlatform.ReportProgress as closely as possible,
+        /// to implement the expected behavior of <c>ISocialPlatform.ReportProgress</c> as closely as possible,
         /// as described below. Although this method works with incremental achievements for compatibility
         /// purposes, calling this method for incremental achievements is not recommended,
         /// since the Play Games API exposes incremental achievements in a very different way
-        /// than the interface presented by ISocialPlatform.ReportProgress. The implementation of this
+        /// than the interface presented by <c>ISocialPlatform.ReportProgress</c>. The implementation of this
         /// method for incremental achievements attempts to produce the correct result, but may be
         /// imprecise. If possible, call <see cref="IncrementAchievement" /> instead.
         /// </summary>
@@ -543,6 +569,18 @@ namespace GooglePlayGames
             });
         }
 
+        /// <summary>
+        /// Converts a progress value to a number of steps.
+        /// </summary>
+        /// <param name='progress'>
+        /// The progress value.
+        /// </param>
+        /// <param name='totalSteps'>
+        /// The total number of steps.
+        /// </param>
+        /// <returns>
+        /// The number of steps.
+        /// </returns>
         internal static int progressToSteps(double progress, int totalSteps) {
             return (progress >= 100.0) ? totalSteps : (int) (progress * totalSteps / 100.0);
         }
@@ -551,10 +589,10 @@ namespace GooglePlayGames
         /// Reveals the achievement with the passed identifier. This is a Play Games extension of the ISocialPlatform API.
         /// </summary>
         /// <remarks>If the operation succeeds, the callback
-        /// will be invoked on the game thread with <code>true</code>. If the operation fails, the
-        /// callback will be invoked with <code>false</code>. This operation will immediately fail if
-        /// the user is not authenticated (i.e. the callback will immediately be invoked with
-        /// <code>false</code>). If the achievement is already in a revealed state, this call will
+        /// will be invoked on the game thread with <c>true</c>. If the operation fails, the
+        /// callback will be invoked with <c>false</c>. This operation will immediately fail if
+        /// the user is not authenticated (the callback will immediately be invoked with
+        /// false). If the achievement is already in a revealed state, this call will
         /// succeed immediately.
         /// </remarks>
         /// <param name='achievementID'>
@@ -591,10 +629,10 @@ namespace GooglePlayGames
         /// Unlocks the achievement with the passed identifier. This is a Play Games extension of the ISocialPlatform API.
         /// </summary>
         /// <remarks>If the operation succeeds, the callback
-        /// will be invoked on the game thread with <code>true</code>. If the operation fails, the
-        /// callback will be invoked with <code>false</code>. This operation will immediately fail if
-        /// the user is not authenticated (i.e. the callback will immediately be invoked with
-        /// <code>false</code>). If the achievement is already unlocked, this call will
+        /// will be invoked on the game thread with <c>true</c>. If the operation fails, the
+        /// callback will be invoked with false. This operation will immediately fail if
+        /// the user is not authenticated (the callback will immediately be invoked with
+        /// <c>false</c>). If the achievement is already unlocked, this call will
         /// succeed immediately.
         /// </remarks>
         /// <param name='achievementID'>
@@ -1170,9 +1208,9 @@ namespace GooglePlayGames
         /// <summary>
         /// Returns if the user has allowed permission for the game to access the friends list.
         /// </summary>
-        /// <param name="forceReload">If true, this call will clear any locally cached data and
-        /// attempt to fetch the latest data from the server. Normally, this should be set to {@code
-        /// false} to gain advantages of data caching.</param>
+        /// <param name="forceReload">If <c>true</c>, this call will clear any locally cached data and
+        /// attempt to fetch the latest data from the server. Normally, this should be set to
+        /// <c>false</c> to gain advantages of data caching.</param>
         /// <param name="callback">Callback invoked upon completion.</param>
         public void GetFriendsListVisibility(bool forceReload,
             Action<FriendsListVisibilityStatus> callback)
@@ -1224,7 +1262,7 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Loads the first page of the user's friends
+        /// Loads the first page of the user's friends.
         /// </summary>
         /// <param name="pageSize">
         /// The number of entries to request for this initial page. Note that if cached
@@ -1234,9 +1272,9 @@ namespace GooglePlayGames
         /// <param name="forceReload">
         /// If true, this call will clear any locally cached data and attempt to
         /// fetch the latest data from the server. This would commonly be used for something like a
-        /// user-initiated refresh. Normally, this should be set to {@code false} to gain advantages
-        /// of data caching.</param> <param name="callback">Callback invoked upon
-        /// completion.</param>
+        /// user-initiated refresh. Normally, this should be set to <c>false</c> to gain advantages of data caching.
+        /// </param>
+        /// <param name="callback">Callback invoked upon completion with the status.</param>
         public void LoadFriends(int pageSize, bool forceReload,
             Action<LoadFriendsStatus> callback)
         {
@@ -1320,12 +1358,12 @@ namespace GooglePlayGames
         /// <summary>
         /// Maps the alias to the identifier.
         /// </summary>
+        /// <param name="id">Alias to map</param>
         /// <remarks>This maps an aliased ID to the actual id.  The intent of
         /// this method is to allow easy to read constants to be used instead of
         /// the generated ids.
         /// </remarks>
         /// <returns>The identifier, or null if not found.</returns>
-        /// <param name="id">Alias to map</param>
         private string MapId(string id)
         {
             if (id == null)
