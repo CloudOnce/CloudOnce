@@ -10,6 +10,9 @@ namespace CloudOnce.Internal.Editor.Utils
     using System.Linq;
     using UnityEditor;
     using UnityEngine;
+#if UNITY_6000_0_OR_NEWER
+    using UnityEditor.Build;
+#endif
 
     /// <summary>
     /// Build utilities used by the CloudOnce editor.
@@ -92,7 +95,11 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <returns>List of defined build constraint symbols.</returns>
         private static List<string> GetAndroidDefinesList()
         {
+#if UNITY_6000_0_OR_NEWER
+            return PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.Android).Split(';').ToList();
+#else
             return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android).Split(';').ToList();
+#endif
         }
 
         /// <summary>
@@ -101,7 +108,11 @@ namespace CloudOnce.Internal.Editor.Utils
         /// <returns>List of defined build constraint symbols.</returns>
         private static List<string> GetiOSDefinesList()
         {
+#if UNITY_6000_0_OR_NEWER
+            return PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.iOS).Split(';').ToList();
+#else
             return PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS).Split(';').ToList();
+#endif
         }
 
         /// <summary>
@@ -160,8 +171,11 @@ namespace CloudOnce.Internal.Editor.Utils
                     }
                 }
             }
-
+#if UNITY_6000_0_OR_NEWER
+            PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.Android, string.Join(";", definedSymbols.ToArray()));
+#else
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, string.Join(";", definedSymbols.ToArray()));
+#endif
         }
 
         /// <summary>
@@ -201,7 +215,11 @@ namespace CloudOnce.Internal.Editor.Utils
                 }
             }
 
+#if UNITY_6000_0_OR_NEWER
+            PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.iOS, string.Join(";", definedSymbols.ToArray()));
+#else
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, string.Join(";", definedSymbols.ToArray()));
+#endif
         }
 
         #endregion / Private methods

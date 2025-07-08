@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 #if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Utils
 {

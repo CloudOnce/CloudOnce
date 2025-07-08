@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce.Internal.Utils
 {
     using System;
@@ -107,7 +108,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Load the achievements the logged in user has already achieved or reported progress on.
+        /// Load the achievements the logged-in user has already achieved or reported progress on.
         /// </summary>
         /// <param name="callback">Callback to handle the achievements.</param>
         public void LoadAchievements(Action<IAchievement[]> callback)

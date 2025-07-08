@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 #if UNITY_ANDROID && CLOUDONCE_GOOGLE
 namespace CloudOnce.Internal.Utils
 {
@@ -139,7 +140,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Loads the achievement descriptions accociated with this application.
+        /// Loads the achievement descriptions associated with this application.
         /// </summary>
         /// <param name="callback">Callback to handle the achievement descriptions.</param>
         public void LoadAchievementDescriptions(Action<IAchievementDescription[]> callback)
@@ -158,7 +159,7 @@ namespace CloudOnce.Internal.Utils
         }
 
         /// <summary>
-        /// Load the achievements the logged in user has already achieved or reported progress on.
+        /// Load the achievements the logged-in user has already achieved or reported progress on.
         /// </summary>
         /// <param name="callback">Callback to handle the achievements.</param>
         public void LoadAchievements(Action<IAchievement[]> callback)

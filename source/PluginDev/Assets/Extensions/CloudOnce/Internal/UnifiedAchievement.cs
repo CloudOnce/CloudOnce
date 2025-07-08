@@ -39,7 +39,7 @@ namespace CloudOnce.Internal
         public string ID { get; private set; }
 
         /// <summary>
-        /// Whether or not this achievement has been unlocked.
+        /// Whether this achievement has been unlocked.
         /// </summary>
         public bool IsUnlocked { get; private set; }
 
@@ -147,7 +147,7 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="progress">
         /// The current progress of this achievement, represented as a number between 0.0 and 100.0.
-        /// A progress of 0.0 will reveal the achievement and 100.0 will unlock it.
+        /// Progress of 0.0 will reveal the achievement and 100.0 will unlock it.
         /// <para> </para>
         /// This value is interpreted as the total percentage of the achievement's progress that the
         /// player should have as a result of this call (regardless of the progress they had before).
@@ -210,9 +210,9 @@ namespace CloudOnce.Internal
         /// Updates locked status and progress with data received from native API.
         /// <para>Only intended to be used by internal CloudOnce systems.</para>
         /// </summary>
-        /// <param name="isUnlocked">Whether or not this achievement has been unlocked.</param>
+        /// <param name="isUnlocked">Whether this achievement has been unlocked.</param>
         /// <param name="progress">The current progress of this achievement, represented as a number between 0.0 and 100.0.</param>
-        /// <param name="isHidden">Whether or not this achievement is hidden.</param>
+        /// <param name="isHidden">Whether this achievement is hidden.</param>
         public void UpdateData(bool isUnlocked, double progress, bool isHidden)
         {
 #if CLOUDONCE_DEBUG

@@ -31,7 +31,7 @@ namespace CloudOnce.Internal.Providers
         /// Resets a Cloud variable to the default value.
         /// </summary>
         /// <param name="key">The unique identifier for the Cloud variable you want to reset.</param>
-        /// <returns>Whether or not the variable was successfully reset.</returns>
+        /// <returns>Whether the variable was successfully reset.</returns>
         bool ResetVariable(string key);
 
         /// <summary>

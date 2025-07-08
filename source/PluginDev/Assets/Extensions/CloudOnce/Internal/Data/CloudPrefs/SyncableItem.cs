@@ -127,9 +127,9 @@ namespace CloudOnce.Internal
         }
 
         /// <summary>
-        /// Returns the meta data as a formatted <see cref="string"/>.
+        /// Returns the metadata as a formatted <see cref="string"/>.
         /// </summary>
-        /// <returns>The meta data as a formatted <see cref="string"/>.</returns>
+        /// <returns>The metadata as a formatted <see cref="string"/>.</returns>
         public override string ToString()
         {
             return string.Format("Value: {0}" + Environment.NewLine + " Meta Data: {1}", ValueString, Metadata);

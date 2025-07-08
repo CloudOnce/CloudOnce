@@ -30,9 +30,7 @@ namespace CloudOnce.Internal
         /// </summary>
         /// <param name="dataType">The data type</param>
         /// <param name="persistenceType">The selected conflict resolution type</param>
-        public SyncableItemMetaData(
-            DataType dataType,
-            PersistenceType persistenceType)
+        public SyncableItemMetaData(DataType dataType, PersistenceType persistenceType)
         {
             DataType = dataType;
             PersistenceType = persistenceType;
@@ -44,7 +42,7 @@ namespace CloudOnce.Internal
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SyncableItemMetaData"/> class.
-        /// Reconstructs the meta data from a <see cref="JSONObject"/>.
+        /// Reconstructs the metadata from a <see cref="JSONObject"/>.
         /// </summary>
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the meta data.</param>
         public SyncableItemMetaData(JSONObject jsonObject)
@@ -84,10 +82,10 @@ namespace CloudOnce.Internal
         }
 
         /// <summary>
-        /// Check if this meta data is identical to another.
+        /// Check if this metadata is identical to another.
         /// </summary>
-        /// <param name="other">The other meta data to check against.</param>
-        /// <returns>Returns <c>true</c> if the meta data is identical, <c>false</c> if there are any differences.</returns>
+        /// <param name="other">The other metadata to check against.</param>
+        /// <returns>Returns <c>true</c> if the metadata is identical, <c>false</c> if there are any differences.</returns>
         public bool Equals(SyncableItemMetaData other)
         {
             if (other == null)
@@ -106,9 +104,9 @@ namespace CloudOnce.Internal
         }
 
         /// <summary>
-        /// Returns the meta data as a formatted <see cref="string"/>.
+        /// Returns the metadata as a formatted <see cref="string"/>.
         /// </summary>
-        /// <returns>The meta data as a formatted <see cref="string"/>.</returns>
+        /// <returns>The metadata as a formatted <see cref="string"/>.</returns>
         public override string ToString()
         {
             if (PersistenceType == PersistenceType.Latest)
@@ -127,7 +125,7 @@ namespace CloudOnce.Internal
         }
 
         /// <summary>
-        /// Reconstructs the meta data from a <see cref="JSONObject"/>.
+        /// Reconstructs the metadata from a <see cref="JSONObject"/>.
         /// </summary>
         /// <param name="jsonObject"><see cref="JSONObject"/> containing the meta data.</param>
         public void FromJSONObject(JSONObject jsonObject)
@@ -164,7 +162,7 @@ namespace CloudOnce.Internal
         }
 
         /// <summary>
-        /// Converts the meta data into a <see cref="JSONObject"/>.
+        /// Converts the metadata into a <see cref="JSONObject"/>.
         /// </summary>
         /// <returns><see cref="JSONObject"/> containing the meta data</returns>
         public JSONObject ToJSONObject()

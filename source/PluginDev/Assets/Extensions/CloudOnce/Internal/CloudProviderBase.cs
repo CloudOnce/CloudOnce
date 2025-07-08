@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce.Internal
 {
     using System;
@@ -94,12 +95,12 @@ namespace CloudOnce.Internal
         public abstract Texture2D PlayerImage { get; }
 
         /// <summary>
-        /// Whether or not the user is currently signed in.
+        /// Whether the user is currently signed in.
         /// </summary>
         public abstract bool IsSignedIn { get; }
 
         /// <summary>
-        /// Whether or not Cloud Save is enabled.
+        /// Whether Cloud Save is enabled.
         /// Disabling Cloud Save will make <c>Cloud.Storage.Save</c> only save to disk.
         /// Can only be enabled if Cloud Save was initialized in <see cref="Cloud.Initialize"/> method.
         /// </summary>
@@ -113,12 +114,12 @@ namespace CloudOnce.Internal
         /// <summary>
         /// Initializes the current cloud provider.
         /// </summary>
-        /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
+        /// <param name="activateCloudSave">Whether Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
-        /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
+        /// Whether <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
         /// </param>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         public abstract void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true);
@@ -127,7 +128,7 @@ namespace CloudOnce.Internal
         /// Signs in to the current cloud provider.
         /// </summary>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         /// <param name='callback'>

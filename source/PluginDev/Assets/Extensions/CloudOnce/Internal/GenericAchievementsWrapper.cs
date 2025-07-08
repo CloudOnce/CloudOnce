@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace CloudOnce.Internal.Providers
 {
     using System;
@@ -81,7 +82,7 @@ namespace CloudOnce.Internal.Providers
         /// <param name="achievementId">Current platform's ID for the achievement.</param>
         /// <param name="progress">
         /// The current progress of this achievement, represented as a number between 0.0 and 100.0.
-        /// A progress of 0.0 will reveal the achievement and 100.0 will unlock it.
+        /// Progress of 0.0 will reveal the achievement and 100.0 will unlock it.
         /// <para> </para>
         /// This value is interpreted as the total percentage of the achievement's progress that the
         /// player should have as a result of this call (regardless of the progress they had before).
@@ -145,7 +146,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Load the achievements the logged in user has already achieved or reported progress on.
+        /// Load the achievements the logged-in user has already achieved or reported progress on.
         /// </summary>
         /// <param name="callback">Callback to handle the achievements.</param>
         public void LoadAchievements(Action<IAchievement[]> callback)

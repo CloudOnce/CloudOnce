@@ -49,7 +49,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not the user is currently signed in.
+        /// Whether the user is currently signed in.
         /// </summary>
         public override bool IsSignedIn
         {
@@ -57,7 +57,7 @@ namespace CloudOnce.Internal.Providers
         }
 
         /// <summary>
-        /// Whether or not Cloud Save is enabled.
+        /// Whether Cloud Save is enabled.
         /// Disabling Cloud Save will make <c>Cloud.Storage.Save</c> only save to disk.
         /// </summary>
         public override bool CloudSaveEnabled
@@ -78,12 +78,12 @@ namespace CloudOnce.Internal.Providers
         /// <summary>
         /// Initializes Apple Game Center.
         /// </summary>
-        /// <param name="activateCloudSave">Whether or not Cloud Saving should be activated.</param>
+        /// <param name="activateCloudSave">Whether Cloud Saving should be activated.</param>
         /// <param name="autoSignIn">
-        /// Whether or not <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
+        /// Whether <see cref="SignIn"/> will be called automatically once the cloud provider is initialized.
         /// </param>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically if the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically if the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated.
         /// </param>
         public override void Initialize(bool activateCloudSave = true, bool autoSignIn = true, bool autoCloudLoad = true)
@@ -126,7 +126,7 @@ namespace CloudOnce.Internal.Providers
         /// Signs in to Apple Game Center.
         /// </summary>
         /// <param name="autoCloudLoad">
-        /// Whether or not cloud data should be loaded automatically when the user is successfully signed in.
+        /// Whether cloud data should be loaded automatically when the user is successfully signed in.
         /// Ignored if Cloud Saving is deactivated or the user fails to sign in.
         /// </param>
         /// <param name='callback'>

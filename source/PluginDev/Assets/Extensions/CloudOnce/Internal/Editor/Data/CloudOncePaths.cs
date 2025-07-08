@@ -14,6 +14,5 @@ public static class CloudOncePaths
     public const string SettingsAssets = cloudOnce + "/CloudOnceSettings.txt";
 
     private const string cloudOnce = "Assets/Extensions/CloudOnce";
-    private const string gpgs = "Assets/Extensions/GooglePlayGames";
     private const string plugins = "Assets/Plugins";
 }
