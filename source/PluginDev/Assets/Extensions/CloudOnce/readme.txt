@@ -10,6 +10,9 @@ but it also attempts to satisfy the needs of power users.
 
 Release Notes
 -------------
+Version 3.1.0
+- Updated GPGS from v2.0.0 to v2.1.0
+
 Version 3.0.0
 - Unity 6 support
 - Updated GPGS from v0.10.14 to v2.0.0
