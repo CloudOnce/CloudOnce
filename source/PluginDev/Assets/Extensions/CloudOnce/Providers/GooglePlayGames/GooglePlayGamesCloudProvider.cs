@@ -400,7 +400,7 @@ namespace CloudOnce.Internal.Providers
             {
                 yield return request.SendWebRequest();
 #if UNITY_2020_1_OR_NEWER
-                if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
+                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
 #else
                 if (request.isNetworkError || request.isHttpError)
 #endif
